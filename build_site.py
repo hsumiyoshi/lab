@@ -71,6 +71,15 @@ def data_uri(path):
     return "data:image/png;base64," + base64.b64encode(p.read_bytes()).decode()
 
 
+def rule_svg(key):
+    f = ROOT / "rule_diagrams.html"
+    if not f.exists():
+        return ""
+    t = f.read_text(encoding="utf-8")
+    m = re.search(rf"<!--SVG:{key}-->([\s\S]*?)<!--/SVG:{key}-->", t)
+    return f"<div class='flow'>{m.group(1)}</div>" if m else ""
+
+
 def league_panels(veg, qk):
     """左ナビで切り替わるリーグ別パネル（ルール／成績表／当日・次イベントの3ブロック）"""
     GHB = "https://github.com/hsumiyoshi/lab/blob/main"
@@ -101,7 +110,7 @@ def league_panels(veg, qk):
     return "".join([
         panel("lg-veg",
               "仮想の出荷者として、東京市場の日次単価で「週のどの日に売るか」を毎週選ぶ。"
-              "品目はきゅうり・トマト・キャベツ・レタス。答え合わせは週明けの実勢価格",
+              "品目はきゅうり・トマト・キャベツ・レタス。答え合わせは週明けの実勢価格" + rule_svg("veg"),
               machines([
                   ("equal", "#eda100", "毎営業日に均等出荷する脳死ベンチマーク"),
                   ("weekshape8", "#2a78d6", "直近8週の曜日別の価格の形で売り日を選ぶ"),
@@ -117,7 +126,7 @@ def league_panels(veg, qk):
               f"{GHB}/exp02_vegetable/reports/veg_forward.md"),
         panel("lg-quake",
               "大森則（余震が時間のべき乗で減る経験則）をフィットし、熊本余震（2026-07-28 M7.1）の"
-              "翌週件数を予測する。採点は対数誤差",
+              "翌週件数を予測する。採点は対数誤差" + rule_svg("quake"),
               machines([
                   ("flat", "#eda100", "前週と同じ件数と予測する脳死ベンチマーク"),
                   ("omori", "#eb6834", "改良大森則 n(t)=K/(t+c)^p を毎週フィットして外挿"),
@@ -131,7 +140,7 @@ def league_panels(veg, qk):
               f"{GHB}/exp05_quake/reports/quake_forward.md"),
         panel("lg-re",
               "2026-07-28 熊本地震（M7.1）の直後に、市場への影響を予言してコミット済み。"
-              "外れてもそのまま残す",
+              "外れてもそのまま残す" + rule_svg("re"),
               machines([
                   ("予言1", "#2a78d6", "2026Q3の取引件数は前年比で減る（中心-10%）"),
                   ("予言2", "#1baf7a", "価格は±5%以内——恐怖による割引は現れない"),
@@ -143,7 +152,7 @@ def league_panels(veg, qk):
               f"{GHB}/exp04_realestate/predictions.md"),
         panel("lg-sat",
               "Sentinel-2衛星で嬬恋のキャベツ畑の緑（NDVI）を観測し、生育の進み方から"
-              "東京市場への本格出荷週を予測する",
+              "東京市場への本格出荷週を予測する" + rule_svg("sat"),
               machines([
                   ("平年並み", "#eda100", "毎年W25と予測する脳死ベンチマーク"),
                   ("threshold", "#2a78d6", "NDVI 0.65到達日が6/上旬より遅ければW26、早ければW25"),
