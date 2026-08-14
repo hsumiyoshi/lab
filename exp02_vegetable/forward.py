@@ -62,9 +62,42 @@ def report(ledger: pd.DataFrame) -> str:
     return "\n".join(lines) + "\n"
 
 
+def chart() -> None:
+    """直近90日の日次単価（4品目）。ダッシュボード用"""
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    import glob
+    INK, INK2, GRID, BASE, SURFACE = "#0b0b0b", "#52514e", "#e1e0d9", "#c3c2b7", "#fcfcfb"
+    COLORS = {"きゅうり": ("Cucumber", "#2a78d6"), "トマト": ("Tomato", "#eb6834"),
+              "キャベツ": ("Cabbage", "#1baf7a"), "レタス": ("Lettuce", "#eda100")}
+    fig, ax = plt.subplots(figsize=(10, 4.5))
+    fig.patch.set_facecolor(SURFACE)
+    for f in sorted(glob.glob(str(HERE / "data" / "veg_*.csv"))):
+        df = pd.read_csv(f, parse_dates=["date"])
+        df = df[df["origin"] == "総計"]
+        item = df["item"].iloc[0]
+        en, c = COLORS.get(item, (item, "#888"))
+        s = df.set_index("date")["price"].sort_index()
+        s = s[s.index >= s.index.max() - pd.Timedelta(days=90)]
+        ax.plot(s.index, s.values, color=c, lw=1.7, label=en)
+    ax.set_facecolor(SURFACE)
+    ax.grid(color=GRID, lw=0.7)
+    for sp in ("top", "right"):
+        ax.spines[sp].set_visible(False)
+    for sp in ("left", "bottom"):
+        ax.spines[sp].set_color(BASE)
+    ax.tick_params(colors=INK2, labelsize=8.5)
+    ax.set_title("Tokyo wholesale price, last 90 days (JPY/kg)", color=INK, fontsize=11, loc="left")
+    ax.legend(frameon=False, labelcolor=INK2, fontsize=8.5)
+    fig.tight_layout()
+    fig.savefig(REPORTS / "veg_chart.png", dpi=130, facecolor=SURFACE)
+
+
 if __name__ == "__main__":
     REPORTS.mkdir(exist_ok=True)
     ledger = build_ledger()
     ledger.to_csv(REPORTS / "veg_ledger.csv", index=False)
     (REPORTS / "veg_forward.md").write_text(report(ledger))
+    chart()
     print(report(ledger))

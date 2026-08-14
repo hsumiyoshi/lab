@@ -266,7 +266,27 @@ transition:border-color .2s}
   <h1>lab <span style="font-weight:400;color:var(--muted)">/ 予測の公開実験場</span></h1>
   <p class="tagline">予測を先に固定し、現実に採点させる公開実験</p>
 
-  <div class="flow" role="img" aria-label="仕組み: 凍結、提出、採点、台帳の4ステップ">
+  </header>
+
+<!-- 2. 生きているか？ -->
+<div class="live">
+  <span class="pulse" aria-hidden="true"></span>
+  <span>フォワード <b><!--TPL:{{DAYS}}/TPL--><!--SAMPLE-->12<!--/SAMPLE--></b> 日目</span>
+  <span>最終更新 <b><!--TPL:{{UPDATED}}/TPL--><!--SAMPLE-->2026-08-14 13:31<!--/SAMPLE--></b> JST</span>
+  <span>全採点は自動</span>
+</div>
+
+<div class="app">
+<nav class="lnav">
+<a href="#pg-top" class="on">🏠 TOP<span class="sub">概要</span></a>
+<a href="#lg-power">⚡ 電力<span class="sub">毎日</span></a>
+<a href="#lg-veg">🥬 青果<span class="sub">週次</span></a>
+<a href="#lg-quake">🌏 地震<span class="sub">週次</span></a>
+<a href="#lg-re">🏠 不動産<span class="sub">四半期</span></a>
+<a href="#lg-sat">🛰 衛星<span class="sub">年次</span></a>
+</nav>
+<div class="panels">
+<article id="pg-top" class="panel on"><section><div class="flow" role="img" aria-label="仕組み: 凍結、提出、採点、台帳の4ステップ">
     <!-- 横フロー（PC） -->
     <svg class="flow-h" viewBox="0 0 640 122" xmlns="http://www.w3.org/2000/svg">
       <path class="f-line" d="M112,46 H196"/>
@@ -323,18 +343,7 @@ transition:border-color .2s}
       <text class="f-name" x="80" y="274">台帳</text>
       <text class="f-sub" x="80" y="291">git履歴が改竄不能な公証</text>
     </svg>
-  </div>
-</header>
-
-<!-- 2. 生きているか？ -->
-<div class="live">
-  <span class="pulse" aria-hidden="true"></span>
-  <span>フォワード <b><!--TPL:{{DAYS}}/TPL--><!--SAMPLE-->12<!--/SAMPLE--></b> 日目</span>
-  <span>最終更新 <b><!--TPL:{{UPDATED}}/TPL--><!--SAMPLE-->2026-08-14 13:31<!--/SAMPLE--></b> JST</span>
-  <span>全採点は自動</span>
-</div>
-
-<!-- 7. 信用できる？ -->
+  </div></section><!-- 7. 信用できる？ -->
 <section>
   <div class="head">
     <p class="kick">信用できる？</p>
@@ -356,16 +365,8 @@ transition:border-color .2s}
 <section><div class="head"><h2>🗓 これからの予定</h2></div>
 <ul class="tl2"><!--TPL:{{TIMELINE}}/TPL--><!--SAMPLE--><li><b>毎日 13:30</b><span>⚡ 電力リーグ採点</span></li><!--/SAMPLE--></ul>
 </section>
-<div class="app">
-<nav class="lnav">
-<a href="#lg-power" class="on">⚡ 電力<span class="sub">毎日</span></a>
-<a href="#lg-veg">🥬 青果<span class="sub">週次</span></a>
-<a href="#lg-quake">🌏 地震<span class="sub">週次</span></a>
-<a href="#lg-re">🏠 不動産<span class="sub">四半期</span></a>
-<a href="#lg-sat">🛰 衛星<span class="sub">年次</span></a>
-</nav>
-<div class="panels">
-<article id="lg-power" class="panel on">
+</article>
+<article id="lg-power" class="panel">
 <!-- 3. 何の勝負？ -->
 <section>
   <div class="head">
@@ -507,12 +508,12 @@ transition:border-color .2s}
 </div>
 <script>
 (function(){
-var ids=["lg-power","lg-veg","lg-quake","lg-re","lg-sat"];
+var ids=["pg-top","lg-power","lg-veg","lg-quake","lg-re","lg-sat"];
 function show(id){
   document.querySelectorAll(".panel").forEach(function(p){p.classList.toggle("on",p.id===id)});
   document.querySelectorAll(".lnav a").forEach(function(a){a.classList.toggle("on",a.getAttribute("href")==="#"+id)});
 }
-function init(){var h=location.hash.slice(1);show(ids.indexOf(h)>=0?h:"lg-power");}
+function init(){var h=location.hash.slice(1);show(ids.indexOf(h)>=0?h:"pg-top");}
 window.addEventListener("hashchange",init);init();
 })();
 </script>

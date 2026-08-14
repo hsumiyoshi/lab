@@ -6,6 +6,7 @@ docs/index.html を生成する。置換契約はテンプレート冒頭コメ�
 ①SAMPLEブロック削除 ②TPLコメント展開 ③{{マーカー}}置換
 """
 
+import base64
 import csv
 import re
 from datetime import datetime
@@ -63,6 +64,13 @@ def latest_line(p):
             f"{body}（oracle上限 {orc:+,.0f}円）")
 
 
+def data_uri(path):
+    p = ROOT / path
+    if not p.exists():
+        return None
+    return "data:image/png;base64," + base64.b64encode(p.read_bytes()).decode()
+
+
 def league_panels(veg, qk):
     """左ナビで切り替わるリーグ別パネル（ルール／成績表／当日・次イベントの3ブロック）"""
     GHB = "https://github.com/hsumiyoshi/lab/blob/main"
@@ -75,39 +83,72 @@ def league_panels(veg, qk):
         trs = "".join("<tr>" + "".join(f"<td>{r.get(c, chr(8212))}</td>" for c in cols) + "</tr>"
                       for r in rows[-6:])
         return f"<table><tr>{th}</tr>{trs}</table>"
-    def panel(pid, rule_title, rule_html, score_body, today_body, link):
+    def machines(items):
+        cards = "".join(
+            f"<div class='mc'><span class='mdot' style='background:{c}'></span>"
+            f"<div><div class='mname'>{n}</div><div class='mdesc'>{d}</div></div></div>"
+            for n, c, d in items)
+        return f"<div class='mgrid'>{cards}</div>"
+    def fig(path, alt):
+        uri = data_uri(path)
+        return (f"<div class='fig'><img src='{uri}' alt='{alt}'></div>" if uri else "")
+    def panel(pid, rule_html, mcards, score_body, today_body, link):
         return (f"<article id='{pid}' class='panel'>"
-                + card("📖 ルール", f"<div class='meta'>{rule_html}</div>")
+                + card("📖 ルールと出場機体", f"<div class='meta'>{rule_html}</div>{mcards}")
                 + card("🏆 成績表", score_body)
                 + card("📍 当日 / 次のイベント", today_body)
                 + f"<div class='links'><a href='{link}'>台帳（生データ）</a></div></article>")
     return "".join([
-        panel("lg-veg", "青果",
+        panel("lg-veg",
               "仮想の出荷者として、東京市場の日次単価で「週のどの日に売るか」を毎週選ぶ。"
-              "oracle=週内最高値の日、脳死ベンチ=毎営業日の均等出荷。品目はきゅうり・トマト・キャベツ・レタス",
-              table(veg, ["week", "item", "oracle", "equal", "weekshape8", "stop_rule"],
-                    ["週", "品目", "oracle", "均等", "weekshape8", "stop_rule"]) if veg
-              else empty("初戦 8/17週 — 水曜14:00に採点結果がここに載る"),
+              "品目はきゅうり・トマト・キャベツ・レタス。答え合わせは週明けの実勢価格",
+              machines([
+                  ("equal", "#eda100", "毎営業日に均等出荷する脳死ベンチマーク"),
+                  ("weekshape8", "#2a78d6", "直近8週の曜日別の価格の形で売り日を選ぶ"),
+                  ("stop_rule", "#1baf7a", "前日価格が21日平均を超えたら売る（見切り型）"),
+                  ("first_day", "#eb6834", "週の初日に即売り（保存リスク回避の慣行）"),
+                  ("oracle", "#898781", "週内最高値の日に売った場合の理論上限（参照値）"),
+              ]),
+              (table(veg, ["week", "item", "oracle", "equal", "weekshape8", "stop_rule"],
+                     ["週", "品目", "oracle", "均等", "weekshape8", "stop_rule"]) if veg
+               else empty("初戦 8/17週 — 水曜14:00に採点結果がここに載る"))
+              + fig("exp02_vegetable/reports/veg_chart.png", "直近90日の日次単価"),
               empty("次回採点: 水曜 14:00"),
               f"{GHB}/exp02_vegetable/reports/veg_forward.md"),
-        panel("lg-quake", "地震",
-              "大森則（余震が時間のべき乗で減る経験則）をフィットし、熊本余震の翌週件数を予測。"
-              "脳死ベンチ=前週横ばい。採点は対数誤差",
-              table(qk, ["week", "actual", "omori", "flat", "err_omori", "err_flat"],
-                    ["週", "実績", "大森則", "横ばい", "誤差(大森)", "誤差(横ばい)"]) if qk
-              else empty("初戦 8/17週 — 月曜14:00に採点結果がここに載る"),
+        panel("lg-quake",
+              "大森則（余震が時間のべき乗で減る経験則）をフィットし、熊本余震（2026-07-28 M7.1）の"
+              "翌週件数を予測する。採点は対数誤差",
+              machines([
+                  ("flat", "#eda100", "前週と同じ件数と予測する脳死ベンチマーク"),
+                  ("omori", "#eb6834", "改良大森則 n(t)=K/(t+c)^p を毎週フィットして外挿"),
+                  ("oracle", "#898781", "実績そのもの（誤差ゼロの参照値）"),
+              ]),
+              (table(qk, ["week", "actual", "omori", "flat", "err_omori", "err_flat"],
+                     ["週", "実績", "大森則", "横ばい", "誤差(大森)", "誤差(横ばい)"]) if qk
+               else empty("初戦 8/17週 — 月曜14:00に採点結果がここに載る"))
+              + fig("exp05_quake/reports/quake_forward.png", "日別余震件数と大森則フィット"),
               empty("次回採点: 月曜 14:00"),
               f"{GHB}/exp05_quake/reports/quake_forward.md"),
-        panel("lg-re", "不動産",
-              "2026-07-28 熊本地震（M7.1）の直後に、影響の予測3つを公証: "
-              "①取引件数は減る ②価格は±5%以内（恐怖の割引は出ない）③洪水ハザード内外の相対差は不変",
+        panel("lg-re",
+              "2026-07-28 熊本地震（M7.1）の直後に、市場への影響を予言してコミット済み。"
+              "外れてもそのまま残す",
+              machines([
+                  ("予言1", "#2a78d6", "2026Q3の取引件数は前年比で減る（中心-10%）"),
+                  ("予言2", "#1baf7a", "価格は±5%以内——恐怖による割引は現れない"),
+                  ("予言3", "#eb6834", "洪水ハザード内外の相対価格差は地震後も不変"),
+              ]),
               empty("対象データ（2026Q3）の公表待ち — 予言は先に置いてある"),
               empty("判定 2027年1月〜（不動産取引データの公表後）"),
               f"{GHB}/exp04_realestate/predictions.md"),
-        panel("lg-sat", "衛星",
-              "Sentinel-2衛星で嬬恋のキャベツ畑の緑（NDVI）を観測し、"
-              "「0.65到達日が6月上旬より遅ければ本格出荷はW26、早ければW25」という閾値ルールを公証済み",
-              empty("2027年春の生育観測から — 予測のコミット期限は2027-06-01"),
+        panel("lg-sat",
+              "Sentinel-2衛星で嬬恋のキャベツ畑の緑（NDVI）を観測し、生育の進み方から"
+              "東京市場への本格出荷週を予測する",
+              machines([
+                  ("平年並み", "#eda100", "毎年W25と予測する脳死ベンチマーク"),
+                  ("threshold", "#2a78d6", "NDVI 0.65到達日が6/上旬より遅ければW26、早ければW25"),
+              ]),
+              empty("2027年春の生育観測から — 予測のコミット期限は2027-06-01")
+              + fig("exp07_satellite/reports/ndvi_chart.png", "NDVIと入荷量の3年比較"),
               empty("判定 2027年7月頃（東京市場の入荷実績で）"),
               f"{GHB}/exp07_satellite/predictions.md"),
     ])
@@ -139,6 +180,16 @@ def build():
                 .replace("{{LATEST_LINE}}", latest_line(p) if p else "初日の採点待ち")
                 .replace("{{LEAGUE_PANELS}}", league_panels(veg, qk))
                 .replace("{{TIMELINE}}", timeline(veg, qk)))
+    for src_name, path in (("forward_pnl.png", "exp01_jepx/reports/forward_pnl.png"),
+                           ("latest_anatomy.png", None)):
+        pass
+    pnl = data_uri("exp01_jepx/reports/forward_pnl.png")
+    anas = sorted((ROOT / "exp01_jepx" / "reports" / "anatomy").glob("*.png"))
+    ana = ("data:image/png;base64," + base64.b64encode(anas[-1].read_bytes()).decode()) if anas else None
+    if pnl:
+        html = html.replace('src="forward_pnl.png"', f'src="{pnl}"')
+    if ana:
+        html = html.replace('src="latest_anatomy.png"', f'src="{ana}"')
     html = re.sub(r"<!--[\s\S]*?-->", "", html)  # 本番出力はコメント（契約説明含む）を全除去
     assert "{{" not in html, "置換漏れあり"
 
