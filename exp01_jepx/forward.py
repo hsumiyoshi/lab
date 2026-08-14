@@ -74,7 +74,7 @@ def rad_dev(day: pd.Timestamp, rad_forecast: float | None = None):
 
 
 # ---------------- 台帳 ----------------
-# 予測提出型: ベースライン（clock/weekshape）はここで計算し、参加機体（haruki等）は
+# 予測提出型: ベースライン（clock/weekshape）はここで計算し、参加機体（tenki/hybrid等）は
 # picks/ に提出されたJSONだけで台帳入りする。提出が無い日は無得点（欠場）。
 
 PICKS_DIR = HERE / "picks"
@@ -192,7 +192,7 @@ def plot_ledger(ledger: pd.DataFrame, dest: Path) -> None:
     strong = ledger.index[ledger["signal"] == "強"]
     if len(strong) and "hybrid" in cum.columns:
         ax.plot(strong, cum.loc[strong, "hybrid"], "o",
-                color=COLORS["haruki_hybrid"], ms=5, mec=SURFACE, mew=1.2)
+                color=COLORS["hybrid"], ms=5, mec=SURFACE, mew=1.2)
     ax.set_title("Virtual battery forward test — cumulative P&L (JPY, 10kWh)",
                  color=INK, fontsize=11)
     ax.grid(color=GRID, lw=0.7)
