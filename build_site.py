@@ -64,23 +64,42 @@ def latest_line(p):
 
 
 def leagues(veg, qk):
-    """リーグごとの縦カード（開幕前から領域を確保しておく）"""
-    def card(emoji, name, rule, status, live=False):
-        pulse = "<span class='pulse'></span>" if live else ""
-        return (f"<div class='lcard'><div class='lhead'><span class='lemoji'>{emoji}</span>"
-                f"<b>{name}</b>{pulse}</div>"
-                f"<div class='lrule'>{rule}</div><div class='lstat'>{status}</div></div>")
-    items = [
-        card("🥬", "青果リーグ", "東京市場の日次単価で「週のどの日に売るか」を競う出荷タイミング戦",
-             f"直近 {veg[-1]['week']} 採点済み" if veg else "初戦 8/17週・水曜14:00採点", live=True),
-        card("🌏", "地震リーグ", "大森則（余震の減衰法則）で熊本余震の週次件数を予測 vs 脳死ベンチ「前週横ばい」",
-             f"直近 {qk[-1]['week']} 採点済み" if qk else "初戦 8/17週・月曜14:00採点", live=True),
-        card("🏠", "不動産（事前登録）", "M7.1後の熊本: 取引件数は減る・価格は±5%・ハザード内外差は不変——と地震直後に公証済み",
-             "判定 2027年1月〜（データ公表後）"),
-        card("🛰", "衛星（事前登録）", "嬬恋のNDVI 0.65到達日からキャベツ本格出荷週を予測する閾値ルールを公証済み",
-             "判定 2027年7月頃"),
-    ]
-    return "".join(items)
+    """各リーグを電力と同格のトップレベルセクションとして生成（開幕前から領域を確保）"""
+    GHB = "https://github.com/hsumiyoshi/lab/blob/main"
+    def sec(emoji, name, cad, rule, body, link):
+        return (f"<section><div class='head'><h2>{emoji} {name}</h2>"
+                f"<span class='cad'>{cad}</span></div>"
+                f"<div class='meta'>{rule}</div>{body}"
+                f"<div class='links'><a href='{link}'>台帳</a></div></section>")
+    def empty(msg):
+        return f"<div class='empty'><span class='pulse'></span>{msg}</div>"
+    def table(rows, cols, headers):
+        th = "".join(f"<th>{h}</th>" for h in headers)
+        trs = "".join("<tr>" + "".join(f"<td>{r.get(c, chr(8212))}</td>" for c in cols) + "</tr>"
+                      for r in rows[-4:])
+        return f"<table><tr>{th}</tr>{trs}</table>"
+    return "".join([
+        sec("🥬", "青果リーグ — 出荷タイミング", "週次・水曜14:00採点",
+            "東京市場の日次単価で「週のどの日に売るか」を競う。脳死ベンチ=毎営業日の均等出荷",
+            table(veg, ["week", "item", "oracle", "equal", "weekshape8", "stop_rule"],
+                  ["週", "品目", "oracle", "均等", "weekshape8", "stop_rule"]) if veg
+            else empty("初戦 8/17週 — 結果はここに刻まれていく"),
+            f"{GHB}/exp02_vegetable/reports/veg_forward.md"),
+        sec("🌏", "地震リーグ — 余震件数予測", "週次・月曜14:00採点",
+            "大森則（余震の減衰法則）で熊本余震の週次件数を予測。脳死ベンチ=前週横ばい",
+            table(qk, ["week", "actual", "omori", "flat", "err_omori", "err_flat"],
+                  ["週", "実績", "大森則", "横ばい", "誤差(大森)", "誤差(横ばい)"]) if qk
+            else empty("初戦 8/17週 — 結果はここに刻まれていく"),
+            f"{GHB}/exp05_quake/reports/quake_forward.md"),
+        sec("🏠", "不動産 — 熊本地震の事前登録予測", "四半期・判定2027年1月〜",
+            "M7.1直後に公証した3つの予言: 取引件数は減る／価格は±5%以内／ハザード内外差は不変",
+            empty("対象データ（2026Q3）の公表を待機中 — 予言は先に置いてある"),
+            f"{GHB}/exp04_realestate/predictions.md"),
+        sec("🛰", "衛星 — キャベツ出荷週の事前登録予測", "年次・判定2027年7月頃",
+            "嬬恋のNDVI 0.65到達日から本格出荷週を当てる閾値ルールを公証済み",
+            empty("2027年春の生育観測を待機中"),
+            f"{GHB}/exp07_satellite/predictions.md"),
+    ])
 
 
 def build():

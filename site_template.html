@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light dark">
-<title>リーグ台帳</title>
+<title>lab — 予測の公開実験場</title>
 <!--
   置換契約（build_site.py 用・3ステップ）:
     step1: SAMPLEコメントブロック（開始タグ SAMPLE / 終了タグ /SAMPLE のHTMLコメント対）を
@@ -237,7 +237,7 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
 
 <!-- 1. これは何？ -->
 <header>
-  <h1>リーグ台帳</h1>
+  <h1>lab <span style="font-weight:400;color:var(--muted)">/ 予測の公開実験場</span></h1>
   <p class="tagline">予測を先に固定し、現実に採点させる公開実験</p>
 
   <div class="flow" role="img" aria-label="仕組み: 凍結、提出、採点、台帳の4ステップ">
@@ -439,17 +439,7 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
 </section>
 
 <!-- 6. 他のリーグは？ -->
-<section>
-  <div class="head">
-    <p class="kick">他のリーグは？</p>
-    <h2>開催予定と長期予測</h2>
-  </div>
-  <div class="lgrid">
-    <!--TPL:{{LEAGUES}}/TPL--><!--SAMPLE-->
-    <div class="lcard"><div class="lhead"><span class="lemoji">🥬</span><b>青果リーグ</b><span class="pulse"></span></div><div class="lrule">東京市場の日次単価で「週のどの日に売るか」を競う</div><div class="lstat">初戦 8/17週・水曜14:00採点</div></div>
-    <!--/SAMPLE-->
-  </div>
-</section>
+<!--TPL:{{LEAGUES}}/TPL--><!--SAMPLE--><section><div class="head"><h2>🥬 青果リーグ — 出荷タイミング</h2><span class="cad">週次・水曜14:00採点</span></div><div class="meta">東京市場の日次単価で「週のどの日に売るか」を競う</div><div class="empty"><span class="pulse"></span>初戦 8/17週 — 結果はここに刻まれていく</div></section><!--/SAMPLE-->
 
 <!-- 7. 信用できる？ -->
 <section>
