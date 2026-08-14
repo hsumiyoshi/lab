@@ -10,7 +10,7 @@
     python3 forward.py          # データ更新→台帳更新→明日のpicks生成→レポート出力
 
 出場機体: ベースライン = clock(固定時間帯) / weekshape(曜日形状) をここで計算。
-         参加機体（haruki_tenki / haruki_hybrid 等）は「予測提出型」——
+         参加機体（tenki / hybrid 等）は「予測提出型」——
          picks/ に提出されたJSONだけで台帳入りする（コードは参加者の手元、
          2026-08-13に本リポジトリから分離。凍結済みロジックは不変）
 oracle は事後の上限参照値としてのみ記載。
@@ -46,7 +46,7 @@ JST = ZoneInfo("Asia/Tokyo")
 FORWARD_START = pd.Timestamp("2026-08-14")
 FREEZE_NOTE = "戦略凍結: 2026-08-12 / フォワード開始: 2026-08-14受渡分"
 
-STRAT_NAMES = ["clock", "weekshape", "haruki_tenki", "haruki_hybrid", "oracle"]
+STRAT_NAMES = ["clock", "weekshape", "tenki", "hybrid", "oracle"]
 
 
 # ---------------- ハイブリッド（フォワード専用機体） ----------------
@@ -85,7 +85,8 @@ def load_picks(day: pd.Timestamp) -> dict:
     if not f.exists():
         return {}
     data = json.loads(f.read_text(encoding="utf-8"))
-    return {name: (set(v["charge"]), set(v["discharge"]))
+    # 機体名の正規化: 旧picksの haruki_ プレフィックスは表示名から外す（履歴は無変換で保持）
+    return {name.removeprefix("haruki_"): (set(v["charge"]), set(v["discharge"]))
             for name, v in data.items() if not name.startswith("_")}
 
 
@@ -169,8 +170,8 @@ def make_picks(df: pd.DataFrame, target: pd.Timestamp) -> dict:
 # ---------------- チャート ----------------
 
 # 機体→色の固定割当（dataviz検証済みパレット。順序・対応は変更しない）
-COLORS = {"weekshape": "#2a78d6", "haruki_tenki": "#eb6834",
-          "haruki_hybrid": "#1baf7a", "clock": "#eda100"}
+COLORS = {"weekshape": "#2a78d6", "tenki": "#eb6834",
+          "hybrid": "#1baf7a", "clock": "#eda100"}
 INK, INK2, MUTED = "#0b0b0b", "#52514e", "#898781"
 GRID, BASE, SURFACE = "#e1e0d9", "#c3c2b7", "#fcfcfb"
 
@@ -189,8 +190,8 @@ def plot_ledger(ledger: pd.DataFrame, dest: Path) -> None:
     # 低コントラスト色の緩和はレポート内の成績テーブル（table view）が担う
     # 信号「強」の日をhybrid線上に打点
     strong = ledger.index[ledger["signal"] == "強"]
-    if len(strong) and "haruki_hybrid" in cum.columns:
-        ax.plot(strong, cum.loc[strong, "haruki_hybrid"], "o",
+    if len(strong) and "hybrid" in cum.columns:
+        ax.plot(strong, cum.loc[strong, "hybrid"], "o",
                 color=COLORS["haruki_hybrid"], ms=5, mec=SURFACE, mew=1.2)
     ax.set_title("Virtual battery forward test — cumulative P&L (JPY, 10kWh)",
                  color=INK, fontsize=11)
@@ -277,7 +278,7 @@ def day_anatomy(df: pd.DataFrame, day: pd.Timestamp) -> str:
 def anatomy_chart(today, picks, dest) -> None:
     """価格カーブ＋各機体の売買位置（▽=買い △=売り）を1枚に"""
     import matplotlib.pyplot as plt
-    names = [n for n in ("clock", "weekshape", "haruki_tenki", "haruki_hybrid", "oracle")
+    names = [n for n in ("clock", "weekshape", "tenki", "hybrid", "oracle")
              if n in picks and picks[n]]
     fig, (ax, ax2) = plt.subplots(2, 1, figsize=(10, 6), sharex=True,
                                   height_ratios=[3, 1.6])

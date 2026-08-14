@@ -196,6 +196,14 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
 @media (prefers-reduced-motion: reduce){
   .p-move{display:none}
 }
+
+.lgrid{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+.lcard{border:1px solid var(--line);border-radius:12px;padding:12px 14px;transition:border-color .25s}
+.lcard:hover{border-color:var(--accent)}
+.lhead{display:flex;align-items:center;gap:8px;font-size:.92rem}
+.lemoji{font-size:1.05rem}
+.lrule{color:var(--ink2);font-size:.8rem;margin-top:3px;line-height:1.55}
+.lstat{color:var(--muted);font-size:.72rem;margin-top:5px}
 </style>
 </head>
 <body>
@@ -380,11 +388,11 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
     </div>
     <div class="mc">
       <span class="mdot" style="background:var(--m-tenki)"></span>
-      <div><div class="mname">haruki_tenki</div><div class="mdesc">天気予報から価格の形を予測する</div></div>
+      <div><div class="mname">tenki</div><div class="mdesc">天気予報から価格の形を予測する</div></div>
     </div>
     <div class="mc">
       <span class="mdot" style="background:var(--m-hybrid)"></span>
-      <div><div class="mname">haruki_hybrid</div><div class="mdesc">普段はweekshape、天気が荒れる日だけtenki</div></div>
+      <div><div class="mname">hybrid</div><div class="mdesc">普段はweekshape、天気が荒れる日だけtenki</div></div>
     </div>
     <div class="mc oracle">
       <span class="mdot" style="background:var(--m-oracle)"></span>
@@ -408,9 +416,9 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
       <tbody>
         <!--TPL:{{POWER_TABLE}}/TPL--><!--SAMPLE-->
         <tr class="lead"><td><span class="dot" style="background:#2a78d6"></span>weekshape</td><td>1,842円</td><td>61.2%</td><td><span class="pos">+214</span></td></tr>
-        <tr><td><span class="dot" style="background:#1baf7a"></span>haruki_hybrid</td><td>1,655円</td><td>55.0%</td><td><span class="pos">+180</span></td></tr>
+        <tr><td><span class="dot" style="background:#1baf7a"></span>hybrid</td><td>1,655円</td><td>55.0%</td><td><span class="pos">+180</span></td></tr>
         <tr><td><span class="dot" style="background:#eda100"></span>clock</td><td>1,320円</td><td>43.9%</td><td><span class="neg">-45</span></td></tr>
-        <tr><td><span class="dot" style="background:#eb6834"></span>haruki_tenki</td><td>1,104円</td><td>36.7%</td><td><span class="neg">-102</span></td></tr>
+        <tr><td><span class="dot" style="background:#eb6834"></span>tenki</td><td>1,104円</td><td>36.7%</td><td><span class="neg">-102</span></td></tr>
         <!--/SAMPLE-->
       </tbody>
     </table>
@@ -436,14 +444,11 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
     <p class="kick">他のリーグは？</p>
     <h2>開催予定と長期予測</h2>
   </div>
-  <ul class="tl">
+  <div class="lgrid">
     <!--TPL:{{LEAGUES}}/TPL--><!--SAMPLE-->
-    <li><b>🥬 青果 — 出荷タイミング</b><span>初戦 8/17週・水曜 14:00 採点</span></li>
-    <li><b>🌏 地震 — 余震件数予測</b><span>初戦 8/17週・月曜 14:00 採点</span></li>
-    <li><b>🏠 不動産 — M7.1後の熊本市場</b><span>事前登録済み・判定 2027年1月〜</span></li>
-    <li><b>🛰 衛星 — NDVIによる出荷週予測</b><span>事前登録済み・判定 2027年7月頃</span></li>
+    <div class="lcard"><div class="lhead"><span class="lemoji">🥬</span><b>青果リーグ</b><span class="pulse"></span></div><div class="lrule">東京市場の日次単価で「週のどの日に売るか」を競う</div><div class="lstat">初戦 8/17週・水曜14:00採点</div></div>
     <!--/SAMPLE-->
-  </ul>
+  </div>
 </section>
 
 <!-- 7. 信用できる？ -->

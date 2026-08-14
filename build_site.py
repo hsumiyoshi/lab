@@ -16,8 +16,8 @@ ROOT = Path(__file__).parent
 DOCS = ROOT / "docs"
 JST = ZoneInfo("Asia/Tokyo")
 
-DOT = {"weekshape": "#2a78d6", "haruki_tenki": "#eb6834",
-       "haruki_hybrid": "#1baf7a", "clock": "#eda100", "oracle": "#898781"}
+DOT = {"weekshape": "#2a78d6", "tenki": "#eb6834",
+       "hybrid": "#1baf7a", "clock": "#eda100", "oracle": "#898781"}
 
 
 def read_power():
@@ -64,15 +64,22 @@ def latest_line(p):
 
 
 def leagues(veg, qk):
-    def li(name, status):
-        return f"<li><b>{name}</b><span>{status}</span></li>"
-    items = []
-    items.append(li("🥬 青果 — 出荷タイミング",
-                    f"直近 {veg[-1]['week']} 採点済み" if veg else "初戦 8/17週（水曜14:00採点）"))
-    items.append(li("🌏 地震 — 余震件数予測",
-                    f"直近 {qk[-1]['week']} 採点済み" if qk else "初戦 8/17週（月曜14:00採点）"))
-    items.append(li("🏠 不動産 — M7.1後の熊本（事前登録）", "判定 2027年1月〜"))
-    items.append(li("🛰 衛星 — NDVI→出荷週（事前登録）", "判定 2027年7月頃"))
+    """リーグごとの縦カード（開幕前から領域を確保しておく）"""
+    def card(emoji, name, rule, status, live=False):
+        pulse = "<span class='pulse'></span>" if live else ""
+        return (f"<div class='lcard'><div class='lhead'><span class='lemoji'>{emoji}</span>"
+                f"<b>{name}</b>{pulse}</div>"
+                f"<div class='lrule'>{rule}</div><div class='lstat'>{status}</div></div>")
+    items = [
+        card("🥬", "青果リーグ", "東京市場の日次単価で「週のどの日に売るか」を競う出荷タイミング戦",
+             f"直近 {veg[-1]['week']} 採点済み" if veg else "初戦 8/17週・水曜14:00採点", live=True),
+        card("🌏", "地震リーグ", "大森則（余震の減衰法則）で熊本余震の週次件数を予測 vs 脳死ベンチ「前週横ばい」",
+             f"直近 {qk[-1]['week']} 採点済み" if qk else "初戦 8/17週・月曜14:00採点", live=True),
+        card("🏠", "不動産（事前登録）", "M7.1後の熊本: 取引件数は減る・価格は±5%・ハザード内外差は不変——と地震直後に公証済み",
+             "判定 2027年1月〜（データ公表後）"),
+        card("🛰", "衛星（事前登録）", "嬬恋のNDVI 0.65到達日からキャベツ本格出荷週を予測する閾値ルールを公証済み",
+             "判定 2027年7月頃"),
+    ]
     return "".join(items)
 
 

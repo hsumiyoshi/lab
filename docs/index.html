@@ -184,6 +184,14 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
 @media (prefers-reduced-motion: reduce){
   .p-move{display:none}
 }
+
+.lgrid{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+.lcard{border:1px solid var(--line);border-radius:12px;padding:12px 14px;transition:border-color .25s}
+.lcard:hover{border-color:var(--accent)}
+.lhead{display:flex;align-items:center;gap:8px;font-size:.92rem}
+.lemoji{font-size:1.05rem}
+.lrule{color:var(--ink2);font-size:.8rem;margin-top:3px;line-height:1.55}
+.lstat{color:var(--muted);font-size:.72rem;margin-top:5px}
 </style>
 </head>
 <body>
@@ -284,7 +292,7 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
 <div class="live">
   <span class="pulse" aria-hidden="true"></span>
   <span>フォワード <b>2</b> 日目</span>
-  <span>最終更新 <b>2026-08-14 22:01</b> JST</span>
+  <span>最終更新 <b>2026-08-14 22:22</b> JST</span>
   <span>全採点は自動</span>
 </div>
 
@@ -368,11 +376,11 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
     </div>
     <div class="mc">
       <span class="mdot" style="background:var(--m-tenki)"></span>
-      <div><div class="mname">haruki_tenki</div><div class="mdesc">天気予報から価格の形を予測する</div></div>
+      <div><div class="mname">tenki</div><div class="mdesc">天気予報から価格の形を予測する</div></div>
     </div>
     <div class="mc">
       <span class="mdot" style="background:var(--m-hybrid)"></span>
-      <div><div class="mname">haruki_hybrid</div><div class="mdesc">普段はweekshape、天気が荒れる日だけtenki</div></div>
+      <div><div class="mname">hybrid</div><div class="mdesc">普段はweekshape、天気が荒れる日だけtenki</div></div>
     </div>
     <div class="mc oracle">
       <span class="mdot" style="background:var(--m-oracle)"></span>
@@ -394,7 +402,7 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
         <tr><th>機体</th><th>累計</th><th>対oracle</th><th>直近日</th></tr>
       </thead>
       <tbody>
-        <tr class='lead'><td><span class='dot' style='background:#eda100'></span>clock</td><td>143円</td><td>91.4%</td><td><span class='pos'>+72</span></td></tr><tr><td><span class='dot' style='background:#2a78d6'></span>weekshape</td><td>117円</td><td>75.0%</td><td><span class='pos'>+67</span></td></tr><tr><td><span class='dot' style='background:#eb6834'></span>haruki_tenki</td><td>93円</td><td>59.8%</td><td><span class='pos'>+61</span></td></tr><tr><td><span class='dot' style='background:#1baf7a'></span>haruki_hybrid</td><td>93円</td><td>59.8%</td><td><span class='pos'>+61</span></td></tr><tr><td><span class='dot' style='background:#898781'></span>oracle</td><td>156円</td><td>100.0%</td><td><span class='pos'>+77</span></td></tr>
+        <tr class='lead'><td><span class='dot' style='background:#eda100'></span>clock</td><td>143円</td><td>91.4%</td><td><span class='pos'>+72</span></td></tr><tr><td><span class='dot' style='background:#2a78d6'></span>weekshape</td><td>117円</td><td>75.0%</td><td><span class='pos'>+67</span></td></tr><tr><td><span class='dot' style='background:#eb6834'></span>tenki</td><td>93円</td><td>59.8%</td><td><span class='pos'>+61</span></td></tr><tr><td><span class='dot' style='background:#1baf7a'></span>hybrid</td><td>93円</td><td>59.8%</td><td><span class='pos'>+61</span></td></tr><tr><td><span class='dot' style='background:#898781'></span>oracle</td><td>156円</td><td>100.0%</td><td><span class='pos'>+77</span></td></tr>
       </tbody>
     </table>
   </div>
@@ -408,7 +416,7 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
     <p class="kick">今日は？</p>
     <h2>直近日の解剖</h2>
   </div>
-  <p class="latest">2026-08-15（信号「強」）: clock +72円 > weekshape +67円 > haruki_tenki +61円 > haruki_hybrid +61円（oracle上限 +77円）</p>
+  <p class="latest">2026-08-15（信号「強」）: clock +72円 > weekshape +67円 > tenki +61円 > hybrid +61円（oracle上限 +77円）</p>
   <div class="fig"><img src="latest_anatomy.png" alt="直近日の解剖チャート" loading="lazy"></div>
   <p class="figcap">上＝当日の30分値価格、下＝各機体が置いた売買の位置</p>
 </section>
@@ -419,9 +427,9 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
     <p class="kick">他のリーグは？</p>
     <h2>開催予定と長期予測</h2>
   </div>
-  <ul class="tl">
-    <li><b>🥬 青果 — 出荷タイミング</b><span>初戦 8/17週（水曜14:00採点）</span></li><li><b>🌏 地震 — 余震件数予測</b><span>初戦 8/17週（月曜14:00採点）</span></li><li><b>🏠 不動産 — M7.1後の熊本（事前登録）</b><span>判定 2027年1月〜</span></li><li><b>🛰 衛星 — NDVI→出荷週（事前登録）</b><span>判定 2027年7月頃</span></li>
-  </ul>
+  <div class="lgrid">
+    <div class='lcard'><div class='lhead'><span class='lemoji'>🥬</span><b>青果リーグ</b><span class='pulse'></span></div><div class='lrule'>東京市場の日次単価で「週のどの日に売るか」を競う出荷タイミング戦</div><div class='lstat'>初戦 8/17週・水曜14:00採点</div></div><div class='lcard'><div class='lhead'><span class='lemoji'>🌏</span><b>地震リーグ</b><span class='pulse'></span></div><div class='lrule'>大森則（余震の減衰法則）で熊本余震の週次件数を予測 vs 脳死ベンチ「前週横ばい」</div><div class='lstat'>初戦 8/17週・月曜14:00採点</div></div><div class='lcard'><div class='lhead'><span class='lemoji'>🏠</span><b>不動産（事前登録）</b></div><div class='lrule'>M7.1後の熊本: 取引件数は減る・価格は±5%・ハザード内外差は不変——と地震直後に公証済み</div><div class='lstat'>判定 2027年1月〜（データ公表後）</div></div><div class='lcard'><div class='lhead'><span class='lemoji'>🛰</span><b>衛星（事前登録）</b></div><div class='lrule'>嬬恋のNDVI 0.65到達日からキャベツ本格出荷週を予測する閾値ルールを公証済み</div><div class='lstat'>判定 2027年7月頃</div></div>
+  </div>
 </section>
 
 
