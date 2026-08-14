@@ -251,23 +251,72 @@ def day_anatomy(df: pd.DataFrame, day: pd.Timestamp) -> str:
         lines.append(f"| {name} | {', '.join(koma_to_range(k) for k in sorted(c))} | {buy:.2f}円 "
                      f"| {', '.join(koma_to_range(k) for k in sorted(d))} | {sell:.2f}円 | {pnl:+,.0f}円 |")
     lines.append("")
-    # 48コマ価格グリッド（行=4時間ブロック、列=30分刻み。選択と価格の突き合わせ用）
+    # 売買位置チャート（価格カーブ＋機体別マーカー）
+    chart_dir = HERE / "reports" / "anatomy"
+    chart_dir.mkdir(parents=True, exist_ok=True)
+    anatomy_chart(today, picks, chart_dir / f"{day:%Y-%m-%d}.png")
+    lines.append(f"![anatomy](anatomy/{day:%Y-%m-%d}.png)")
+    lines.append("")
+    # 48コマ価格（24列×2行・時刻ヘッダ。太字=最安/最高）
     lines.append("**48コマ価格（円/kWh。太字=最安/最高）**")
     lines.append("")
     kmin, kmax = int(today.idxmin()), int(today.idxmax())
-    lines.append("| 帯 | +0:00 | +0:30 | +1:00 | +1:30 | +2:00 | +2:30 | +3:00 | +3:30 |")
-    lines.append("|---|---|---|---|---|---|---|---|---|")
-    for row in range(6):
-        cells = [koma_to_range(row * 8 + 1) + "〜"]
-        for off in range(8):
-            k = row * 8 + off + 1
+    for half in range(2):
+        ks = range(half * 24 + 1, half * 24 + 25)
+        lines.append("| " + " | ".join(koma_to_range(k) for k in ks) + " |")
+        lines.append("|" + "---|" * 24)
+        cells = []
+        for k in ks:
             v = f"{today[k]:.2f}" if k in today.index else "—"
-            if k in (kmin, kmax):
-                v = f"**{v}**"
-            cells.append(v)
+            cells.append(f"**{v}**" if k in (kmin, kmax) else v)
         lines.append("| " + " | ".join(cells) + " |")
-    lines.append("")
+        lines.append("")
     return "\n".join(lines)
+
+
+def anatomy_chart(today, picks, dest) -> None:
+    """価格カーブ＋各機体の売買位置（▽=買い △=売り）を1枚に"""
+    import matplotlib.pyplot as plt
+    names = [n for n in ("clock", "weekshape", "haruki_tenki", "haruki_hybrid", "oracle")
+             if n in picks and picks[n]]
+    fig, (ax, ax2) = plt.subplots(2, 1, figsize=(10, 6), sharex=True,
+                                  height_ratios=[3, 1.6])
+    for a in (ax, ax2):
+        a.set_facecolor(SURFACE)
+        a.grid(color=GRID, lw=0.7)
+        for s in ("top", "right"):
+            a.spines[s].set_visible(False)
+        for s in ("left", "bottom"):
+            a.spines[s].set_color(BASE)
+        a.tick_params(colors=INK2, labelsize=8.5)
+    fig.patch.set_facecolor(SURFACE)
+    x = [(k - 1) * 0.5 for k in today.index]
+    ax.plot(x, today.values, color=INK, lw=1.8, drawstyle="steps-mid")
+    kmin, kmax = int(today.idxmin()), int(today.idxmax())
+    for k, va, dy in ((kmin, "top", -0.4), (kmax, "bottom", 0.4)):
+        ax.annotate(f"{today[k]:.2f}", ((k - 1) * 0.5, today[k] + dy),
+                    color=INK2, fontsize=8.5, ha="center", va=va)
+    ax.set_ylabel("JPY/kWh", color=INK2, fontsize=9)
+    for i, name in enumerate(names):
+        c, d = picks[name]
+        color = COLORS.get(name, MUTED)
+        ax2.scatter([(k - 1) * 0.5 for k in sorted(c)], [i] * len(c),
+                    marker="v", s=52, color=color, label=None)
+        ax2.scatter([(k - 1) * 0.5 for k in sorted(d)], [i] * len(d),
+                    marker="^", s=52, color=color)
+    ax2.set_yticks(range(len(names)), names)
+    ax2.set_ylim(-0.7, len(names) - 0.3)
+    from matplotlib.ticker import MultipleLocator
+    for a in (ax, ax2):
+        a.xaxis.set_minor_locator(MultipleLocator(0.5))  # 30分=1コマごとの補助目盛り
+        a.grid(which="minor", axis="x", color=GRID, lw=0.4, alpha=0.7)
+        a.tick_params(which="minor", length=2, colors=BASE)
+    ax2.set_xticks(range(0, 25, 2), [f"{h}" for h in range(0, 25, 2)])
+    ax2.set_xlim(-0.5, 24.2)
+    ax2.set_xlabel("hour (minor grid = 30min koma / v = buy, ^ = sell)", color=INK2, fontsize=9)
+    fig.tight_layout()
+    fig.savefig(dest, dpi=130, facecolor=SURFACE)
+    plt.close(fig)
 
 
 def write_anatomy(df: pd.DataFrame, ledger: pd.DataFrame, dest) -> str:
