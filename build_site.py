@@ -137,7 +137,8 @@ def league_panels(veg, qk):
                   ("予言2", "#1baf7a", "価格は±5%以内——恐怖による割引は現れない"),
                   ("予言3", "#eb6834", "洪水ハザード内外の相対価格差は地震後も不変"),
               ]),
-              empty("対象データ（2026Q3）の公表待ち — 予言は先に置いてある"),
+              empty("対象データ（2026Q3）の公表待ち — 予言は先に置いてある")
+              + fig("exp04_realestate/reports/re_chart.png", "判定対象データ: 熊本×東京の四半期単価"),
               empty("判定 2027年1月〜（不動産取引データの公表後）"),
               f"{GHB}/exp04_realestate/predictions.md"),
         panel("lg-sat",
