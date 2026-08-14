@@ -206,9 +206,71 @@ def plot_ledger(ledger: pd.DataFrame, dest: Path) -> None:
     plt.close(fig)
 
 
+
+# ---------------- 当日の解剖（勝敗の原因分析用の記録） ----------------
+
+def day_anatomy(df: pd.DataFrame, day: pd.Timestamp) -> str:
+    """採点済みの1日について、各機体の売買コマと因子の値を記録する。
+
+    ステートレス: picksファイル（提出時_meta込み）と価格データから毎回再生成。
+    """
+    today = df[df["date"] == day].set_index("koma")["sp"]
+    hist = df[df["date"] < day]
+    meta = picks_meta(day)
+
+    picks = {"clock": sim.strat_clock()}
+    pred = sim.pred_weekshape(hist, None, day)
+    if pred is not None:
+        picks["weekshape"] = sim.choose_split(pred)
+    picks.update(load_picks(day))
+    picks["oracle"] = sim.choose_split(today)
+
+    lines = [f"### {day.date()}（信号: {meta.get('signal', '?')}）", ""]
+    rad_f, dev, thr = meta.get("rad_forecast"), meta.get("dev"), meta.get("thr")
+    rad_a = (f"{sim.WEATHER_A.loc[day, 'rad']:.0f}"
+             if sim.WEATHER_A is not None and day in sim.WEATHER_A.index
+             else "未確定（実測は約5日遅れ）")
+    if rad_f is not None and dev is not None and thr is not None:
+        lines.append(f"- 因子: 日射予報 {rad_f:.0f} W/m2 / 実測 {rad_a} / "
+                     f"平年乖離 {dev:.0f}（閾値 {thr:.0f}）")
+    else:
+        lines.append("- 因子: picksの_meta欠落")
+    cheap = today.idxmin()
+    rich = today.idxmax()
+    lines.append(f"- 価格の形: 最安 {koma_to_range(int(cheap))} {today.min():.2f}円 / "
+                 f"最高 {koma_to_range(int(rich))} {today.max():.2f}円 / "
+                 f"山谷比 {today.max()/max(today.min(), 0.01):.1f}倍")
+    lines += ["", "| 機体 | 充電（買い） | 平均買値 | 放電（売り） | 平均売値 | 損益 |",
+              "|---|---|---|---|---|---|"]
+    for name, cd in picks.items():
+        if not cd:
+            continue
+        c, d = cd
+        buy, sell = today.loc[list(c)].mean(), today.loc[list(d)].mean()
+        pnl = sim.run_day(today, c, d)
+        lines.append(f"| {name} | {', '.join(koma_to_range(k) for k in sorted(c))} | {buy:.2f}円 "
+                     f"| {', '.join(koma_to_range(k) for k in sorted(d))} | {sell:.2f}円 | {pnl:+,.0f}円 |")
+    lines.append("")
+    return "\n".join(lines)
+
+
+def write_anatomy(df: pd.DataFrame, ledger: pd.DataFrame, dest) -> str:
+    """採点済み全日の解剖を新しい日から順に1ファイルへ（毎回全再生成）"""
+    lines = ["# 日次解剖 — 各機体の売買と因子の記録", "",
+             "勝敗の原因を考えるための記録。picks（提出時_meta）と価格データから毎回再生成される。", ""]
+    latest = ""
+    for day in sorted(ledger.index, reverse=True):
+        a = day_anatomy(df, day)
+        if not latest:
+            latest = a
+        lines.append(a)
+    dest.write_text("\n".join(lines), encoding="utf-8")
+    return latest
+
+
 # ---------------- レポート ----------------
 
-def report(ledger: pd.DataFrame, picks, meta, target) -> str:
+def report(ledger: pd.DataFrame, picks, meta, target, anatomy_latest: str = "") -> str:
     lines = [f"# JEPX仮想蓄電池 フォワード運用レポート",
              f"", f"{FREEZE_NOTE} / 生成: {datetime.now(JST):%Y-%m-%d %H:%M} JST", ""]
     if ledger.empty:
@@ -221,13 +283,9 @@ def report(ledger: pd.DataFrame, picks, meta, target) -> str:
         totals = ledger[names].sum()
         for n in names:
             lines.append(f"| {n} | {totals[n]:,.0f}円 | {totals[n]/days:.1f} | {totals[n]/totals['oracle']*100:.1f}% |")
-        last = ledger.iloc[-1]
-        lines += ["", f"## 直近日（{ledger.index[-1].date()}、信号: {last['signal']}）", "",
-                  "| 機体 | 損益 |", "|---|---|"]
-        for n in names:
-            if pd.notna(last[n]):
-                lines.append(f"| {n} | {last[n]:+,.0f}円 |")
-        lines.append("")
+        if anatomy_latest:
+            lines += ["## 直近日の解剖（全日分は [daily_anatomy.md](daily_anatomy.md)）", "",
+                      anatomy_latest]
     lines += [f"## 明日のpicks（受渡日 {target.date()}、信号: {meta['signal']}）", ""]
     if meta["dev"] is not None:
         lines.append(f"日射予報の平年乖離 {meta['dev']:.0f} W/m2（閾値 {meta['thr']:.0f}）")
@@ -257,11 +315,13 @@ if __name__ == "__main__":
     ledger = build_ledger(df)
     reports = HERE / "reports"  # gitで追跡する（コミット履歴＝改竄不能なフォワード記録）
     reports.mkdir(exist_ok=True)
+    anatomy_latest = ""
     if not ledger.empty:
         ledger.to_csv(reports / "forward_ledger.csv")
         plot_ledger(ledger, reports / "forward_pnl.png")
+        anatomy_latest = write_anatomy(df, ledger, reports / "daily_anatomy.md")
     target = next_delivery_day()
     picks, meta = make_picks(df, target)
-    md = report(ledger, picks, meta, target)
+    md = report(ledger, picks, meta, target, anatomy_latest)
     (reports / "forward_report.md").write_text(md, encoding="utf-8")
     print(md)
