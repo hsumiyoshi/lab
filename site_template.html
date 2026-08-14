@@ -5,7 +5,19 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light dark">
 <title>リーグ台帳</title>
-
+<!--
+  置換契約（build_site.py 用・3ステップ）:
+    step1: SAMPLEコメントブロック（開始タグ SAMPLE / 終了タグ /SAMPLE のHTMLコメント対）を
+           re.sub(r"<!ダッシュ2つSAMPLEダッシュ2つ>.*?<!ダッシュ2つ/SAMPLEダッシュ2つ>", "", t, flags=re.S) で全削除
+    step2: TPLコメントを展開: re.sub(r"<!ダッシュ2つTPL:(.*?)/TPLダッシュ2つ>", r"\1", t, flags=re.S)
+    step3: プレースホルダを実データで置換:
+           {{DAYS}}        フォワード日数（数値のみ）
+           {{UPDATED}}     最終更新 "YYYY-MM-DD HH:MM"（JST）
+           {{POWER_TABLE}} 順位表の<tr>群（td4列: 機体/累計/対oracle/直近日。class: dot/lead/pos/neg）
+           {{LATEST_LINE}} 直近日の1行テキスト
+           {{LEAGUES}}     <li><b>名前</b><span>状態</span></li> 群
+    画像: forward_pnl.png / latest_anatomy.png（相対パス固定）
+-->
 <style>
 :root{
   color-scheme:light dark;
@@ -189,7 +201,7 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
 <body>
 <div class="wrap">
 
-
+<!-- スプライト（フロー図アイコン。両バリアントから参照） -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <g id="ic-lock">
@@ -215,13 +227,13 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
   </defs>
 </svg>
 
-
+<!-- 1. これは何？ -->
 <header>
   <h1>リーグ台帳</h1>
   <p class="tagline">予測を先に固定し、現実に採点させる公開実験</p>
 
   <div class="flow" role="img" aria-label="仕組み: 凍結、提出、採点、台帳の4ステップ">
-    
+    <!-- 横フロー（PC） -->
     <svg class="flow-h" viewBox="0 0 640 122" xmlns="http://www.w3.org/2000/svg">
       <path class="f-line" d="M112,46 H196"/>
       <path class="f-arrow" d="M196,42 l7,4 -7,4"/>
@@ -249,7 +261,7 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
       <text class="f-name" x="560" y="96" text-anchor="middle">台帳</text>
       <text class="f-sub" x="560" y="113" text-anchor="middle">履歴が改竄不能な公証</text>
     </svg>
-    
+    <!-- 縦フロー（スマホ） -->
     <svg class="flow-v" viewBox="0 0 360 312" xmlns="http://www.w3.org/2000/svg">
       <path class="f-line" d="M40,64 V82"/>
       <path class="f-arrow" d="M36,82 l4,7 4,-7"/>
@@ -280,15 +292,15 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
   </div>
 </header>
 
-
+<!-- 2. 生きているか？ -->
 <div class="live">
   <span class="pulse" aria-hidden="true"></span>
-  <span>フォワード <b>2</b> 日目</span>
-  <span>最終更新 <b>2026-08-14 22:01</b> JST</span>
+  <span>フォワード <b><!--TPL:{{DAYS}}/TPL--><!--SAMPLE-->12<!--/SAMPLE--></b> 日目</span>
+  <span>最終更新 <b><!--TPL:{{UPDATED}}/TPL--><!--SAMPLE-->2026-08-14 13:31<!--/SAMPLE--></b> JST</span>
   <span>全採点は自動</span>
 </div>
 
-
+<!-- 3. 何の勝負？ -->
 <section>
   <div class="head">
     <p class="kick">何の勝負？</p>
@@ -305,7 +317,7 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
     </g>
     <text class="r-cap" x="342" y="17" text-anchor="end">蓄電池10kWh</text>
 
-    
+    <!-- 買スロット（安い4コマ・青） -->
     <g class="fu fu1">
       <rect class="r-buy" x="177.2" y="153" width="5.6" height="25"/>
       <rect class="r-buy" x="184.2" y="156" width="5.6" height="22"/>
@@ -315,7 +327,7 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
       <text class="r-lab" x="173" y="171">充電（買）</text>
     </g>
 
-    
+    <!-- 売スロット（高い4コマ・橙） -->
     <g class="fu fu2">
       <rect class="r-sell" x="254.2" y="74" width="5.6" height="104"/>
       <rect class="r-sell" x="261.2" y="60" width="5.6" height="118"/>
@@ -325,7 +337,7 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
       <text class="r-lab" x="266" y="44">放電（売）</text>
     </g>
 
-    
+    <!-- 差額＝損益 -->
     <g class="fu fu3">
       <path class="r-guide" d="M193.5,157 H228"/>
       <path class="r-guide" d="M228,58 H266"/>
@@ -335,7 +347,7 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
       <text class="r-lab2" x="221" y="110" text-anchor="end">差額＝損益</text>
     </g>
 
-    
+    <!-- 価格カーブ -->
     <path class="r-curve" pathLength="1" d="M18,118
       C40,126 48,130 58.5,128
       C75,125 108,94 126,92
@@ -347,7 +359,7 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
       C300,98 308,106 315,108
       C325,111 334,113 342,114"/>
 
-    
+    <!-- 軸 -->
     <path class="r-axis" d="M18,178 H342"/>
     <path class="r-axis" d="M18,178 v4 M180,178 v4 M342,178 v4"/>
     <text class="r-tick" x="18" y="196">0時</text>
@@ -381,7 +393,7 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
   </div>
 </section>
 
-
+<!-- 4. 成績は？ -->
 <section>
   <div class="head">
     <p class="kick">成績は？</p>
@@ -394,7 +406,12 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
         <tr><th>機体</th><th>累計</th><th>対oracle</th><th>直近日</th></tr>
       </thead>
       <tbody>
-        <tr class='lead'><td><span class='dot' style='background:#eda100'></span>clock</td><td>143円</td><td>91.4%</td><td><span class='pos'>+72</span></td></tr><tr><td><span class='dot' style='background:#2a78d6'></span>weekshape</td><td>117円</td><td>75.0%</td><td><span class='pos'>+67</span></td></tr><tr><td><span class='dot' style='background:#eb6834'></span>haruki_tenki</td><td>93円</td><td>59.8%</td><td><span class='pos'>+61</span></td></tr><tr><td><span class='dot' style='background:#1baf7a'></span>haruki_hybrid</td><td>93円</td><td>59.8%</td><td><span class='pos'>+61</span></td></tr><tr><td><span class='dot' style='background:#898781'></span>oracle</td><td>156円</td><td>100.0%</td><td><span class='pos'>+77</span></td></tr>
+        <!--TPL:{{POWER_TABLE}}/TPL--><!--SAMPLE-->
+        <tr class="lead"><td><span class="dot" style="background:#2a78d6"></span>weekshape</td><td>1,842円</td><td>61.2%</td><td><span class="pos">+214</span></td></tr>
+        <tr><td><span class="dot" style="background:#1baf7a"></span>haruki_hybrid</td><td>1,655円</td><td>55.0%</td><td><span class="pos">+180</span></td></tr>
+        <tr><td><span class="dot" style="background:#eda100"></span>clock</td><td>1,320円</td><td>43.9%</td><td><span class="neg">-45</span></td></tr>
+        <tr><td><span class="dot" style="background:#eb6834"></span>haruki_tenki</td><td>1,104円</td><td>36.7%</td><td><span class="neg">-102</span></td></tr>
+        <!--/SAMPLE-->
       </tbody>
     </table>
   </div>
@@ -402,29 +419,34 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
   <div class="fig"><img src="forward_pnl.png" alt="累積損益チャート（機体別）" loading="lazy"></div>
 </section>
 
-
+<!-- 5. 今日は？ -->
 <section>
   <div class="head">
     <p class="kick">今日は？</p>
     <h2>直近日の解剖</h2>
   </div>
-  <p class="latest">2026-08-15（信号「強」）: clock +72円 > weekshape +67円 > haruki_tenki +61円 > haruki_hybrid +61円（oracle上限 +77円）</p>
+  <p class="latest"><!--TPL:{{LATEST_LINE}}/TPL--><!--SAMPLE-->8/13（水）信号「calm」— 首位 weekshape +214円 / clock +112円 / oracle上限 +610円<!--/SAMPLE--></p>
   <div class="fig"><img src="latest_anatomy.png" alt="直近日の解剖チャート" loading="lazy"></div>
   <p class="figcap">上＝当日の30分値価格、下＝各機体が置いた売買の位置</p>
 </section>
 
-
+<!-- 6. 他のリーグは？ -->
 <section>
   <div class="head">
     <p class="kick">他のリーグは？</p>
     <h2>開催予定と長期予測</h2>
   </div>
   <ul class="tl">
-    <li><b>🥬 青果 — 出荷タイミング</b><span>初戦 8/17週（水曜14:00採点）</span></li><li><b>🌏 地震 — 余震件数予測</b><span>初戦 8/17週（月曜14:00採点）</span></li><li><b>🏠 不動産 — M7.1後の熊本（事前登録）</b><span>判定 2027年1月〜</span></li><li><b>🛰 衛星 — NDVI→出荷週（事前登録）</b><span>判定 2027年7月頃</span></li>
+    <!--TPL:{{LEAGUES}}/TPL--><!--SAMPLE-->
+    <li><b>🥬 青果 — 出荷タイミング</b><span>初戦 8/17週・水曜 14:00 採点</span></li>
+    <li><b>🌏 地震 — 余震件数予測</b><span>初戦 8/17週・月曜 14:00 採点</span></li>
+    <li><b>🏠 不動産 — M7.1後の熊本市場</b><span>事前登録済み・判定 2027年1月〜</span></li>
+    <li><b>🛰 衛星 — NDVIによる出荷週予測</b><span>事前登録済み・判定 2027年7月頃</span></li>
+    <!--/SAMPLE-->
   </ul>
 </section>
 
-
+<!-- 7. 信用できる？ -->
 <section>
   <div class="head">
     <p class="kick">信用できる？</p>
@@ -442,7 +464,7 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
   </div>
 </section>
 
-
+<!-- 8. フッター -->
 <footer>
   このページは毎日 13:30 JST に GitHub Actions が台帳から自動生成する。人の手は入らない。
 </footer>
