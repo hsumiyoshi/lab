@@ -251,6 +251,22 @@ def day_anatomy(df: pd.DataFrame, day: pd.Timestamp) -> str:
         lines.append(f"| {name} | {', '.join(koma_to_range(k) for k in sorted(c))} | {buy:.2f}円 "
                      f"| {', '.join(koma_to_range(k) for k in sorted(d))} | {sell:.2f}円 | {pnl:+,.0f}円 |")
     lines.append("")
+    # 48コマ価格グリッド（行=4時間ブロック、列=30分刻み。選択と価格の突き合わせ用）
+    lines.append("**48コマ価格（円/kWh。太字=最安/最高）**")
+    lines.append("")
+    kmin, kmax = int(today.idxmin()), int(today.idxmax())
+    lines.append("| 帯 | +0:00 | +0:30 | +1:00 | +1:30 | +2:00 | +2:30 | +3:00 | +3:30 |")
+    lines.append("|---|---|---|---|---|---|---|---|---|")
+    for row in range(6):
+        cells = [koma_to_range(row * 8 + 1) + "〜"]
+        for off in range(8):
+            k = row * 8 + off + 1
+            v = f"{today[k]:.2f}" if k in today.index else "—"
+            if k in (kmin, kmax):
+                v = f"**{v}**"
+            cells.append(v)
+        lines.append("| " + " | ".join(cells) + " |")
+    lines.append("")
     return "\n".join(lines)
 
 
