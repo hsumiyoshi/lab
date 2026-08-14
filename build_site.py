@@ -67,7 +67,7 @@ def leagues(veg, qk):
     """各リーグを電力と同格のトップレベルセクションとして生成（開幕前から領域を確保）"""
     GHB = "https://github.com/hsumiyoshi/lab/blob/main"
     def sec(emoji, name, cad, rule, body, link):
-        return (f"<section><div class='head'><h2>{emoji} {name}</h2>"
+        return (f"<section class='half'><div class='head'><h2>{emoji} {name}</h2>"
                 f"<span class='cad'>{cad}</span></div>"
                 f"<div class='meta'>{rule}</div>{body}"
                 f"<div class='links'><a href='{link}'>台帳</a></div></section>")

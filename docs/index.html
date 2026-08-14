@@ -192,6 +192,13 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
 .lemoji{font-size:1.05rem}
 .lrule{color:var(--ink2);font-size:.8rem;margin-top:3px;line-height:1.55}
 .lstat{color:var(--muted);font-size:.72rem;margin-top:5px}
+
+@media(min-width:900px){
+  .wrap{max-width:1160px;display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .wrap>*{grid-column:1/-1}
+  .wrap>section{margin-bottom:0}
+  .wrap>section.half{grid-column:span 1}
+}
 </style>
 </head>
 <body>
@@ -297,7 +304,7 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
 </div>
 
 
-<section>
+<section class="half">
   <div class="head">
     <p class="kick">何の勝負？</p>
     <h2>仮想蓄電池のデイリー売買ゲーム</h2>
@@ -390,7 +397,7 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
 </section>
 
 
-<section>
+<section class="half">
   <div class="head">
     <p class="kick">成績は？</p>
     <h2>順位表</h2>
@@ -422,7 +429,7 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
 </section>
 
 
-<section><div class='head'><h2>🥬 青果リーグ — 出荷タイミング</h2><span class='cad'>週次・水曜14:00採点</span></div><div class='meta'>東京市場の日次単価で「週のどの日に売るか」を競う。脳死ベンチ=毎営業日の均等出荷</div><div class='empty'><span class='pulse'></span>初戦 8/17週 — 結果はここに刻まれていく</div><div class='links'><a href='https://github.com/hsumiyoshi/lab/blob/main/exp02_vegetable/reports/veg_forward.md'>台帳</a></div></section><section><div class='head'><h2>🌏 地震リーグ — 余震件数予測</h2><span class='cad'>週次・月曜14:00採点</span></div><div class='meta'>大森則（余震の減衰法則）で熊本余震の週次件数を予測。脳死ベンチ=前週横ばい</div><div class='empty'><span class='pulse'></span>初戦 8/17週 — 結果はここに刻まれていく</div><div class='links'><a href='https://github.com/hsumiyoshi/lab/blob/main/exp05_quake/reports/quake_forward.md'>台帳</a></div></section><section><div class='head'><h2>🏠 不動産 — 熊本地震の事前登録予測</h2><span class='cad'>四半期・判定2027年1月〜</span></div><div class='meta'>M7.1直後に公証した3つの予言: 取引件数は減る／価格は±5%以内／ハザード内外差は不変</div><div class='empty'><span class='pulse'></span>対象データ（2026Q3）の公表を待機中 — 予言は先に置いてある</div><div class='links'><a href='https://github.com/hsumiyoshi/lab/blob/main/exp04_realestate/predictions.md'>台帳</a></div></section><section><div class='head'><h2>🛰 衛星 — キャベツ出荷週の事前登録予測</h2><span class='cad'>年次・判定2027年7月頃</span></div><div class='meta'>嬬恋のNDVI 0.65到達日から本格出荷週を当てる閾値ルールを公証済み</div><div class='empty'><span class='pulse'></span>2027年春の生育観測を待機中</div><div class='links'><a href='https://github.com/hsumiyoshi/lab/blob/main/exp07_satellite/predictions.md'>台帳</a></div></section>
+<section class='half'><div class='head'><h2>🥬 青果リーグ — 出荷タイミング</h2><span class='cad'>週次・水曜14:00採点</span></div><div class='meta'>東京市場の日次単価で「週のどの日に売るか」を競う。脳死ベンチ=毎営業日の均等出荷</div><div class='empty'><span class='pulse'></span>初戦 8/17週 — 結果はここに刻まれていく</div><div class='links'><a href='https://github.com/hsumiyoshi/lab/blob/main/exp02_vegetable/reports/veg_forward.md'>台帳</a></div></section><section class='half'><div class='head'><h2>🌏 地震リーグ — 余震件数予測</h2><span class='cad'>週次・月曜14:00採点</span></div><div class='meta'>大森則（余震の減衰法則）で熊本余震の週次件数を予測。脳死ベンチ=前週横ばい</div><div class='empty'><span class='pulse'></span>初戦 8/17週 — 結果はここに刻まれていく</div><div class='links'><a href='https://github.com/hsumiyoshi/lab/blob/main/exp05_quake/reports/quake_forward.md'>台帳</a></div></section><section class='half'><div class='head'><h2>🏠 不動産 — 熊本地震の事前登録予測</h2><span class='cad'>四半期・判定2027年1月〜</span></div><div class='meta'>M7.1直後に公証した3つの予言: 取引件数は減る／価格は±5%以内／ハザード内外差は不変</div><div class='empty'><span class='pulse'></span>対象データ（2026Q3）の公表を待機中 — 予言は先に置いてある</div><div class='links'><a href='https://github.com/hsumiyoshi/lab/blob/main/exp04_realestate/predictions.md'>台帳</a></div></section><section class='half'><div class='head'><h2>🛰 衛星 — キャベツ出荷週の事前登録予測</h2><span class='cad'>年次・判定2027年7月頃</span></div><div class='meta'>嬬恋のNDVI 0.65到達日から本格出荷週を当てる閾値ルールを公証済み</div><div class='empty'><span class='pulse'></span>2027年春の生育観測を待機中</div><div class='links'><a href='https://github.com/hsumiyoshi/lab/blob/main/exp07_satellite/predictions.md'>台帳</a></div></section>
 
 
 <section>
