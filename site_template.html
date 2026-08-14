@@ -211,11 +211,30 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
   .wrap>section{margin-bottom:0}
   .wrap>section.half{grid-column:span 1}
 }
+
+.wrap{max-width:1160px}
+.tl2{list-style:none;margin-top:8px}
+.tl2 li{display:flex;gap:12px;padding:7px 0;border-bottom:1px solid var(--line);font-size:.84rem}
+.tl2 li:last-child{border-bottom:none}
+.tl2 b{min-width:110px;color:var(--ink2);font-weight:600;font-variant-numeric:tabular-nums}
+.app{display:grid;grid-template-columns:210px 1fr;gap:14px;align-items:start;margin-top:4px}
+.lnav{position:sticky;top:14px;display:flex;flex-direction:column;gap:7px}
+.lnav a{display:flex;gap:9px;align-items:center;padding:10px 13px;border:1px solid var(--line);
+border-radius:11px;color:var(--ink);text-decoration:none;font-size:.86rem;background:var(--card);
+transition:border-color .2s}
+.lnav a:hover{border-color:var(--accent)}
+.lnav a.on{border-color:var(--accent);font-weight:700}
+.lnav .sub{margin-left:auto;font-size:.66rem;color:var(--muted)}
+.panel{display:none}
+.panel.on{display:block}
+.panel>section{margin-bottom:14px}
+@media(max-width:840px){.app{grid-template-columns:1fr}
+.lnav{position:static;flex-direction:row;overflow-x:auto;padding-bottom:4px}
+.lnav a{white-space:nowrap}}
 </style>
 </head>
 <body>
 <div class="wrap">
-
 <!-- スプライト（フロー図アイコン。両バリアントから参照） -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
@@ -315,8 +334,40 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
   <span>全採点は自動</span>
 </div>
 
+<!-- 7. 信用できる？ -->
+<section>
+  <div class="head">
+    <p class="kick">信用できる？</p>
+    <h2>公証の仕組み</h2>
+  </div>
+  <ol class="notary">
+    <li>picksは市場価格の公表<b>前</b>にコミットされる——後出しは不可能</li>
+    <li>gitのコミット履歴が、改竄不能なタイムスタンプ＝公証になる</li>
+    <li>負けた記録も削除しない。全履歴が誰でも検証できる</li>
+  </ol>
+  <div class="links">
+    <a href="https://github.com/hsumiyoshi/lab">GitHub（コードと台帳）</a>
+    <a href="https://github.com/hsumiyoshi/lab/blob/main/CHANGELOG.md">工事ログ</a>
+    <a href="https://github.com/hsumiyoshi/lab/tree/main/exp01_jepx/picks">picksの現物</a>
+  </div>
+</section>
+
+<!-- 予定タイムライン -->
+<section><div class="head"><h2>🗓 これからの予定</h2></div>
+<ul class="tl2"><!--TPL:{{TIMELINE}}/TPL--><!--SAMPLE--><li><b>毎日 13:30</b><span>⚡ 電力リーグ採点</span></li><!--/SAMPLE--></ul>
+</section>
+<div class="app">
+<nav class="lnav">
+<a href="#lg-power" class="on">⚡ 電力<span class="sub">毎日</span></a>
+<a href="#lg-veg">🥬 青果<span class="sub">週次</span></a>
+<a href="#lg-quake">🌏 地震<span class="sub">週次</span></a>
+<a href="#lg-re">🏠 不動産<span class="sub">四半期</span></a>
+<a href="#lg-sat">🛰 衛星<span class="sub">年次</span></a>
+</nav>
+<div class="panels">
+<article id="lg-power" class="panel on">
 <!-- 3. 何の勝負？ -->
-<section class="half">
+<section>
   <div class="head">
     <p class="kick">何の勝負？</p>
     <h2>仮想蓄電池のデイリー売買ゲーム</h2>
@@ -409,7 +460,7 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
 </section>
 
 <!-- 4. 成績は？ -->
-<section class="half">
+<section>
   <div class="head">
     <p class="kick">成績は？</p>
     <h2>順位表</h2>
@@ -445,32 +496,26 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
   <p class="figcap">上＝当日の30分値価格、下＝各機体が置いた売買の位置</p>
 </section>
 
-<!-- 6. 他のリーグは？ -->
-<!--TPL:{{LEAGUES}}/TPL--><!--SAMPLE--><section><div class="head"><h2>🥬 青果リーグ — 出荷タイミング</h2><span class="cad">週次・水曜14:00採点</span></div><div class="meta">東京市場の日次単価で「週のどの日に売るか」を競う</div><div class="empty"><span class="pulse"></span>初戦 8/17週 — 結果はここに刻まれていく</div></section><!--/SAMPLE-->
-
-<!-- 7. 信用できる？ -->
-<section>
-  <div class="head">
-    <p class="kick">信用できる？</p>
-    <h2>公証の仕組み</h2>
-  </div>
-  <ol class="notary">
-    <li>picksは市場価格の公表<b>前</b>にコミットされる——後出しは不可能</li>
-    <li>gitのコミット履歴が、改竄不能なタイムスタンプ＝公証になる</li>
-    <li>負けた記録も削除しない。全履歴が誰でも検証できる</li>
-  </ol>
-  <div class="links">
-    <a href="https://github.com/hsumiyoshi/lab">GitHub（コードと台帳）</a>
-    <a href="https://github.com/hsumiyoshi/lab/blob/main/CHANGELOG.md">工事ログ</a>
-    <a href="https://github.com/hsumiyoshi/lab/tree/main/exp01_jepx/picks">picksの現物</a>
-  </div>
-</section>
-
+</article>
+<!--TPL:{{LEAGUE_PANELS}}/TPL--><!--SAMPLE--><article id="lg-veg" class="panel"><section><div class="head"><h2>🥬 青果リーグ</h2></div><div class="empty"><span class="pulse"></span>初戦 8/17週</div></section></article><!--/SAMPLE-->
+</div></div>
 <!-- 8. フッター -->
 <footer>
   このページは毎日 13:30 JST に GitHub Actions が台帳から自動生成する。人の手は入らない。
 </footer>
 
 </div>
+<script>
+(function(){
+var ids=["lg-power","lg-veg","lg-quake","lg-re","lg-sat"];
+function show(id){
+  document.querySelectorAll(".panel").forEach(function(p){p.classList.toggle("on",p.id===id)});
+  document.querySelectorAll(".lnav a").forEach(function(a){a.classList.toggle("on",a.getAttribute("href")==="#"+id)});
+}
+function init(){var h=location.hash.slice(1);show(ids.indexOf(h)>=0?h:"lg-power");}
+window.addEventListener("hashchange",init);init();
+})();
+</script>
+<noscript><style>.panel{display:block}</style></noscript>
 </body>
 </html>

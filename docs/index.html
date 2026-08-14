@@ -199,11 +199,30 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
   .wrap>section{margin-bottom:0}
   .wrap>section.half{grid-column:span 1}
 }
+
+.wrap{max-width:1160px}
+.tl2{list-style:none;margin-top:8px}
+.tl2 li{display:flex;gap:12px;padding:7px 0;border-bottom:1px solid var(--line);font-size:.84rem}
+.tl2 li:last-child{border-bottom:none}
+.tl2 b{min-width:110px;color:var(--ink2);font-weight:600;font-variant-numeric:tabular-nums}
+.app{display:grid;grid-template-columns:210px 1fr;gap:14px;align-items:start;margin-top:4px}
+.lnav{position:sticky;top:14px;display:flex;flex-direction:column;gap:7px}
+.lnav a{display:flex;gap:9px;align-items:center;padding:10px 13px;border:1px solid var(--line);
+border-radius:11px;color:var(--ink);text-decoration:none;font-size:.86rem;background:var(--card);
+transition:border-color .2s}
+.lnav a:hover{border-color:var(--accent)}
+.lnav a.on{border-color:var(--accent);font-weight:700}
+.lnav .sub{margin-left:auto;font-size:.66rem;color:var(--muted)}
+.panel{display:none}
+.panel.on{display:block}
+.panel>section{margin-bottom:14px}
+@media(max-width:840px){.app{grid-template-columns:1fr}
+.lnav{position:static;flex-direction:row;overflow-x:auto;padding-bottom:4px}
+.lnav a{white-space:nowrap}}
 </style>
 </head>
 <body>
 <div class="wrap">
-
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
@@ -299,12 +318,44 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
 <div class="live">
   <span class="pulse" aria-hidden="true"></span>
   <span>フォワード <b>2</b> 日目</span>
-  <span>最終更新 <b>2026-08-14 23:18</b> JST</span>
+  <span>最終更新 <b>2026-08-14 23:25</b> JST</span>
   <span>全採点は自動</span>
 </div>
 
 
-<section class="half">
+<section>
+  <div class="head">
+    <p class="kick">信用できる？</p>
+    <h2>公証の仕組み</h2>
+  </div>
+  <ol class="notary">
+    <li>picksは市場価格の公表<b>前</b>にコミットされる——後出しは不可能</li>
+    <li>gitのコミット履歴が、改竄不能なタイムスタンプ＝公証になる</li>
+    <li>負けた記録も削除しない。全履歴が誰でも検証できる</li>
+  </ol>
+  <div class="links">
+    <a href="https://github.com/hsumiyoshi/lab">GitHub（コードと台帳）</a>
+    <a href="https://github.com/hsumiyoshi/lab/blob/main/CHANGELOG.md">工事ログ</a>
+    <a href="https://github.com/hsumiyoshi/lab/tree/main/exp01_jepx/picks">picksの現物</a>
+  </div>
+</section>
+
+
+<section><div class="head"><h2>🗓 これからの予定</h2></div>
+<ul class="tl2"><li><b>毎日 13:30</b><span>⚡ 電力リーグ採点（picksは毎朝7:00に自動提出）</span></li><li><b>8/17 (月) 14:00</b><span>🌏 地震リーグ初戦の採点</span></li><li><b>8/19 (水) 14:00</b><span>🥬 青果リーグ初戦の採点</span></li><li><b>2027年1月〜</b><span>🏠 不動産の事前登録予測を判定</span></li><li><b>2027年6月</b><span>🛰 衛星の出荷週予測をコミット（7月に判定）</span></li></ul>
+</section>
+<div class="app">
+<nav class="lnav">
+<a href="#lg-power" class="on">⚡ 電力<span class="sub">毎日</span></a>
+<a href="#lg-veg">🥬 青果<span class="sub">週次</span></a>
+<a href="#lg-quake">🌏 地震<span class="sub">週次</span></a>
+<a href="#lg-re">🏠 不動産<span class="sub">四半期</span></a>
+<a href="#lg-sat">🛰 衛星<span class="sub">年次</span></a>
+</nav>
+<div class="panels">
+<article id="lg-power" class="panel on">
+
+<section>
   <div class="head">
     <p class="kick">何の勝負？</p>
     <h2>仮想蓄電池のデイリー売買ゲーム</h2>
@@ -397,7 +448,7 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
 </section>
 
 
-<section class="half">
+<section>
   <div class="head">
     <p class="kick">成績は？</p>
     <h2>順位表</h2>
@@ -428,32 +479,26 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
   <p class="figcap">上＝当日の30分値価格、下＝各機体が置いた売買の位置</p>
 </section>
 
-
-<section class='half'><div class='head'><h2>🥬 青果リーグ — 出荷タイミング</h2><span class='cad'>週次・水曜14:00採点</span></div><div class='meta'>東京市場の日次単価で「週のどの日に売るか」を競う。脳死ベンチ=毎営業日の均等出荷</div><div class='empty'><span class='pulse'></span>初戦 8/17週 — 結果はここに刻まれていく</div><div class='links'><a href='https://github.com/hsumiyoshi/lab/blob/main/exp02_vegetable/reports/veg_forward.md'>台帳</a></div></section><section class='half'><div class='head'><h2>🌏 地震リーグ — 余震件数予測</h2><span class='cad'>週次・月曜14:00採点</span></div><div class='meta'>大森則（余震の減衰法則）で熊本余震の週次件数を予測。脳死ベンチ=前週横ばい</div><div class='empty'><span class='pulse'></span>初戦 8/17週 — 結果はここに刻まれていく</div><div class='links'><a href='https://github.com/hsumiyoshi/lab/blob/main/exp05_quake/reports/quake_forward.md'>台帳</a></div></section><section class='half'><div class='head'><h2>🏠 不動産 — 熊本地震の事前登録予測</h2><span class='cad'>四半期・判定2027年1月〜</span></div><div class='meta'>M7.1直後に公証した3つの予言: 取引件数は減る／価格は±5%以内／ハザード内外差は不変</div><div class='empty'><span class='pulse'></span>対象データ（2026Q3）の公表を待機中 — 予言は先に置いてある</div><div class='links'><a href='https://github.com/hsumiyoshi/lab/blob/main/exp04_realestate/predictions.md'>台帳</a></div></section><section class='half'><div class='head'><h2>🛰 衛星 — キャベツ出荷週の事前登録予測</h2><span class='cad'>年次・判定2027年7月頃</span></div><div class='meta'>嬬恋のNDVI 0.65到達日から本格出荷週を当てる閾値ルールを公証済み</div><div class='empty'><span class='pulse'></span>2027年春の生育観測を待機中</div><div class='links'><a href='https://github.com/hsumiyoshi/lab/blob/main/exp07_satellite/predictions.md'>台帳</a></div></section>
-
-
-<section>
-  <div class="head">
-    <p class="kick">信用できる？</p>
-    <h2>公証の仕組み</h2>
-  </div>
-  <ol class="notary">
-    <li>picksは市場価格の公表<b>前</b>にコミットされる——後出しは不可能</li>
-    <li>gitのコミット履歴が、改竄不能なタイムスタンプ＝公証になる</li>
-    <li>負けた記録も削除しない。全履歴が誰でも検証できる</li>
-  </ol>
-  <div class="links">
-    <a href="https://github.com/hsumiyoshi/lab">GitHub（コードと台帳）</a>
-    <a href="https://github.com/hsumiyoshi/lab/blob/main/CHANGELOG.md">工事ログ</a>
-    <a href="https://github.com/hsumiyoshi/lab/tree/main/exp01_jepx/picks">picksの現物</a>
-  </div>
-</section>
-
+</article>
+<article id='lg-veg' class='panel'><section><div class='head'><h2>📖 ルール</h2></div><div class='meta'>仮想の出荷者として、東京市場の日次単価で「週のどの日に売るか」を毎週選ぶ。oracle=週内最高値の日、脳死ベンチ=毎営業日の均等出荷。品目はきゅうり・トマト・キャベツ・レタス</div></section><section><div class='head'><h2>🏆 成績表</h2></div><div class='empty'><span class='pulse'></span>初戦 8/17週 — 水曜14:00に採点結果がここに載る</div></section><section><div class='head'><h2>📍 当日 / 次のイベント</h2></div><div class='empty'><span class='pulse'></span>次回採点: 水曜 14:00</div></section><div class='links'><a href='https://github.com/hsumiyoshi/lab/blob/main/exp02_vegetable/reports/veg_forward.md'>台帳（生データ）</a></div></article><article id='lg-quake' class='panel'><section><div class='head'><h2>📖 ルール</h2></div><div class='meta'>大森則（余震が時間のべき乗で減る経験則）をフィットし、熊本余震の翌週件数を予測。脳死ベンチ=前週横ばい。採点は対数誤差</div></section><section><div class='head'><h2>🏆 成績表</h2></div><div class='empty'><span class='pulse'></span>初戦 8/17週 — 月曜14:00に採点結果がここに載る</div></section><section><div class='head'><h2>📍 当日 / 次のイベント</h2></div><div class='empty'><span class='pulse'></span>次回採点: 月曜 14:00</div></section><div class='links'><a href='https://github.com/hsumiyoshi/lab/blob/main/exp05_quake/reports/quake_forward.md'>台帳（生データ）</a></div></article><article id='lg-re' class='panel'><section><div class='head'><h2>📖 ルール</h2></div><div class='meta'>2026-07-28 熊本地震（M7.1）の直後に、影響の予測3つを公証: ①取引件数は減る ②価格は±5%以内（恐怖の割引は出ない）③洪水ハザード内外の相対差は不変</div></section><section><div class='head'><h2>🏆 成績表</h2></div><div class='empty'><span class='pulse'></span>対象データ（2026Q3）の公表待ち — 予言は先に置いてある</div></section><section><div class='head'><h2>📍 当日 / 次のイベント</h2></div><div class='empty'><span class='pulse'></span>判定 2027年1月〜（不動産取引データの公表後）</div></section><div class='links'><a href='https://github.com/hsumiyoshi/lab/blob/main/exp04_realestate/predictions.md'>台帳（生データ）</a></div></article><article id='lg-sat' class='panel'><section><div class='head'><h2>📖 ルール</h2></div><div class='meta'>Sentinel-2衛星で嬬恋のキャベツ畑の緑（NDVI）を観測し、「0.65到達日が6月上旬より遅ければ本格出荷はW26、早ければW25」という閾値ルールを公証済み</div></section><section><div class='head'><h2>🏆 成績表</h2></div><div class='empty'><span class='pulse'></span>2027年春の生育観測から — 予測のコミット期限は2027-06-01</div></section><section><div class='head'><h2>📍 当日 / 次のイベント</h2></div><div class='empty'><span class='pulse'></span>判定 2027年7月頃（東京市場の入荷実績で）</div></section><div class='links'><a href='https://github.com/hsumiyoshi/lab/blob/main/exp07_satellite/predictions.md'>台帳（生データ）</a></div></article>
+</div></div>
 
 <footer>
   このページは毎日 13:30 JST に GitHub Actions が台帳から自動生成する。人の手は入らない。
 </footer>
 
 </div>
+<script>
+(function(){
+var ids=["lg-power","lg-veg","lg-quake","lg-re","lg-sat"];
+function show(id){
+  document.querySelectorAll(".panel").forEach(function(p){p.classList.toggle("on",p.id===id)});
+  document.querySelectorAll(".lnav a").forEach(function(a){a.classList.toggle("on",a.getAttribute("href")==="#"+id)});
+}
+function init(){var h=location.hash.slice(1);show(ids.indexOf(h)>=0?h:"lg-power");}
+window.addEventListener("hashchange",init);init();
+})();
+</script>
+<noscript><style>.panel{display:block}</style></noscript>
 </body>
 </html>
