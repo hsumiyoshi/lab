@@ -171,7 +171,7 @@ def make_picks(df: pd.DataFrame, target: pd.Timestamp) -> dict:
 
 # 機体→色の固定割当（dataviz検証済みパレット。順序・対応は変更しない）
 COLORS = {"weekshape": "#2a78d6", "tenki": "#eb6834",
-          "hybrid": "#1baf7a", "clock": "#eda100", "tenki_v2": "#9b6bd3"}
+          "hybrid": "#1baf7a", "clock": "#eda100", "tenki_v2": "#9b6bd3", "tenki_v3": "#c44e52"}
 INK, INK2, MUTED = "#0b0b0b", "#52514e", "#898781"
 GRID, BASE, SURFACE = "#e1e0d9", "#c3c2b7", "#fcfcfb"
 
@@ -278,7 +278,7 @@ def day_anatomy(df: pd.DataFrame, day: pd.Timestamp) -> str:
 def anatomy_chart(today, picks, dest) -> None:
     """価格カーブ＋各機体の売買位置（▽=買い △=売り）を1枚に"""
     import matplotlib.pyplot as plt
-    names = [n for n in ("clock", "weekshape", "tenki", "hybrid", "tenki_v2", "oracle")
+    names = [n for n in ("clock", "weekshape", "tenki", "hybrid", "tenki_v2", "tenki_v3", "oracle")
              if n in picks and picks[n]]
     fig, (ax, ax2) = plt.subplots(2, 1, figsize=(10, 6), sharex=True,
                                   height_ratios=[3, 1.6])

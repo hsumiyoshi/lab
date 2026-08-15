@@ -18,7 +18,7 @@ DOCS = ROOT / "docs"
 JST = ZoneInfo("Asia/Tokyo")
 
 DOT = {"weekshape": "#2a78d6", "tenki": "#eb6834",
-       "hybrid": "#1baf7a", "clock": "#eda100", "tenki_v2": "#9b6bd3", "oracle": "#898781"}
+       "hybrid": "#1baf7a", "clock": "#eda100", "tenki_v2": "#9b6bd3", "tenki_v3": "#c44e52", "oracle": "#898781"}
 
 
 def read_power():
