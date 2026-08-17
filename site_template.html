@@ -13,7 +13,7 @@
     step3: プレースホルダを実データで置換:
            {{DAYS}}        フォワード日数（数値のみ）
            {{UPDATED}}     最終更新 "YYYY-MM-DD HH:MM"（JST）
-           {{POWER_TABLE}} 順位表の<tr>群（td4列: 機体/累計/対oracle/直近日。class: dot/lead/pos/neg）
+           {{POWER_TABLE}} 順位表の<tr>群（td5列: 機体/累計/BT率/対oracle/直近日。class: dot/lead/pos/neg）
            {{LATEST_LINE}} 直近日の1行テキスト
            {{LEAGUES}}     <li><b>名前</b><span>状態</span></li> 群
     画像: forward_pnl.png / latest_anatomy.png（相対パス固定）
@@ -477,19 +477,19 @@ transition:border-color .2s}
   <div class="tblwrap">
     <table>
       <thead>
-        <tr><th>機体</th><th>累計</th><th>対oracle</th><th>直近日</th></tr>
+        <tr><th>機体</th><th>累計</th><th>BT率</th><th>対oracle</th><th>直近日</th></tr>
       </thead>
       <tbody>
         <!--TPL:{{POWER_TABLE}}/TPL--><!--SAMPLE-->
-        <tr class="lead"><td><span class="dot" style="background:#2a78d6"></span>weekshape</td><td>1,842円</td><td>61.2%</td><td><span class="pos">+214</span></td></tr>
-        <tr><td><span class="dot" style="background:#1baf7a"></span>hybrid</td><td>1,655円</td><td>55.0%</td><td><span class="pos">+180</span></td></tr>
-        <tr><td><span class="dot" style="background:#eda100"></span>clock</td><td>1,320円</td><td>43.9%</td><td><span class="neg">-45</span></td></tr>
-        <tr><td><span class="dot" style="background:#eb6834"></span>tenki</td><td>1,104円</td><td>36.7%</td><td><span class="neg">-102</span></td></tr>
+        <tr class="lead"><td><span class="dot" style="background:#2a78d6"></span>weekshape</td><td>1,842円</td><td>—</td><td>61.2%</td><td><span class="pos">+214</span></td></tr>
+        <tr><td><span class="dot" style="background:#1baf7a"></span>hybrid</td><td>1,655円</td><td>—</td><td>55.0%</td><td><span class="pos">+180</span></td></tr>
+        <tr><td><span class="dot" style="background:#eda100"></span>clock</td><td>1,320円</td><td>—</td><td>43.9%</td><td><span class="neg">-45</span></td></tr>
+        <tr><td><span class="dot" style="background:#eb6834"></span>tenki</td><td>1,104円</td><td>—</td><td>36.7%</td><td><span class="neg">-102</span></td></tr>
         <!--/SAMPLE-->
       </tbody>
     </table>
   </div>
-  <p class="tnote">対oracle＝答えを見た理論上限（oracle）に対する到達率</p>
+  <p class="tnote">対oracle＝答えを見た理論上限（oracle）に対する到達率（事前コミット済みのフォワード日のみで計算）。BT率＝累計のうち参戦前バックテスト補完の日の割合——事前コミットではない分、割り引いて読む</p>
   <div class="fig"><img src="forward_pnl.png" alt="累積損益チャート（機体別）" loading="lazy"></div>
 </section>
 

@@ -59,11 +59,11 @@ def power_table(p):
         cls = " class='lead'" if n == leader else ""
         delta = f"<span class='{'pos' if last >= 0 else 'neg'}'>{last:+,.0f}</span>"
         bt = p["btdays"].get(n, 0)
-        btnote = (f" <small style='opacity:.6'>BT{bt / p['played'][n] * 100:.0f}%</small>"
-                  if bt else "")
+        btcell = f"{bt / p['played'][n] * 100:.0f}%" if bt else "—"
         rows.append(
             f"<tr{cls}><td><span class='dot' style='background:{DOT.get(n, '#888')}'></span>{n}</td>"
-            f"<td>{v:,.0f}円{btnote}</td><td>{(100.0 if n == 'oracle' else pct[n]):.1f}%</td><td>{delta}</td></tr>")
+            f"<td>{v:,.0f}円</td><td>{btcell}</td>"
+            f"<td>{(100.0 if n == 'oracle' else pct[n]):.1f}%</td><td>{delta}</td></tr>")
     return "".join(rows)
 
 
