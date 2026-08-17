@@ -30,7 +30,10 @@ def read_power():
         return None
     names = [c for c in rows[0] if c not in ("date", "signal")]
     totals = {n: sum(float(r[n]) for r in rows if r[n]) for n in names}
-    return {"days": len(rows), "totals": totals, "last": rows[-1]}
+    # 対oracleは出場日ベース: 欠場日を除いたoracle合計（issue #12）
+    orc_played = {n: sum(float(r["oracle"]) for r in rows if r[n]) for n in names}
+    return {"days": len(rows), "totals": totals, "orc_played": orc_played,
+            "last": rows[-1]}
 
 
 def read_csv(path):
@@ -40,17 +43,17 @@ def read_csv(path):
 
 def power_table(p):
     strat = {n: v for n, v in p["totals"].items() if n != "oracle"}
-    orc = p["totals"].get("oracle", 0) or 1
-    leader = max(strat, key=strat.get)
+    pct = {n: v / (p["orc_played"].get(n) or 1) * 100 for n, v in strat.items()}
+    leader = max(pct, key=pct.get)
     rows = []
-    order = sorted(strat.items(), key=lambda kv: -kv[1]) + [("oracle", p["totals"]["oracle"])]
+    order = sorted(strat.items(), key=lambda kv: -pct[kv[0]]) + [("oracle", p["totals"]["oracle"])]
     for n, v in order:
         last = float(p["last"][n]) if p["last"][n] else 0.0
         cls = " class='lead'" if n == leader else ""
         delta = f"<span class='{'pos' if last >= 0 else 'neg'}'>{last:+,.0f}</span>"
         rows.append(
             f"<tr{cls}><td><span class='dot' style='background:{DOT.get(n, '#888')}'></span>{n}</td>"
-            f"<td>{v:,.0f}円</td><td>{v / orc * 100:.1f}%</td><td>{delta}</td></tr>")
+            f"<td>{v:,.0f}円</td><td>{(100.0 if n == 'oracle' else pct[n]):.1f}%</td><td>{delta}</td></tr>")
     return "".join(rows)
 
 

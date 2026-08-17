@@ -12,6 +12,7 @@ oracle（当日実価格を知る神様）との差分が「予測の市場価�
 約定価格は後から判明する——oracleはその意味で到達不能な上限。
 """
 
+import itertools
 from pathlib import Path
 
 import matplotlib
@@ -61,8 +62,12 @@ def run_day(prices: pd.Series, charge: set, discharge: set) -> float:
 def choose_split(pred: pd.Series):
     """予測カーブから「充電コマ全部→放電コマ全部」の順序を守る最良の組を選ぶ。
 
-    境界tを走査し、t以前の最安N_KOMAで充電・t以降の最高N_KOMAで放電、
-    予測価格上の粗利が最大の組を返す（1サイクル制約下の分割探索）。
+    境界tを走査し、t以前の最安N_KOMAで充電（4コマ充電では容量制約が
+    効かないため最安選択が厳密）。放電はt以降の価格上位8候補の組合せを
+    実ディスパッチ（run_day）で評価して最良を採る。
+    旧実装は放電4コマを等量とみなす近似（est=Σ価格）だったが、SoC端数で
+    時間順最後の放電コマだけ約2.0kWhに減量されるため、端数が高値コマに
+    落ちる日には真の上限を下回った（issue #13、2026-08-18受渡で顕在化）。
     """
     best, best_pair = -1e18, None
     komas = sorted(pred.index)
@@ -71,11 +76,12 @@ def choose_split(pred: pd.Series):
         after = pred[pred.index >= t]
         if len(before) < N_KOMA or len(after) < N_KOMA:
             continue
-        c = before.nsmallest(N_KOMA)
-        d = after.nlargest(N_KOMA)
-        est = d.sum() * EFF * EFF - c.sum()  # 予測上の粗利（比例項のみ）
-        if est > best:
-            best, best_pair = est, (set(c.index), set(d.index))
+        c = set(before.nsmallest(N_KOMA).index)
+        cand = after.nlargest(min(8, len(after))).index
+        for combo in itertools.combinations(cand, N_KOMA):
+            v = run_day(pred, c, set(combo))
+            if v > best:
+                best, best_pair = v, (c, set(combo))
     return best_pair or (set(), set())
 
 

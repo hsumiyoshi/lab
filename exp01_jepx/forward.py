@@ -343,12 +343,41 @@ def report(ledger: pd.DataFrame, picks, meta, target, anatomy_latest: str = "") 
         lines += ["## 累計成績", "", "（フォワード対象日の価格はまだ公表されていない。初日の答え合わせを待て）", ""]
     else:
         days = len(ledger)
-        names = [c for c in ledger.columns if c not in ("signal", "oracle")] + ["oracle"]
+        strat_names = [c for c in ledger.columns if c not in ("signal", "oracle")]
+        # 対oracleは「出場日ベース」: 各機体が出場した日のoracle合計で割る。
+        # 円の絶対額は当日の値幅（レバレッジ）に依存し時変するため、
+        # 在籍時期が違う機体を円/日で比べると不公平（Haruki指摘 2026-08-17, issue #12）
+        stats = {}
+        for n in strat_names:
+            mask = ledger[n].notna()
+            played = int(mask.sum())
+            tot = float(ledger.loc[mask, n].sum())
+            orc = float(ledger.loc[mask, "oracle"].sum())
+            stats[n] = (played, tot, tot / played if played else 0.0,
+                        tot / orc * 100 if orc else 0.0)
+        order = sorted(strat_names, key=lambda n: -stats[n][3])
         lines += ["![cumulative P&L](forward_pnl.png)", "",
-                  f"## 累計成績（{days}日）", "", "| 機体 | 累計損益 | 円/日 | 対oracle |", "|---|---|---|---|"]
-        totals = ledger[names].sum()
-        for n in names:
-            lines.append(f"| {n} | {totals[n]:,.0f}円 | {totals[n]/days:.1f} | {totals[n]/totals['oracle']*100:.1f}% |")
+                  f"## 累計成績（リーグ{days}日目）", "",
+                  "| 機体 | 出場 | 累計損益 | 円/出場日 | 対oracle（出場日） |",
+                  "|---|---|---|---|---|"]
+        for n in order:
+            p_, t_, r_, pct = stats[n]
+            lines.append(f"| {n} | {p_}日 | {t_:,.0f}円 | {r_:.1f} | {pct:.1f}% |")
+        o_tot = float(ledger["oracle"].sum())
+        lines.append(f"| oracle | {days}日 | {o_tot:,.0f}円 | {o_tot/days:.1f} | 100.0% |")
+        lines.append("")
+        lines.append("対oracle（出場日）＝出場した日のoracle合計に対する比率。"
+                     "その日に市場に存在した値幅で正規化するため、参戦時期が違う機体を比べられる（円の絶対額は比べられない）")
+        common = ledger[strat_names].notna().all(axis=1)
+        cdays = int(common.sum())
+        if cdays:
+            lines += ["", f"## 直接対決（全機体出場日 {cdays}日のみ）", "",
+                      "| 機体 | 累計損益 | 対oracle |", "|---|---|---|"]
+            corc = float(ledger.loc[common, "oracle"].sum())
+            for n, t_ in sorted(((n, float(ledger.loc[common, n].sum())) for n in strat_names),
+                                key=lambda kv: -kv[1]):
+                lines.append(f"| {n} | {t_:,.0f}円 | {t_/corc*100:.1f}% |")
+            lines.append(f"| oracle | {corc:,.0f}円 | 100.0% |")
         if anatomy_latest:
             lines += ["## 直近日の解剖（全日分は [daily_anatomy.md](daily_anatomy.md)）", "",
                       anatomy_latest]
