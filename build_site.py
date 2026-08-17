@@ -51,9 +51,9 @@ def read_csv(path):
 def power_table(p):
     strat = {n: v for n, v in p["totals"].items() if n != "oracle"}
     pct = {n: p["fwd_tot"][n] / (p["orc_fwd"].get(n) or 1) * 100 for n in strat}
-    leader = max(strat, key=strat.get)  # 金額で勝負（BT補完込み・Haruki決定）
+    leader = max(pct, key=pct.get)  # 並びと首位は対oracle（Fwd）＝実力順（Haruki指定）
     rows = []
-    order = sorted(strat.items(), key=lambda kv: -kv[1]) + [("oracle", p["totals"]["oracle"])]
+    order = sorted(strat.items(), key=lambda kv: -pct[kv[0]]) + [("oracle", p["totals"]["oracle"])]
     for n, v in order:
         last = float(p["last"][n]) if p["last"][n] else 0.0
         cls = " class='lead'" if n == leader else ""

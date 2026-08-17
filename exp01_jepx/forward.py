@@ -398,7 +398,7 @@ def report(ledger: pd.DataFrame, picks, meta, target, anatomy_latest: str = "") 
             stats[n] = (played, btdays, tot,
                         ftot / orc * 100 if orc else 0.0,
                         (ftot - clk) / orc * 100 if orc else 0.0)
-        order = sorted(strat_names, key=lambda n: -stats[n][2])  # 金額で勝負（Haruki決定）
+        order = sorted(strat_names, key=lambda n: -stats[n][3])  # 並びは対oracle（Fwd）＝実力順（Haruki指定）
         lines += ["![cumulative P&L](forward_pnl.png)", "",
                   f"## 累計成績（リーグ{days}日目）", "",
                   "| 機体 | 累計損益 | BT率 | 対oracle（Fwd） | 対clock差（Fwd, pt） |",
