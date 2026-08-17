@@ -353,21 +353,29 @@ def report(ledger: pd.DataFrame, picks, meta, target, anatomy_latest: str = "") 
             played = int(mask.sum())
             tot = float(ledger.loc[mask, n].sum())
             orc = float(ledger.loc[mask, "oracle"].sum())
-            stats[n] = (played, tot, tot / played if played else 0.0,
-                        tot / orc * 100 if orc else 0.0)
+            # 対clock差（同日ペア）: 同じ日を戦った常設ベンチとの差をoracle比ptで。
+            # 対oracle%は値幅のスケールしか正規化できず、時代の「取りやすさ」の差が
+            # 残る（Haruki指摘 2026-08-17）。同日のclockには難易度も等しく効くため、
+            # ペア差は一次近似で時代補正になる（時代をまたぐ比較の橋）
+            clk = float(ledger.loc[mask, "clock"].sum())
+            stats[n] = (played, tot,
+                        tot / orc * 100 if orc else 0.0,
+                        (tot - clk) / orc * 100 if orc else 0.0)
         order = sorted(strat_names, key=lambda n: -stats[n][3])
         lines += ["![cumulative P&L](forward_pnl.png)", "",
                   f"## 累計成績（リーグ{days}日目）", "",
-                  "| 機体 | 出場 | 累計損益 | 円/出場日 | 対oracle（出場日） |",
+                  "| 機体 | 出場 | 累計損益 | 対oracle（出場日） | 対clock差（同日, pt） |",
                   "|---|---|---|---|---|"]
         for n in order:
-            p_, t_, r_, pct = stats[n]
-            lines.append(f"| {n} | {p_}日 | {t_:,.0f}円 | {r_:.1f} | {pct:.1f}% |")
+            p_, t_, pct, dpt = stats[n]
+            lines.append(f"| {n} | {p_}日 | {t_:,.0f}円 | {pct:.1f}% | {dpt:+.1f} |")
         o_tot = float(ledger["oracle"].sum())
-        lines.append(f"| oracle | {days}日 | {o_tot:,.0f}円 | {o_tot/days:.1f} | 100.0% |")
+        lines.append(f"| oracle | {days}日 | {o_tot:,.0f}円 | 100.0% | — |")
         lines.append("")
-        lines.append("対oracle（出場日）＝出場した日のoracle合計に対する比率。"
-                     "その日に市場に存在した値幅で正規化するため、参戦時期が違う機体を比べられる（円の絶対額は比べられない）")
+        lines.append("物差しは4層: **累計円**=ストック（時代の値幅込み・堀の指標）／"
+                     "**対oracle%**=値幅のスケールを正規化／**対clock差**=同じ日を戦った常設ベンチとのペア差"
+                     "（その時代の取りやすさを一次補正。時代をまたぐ機体比較はこれを使う）／"
+                     "**直接対決**（下表）=完全対等だが共通日のみ。下の層ほど公平で、使える日数は減る")
         common = ledger[strat_names].notna().all(axis=1)
         cdays = int(common.sum())
         if cdays:
