@@ -28,12 +28,19 @@ def read_power():
     rows = list(csv.DictReader(f.open()))
     if not rows:
         return None
-    names = [c for c in rows[0] if c not in ("date", "signal")]
+    names = [c for c in rows[0]
+             if c not in ("date", "signal") and not c.startswith("bt_")]
+    def is_bt(r, n):
+        return r.get(f"bt_{n}", "") in ("1", "1.0")
+    # 累計はBT補完込みの金額（Haruki決定 2026-08-17, issue #12）。
+    # レート（対oracle）は事前コミット済みフォワード日のみで計算
     totals = {n: sum(float(r[n]) for r in rows if r[n]) for n in names}
-    # 対oracleは出場日ベース: 欠場日を除いたoracle合計（issue #12）
-    orc_played = {n: sum(float(r["oracle"]) for r in rows if r[n]) for n in names}
-    return {"days": len(rows), "totals": totals, "orc_played": orc_played,
-            "last": rows[-1]}
+    btdays = {n: sum(1 for r in rows if r[n] and is_bt(r, n)) for n in names}
+    played = {n: sum(1 for r in rows if r[n]) for n in names}
+    fwd_tot = {n: sum(float(r[n]) for r in rows if r[n] and not is_bt(r, n)) for n in names}
+    orc_fwd = {n: sum(float(r["oracle"]) for r in rows if r[n] and not is_bt(r, n)) for n in names}
+    return {"days": len(rows), "totals": totals, "btdays": btdays, "played": played,
+            "fwd_tot": fwd_tot, "orc_fwd": orc_fwd, "last": rows[-1]}
 
 
 def read_csv(path):
@@ -43,17 +50,20 @@ def read_csv(path):
 
 def power_table(p):
     strat = {n: v for n, v in p["totals"].items() if n != "oracle"}
-    pct = {n: v / (p["orc_played"].get(n) or 1) * 100 for n, v in strat.items()}
-    leader = max(pct, key=pct.get)
+    pct = {n: p["fwd_tot"][n] / (p["orc_fwd"].get(n) or 1) * 100 for n in strat}
+    leader = max(strat, key=strat.get)  # 金額で勝負（BT補完込み・Haruki決定）
     rows = []
-    order = sorted(strat.items(), key=lambda kv: -pct[kv[0]]) + [("oracle", p["totals"]["oracle"])]
+    order = sorted(strat.items(), key=lambda kv: -kv[1]) + [("oracle", p["totals"]["oracle"])]
     for n, v in order:
         last = float(p["last"][n]) if p["last"][n] else 0.0
         cls = " class='lead'" if n == leader else ""
         delta = f"<span class='{'pos' if last >= 0 else 'neg'}'>{last:+,.0f}</span>"
+        bt = p["btdays"].get(n, 0)
+        btnote = (f" <small style='opacity:.6'>BT{bt / p['played'][n] * 100:.0f}%</small>"
+                  if bt else "")
         rows.append(
             f"<tr{cls}><td><span class='dot' style='background:{DOT.get(n, '#888')}'></span>{n}</td>"
-            f"<td>{v:,.0f}円</td><td>{(100.0 if n == 'oracle' else pct[n]):.1f}%</td><td>{delta}</td></tr>")
+            f"<td>{v:,.0f}円{btnote}</td><td>{(100.0 if n == 'oracle' else pct[n]):.1f}%</td><td>{delta}</td></tr>")
     return "".join(rows)
 
 

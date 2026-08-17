@@ -90,6 +90,21 @@ def load_picks(day: pd.Timestamp) -> dict:
             for name, v in data.items() if not name.startswith("_")}
 
 
+def load_picks_bt(day: pd.Timestamp) -> dict:
+    """参戦前バックテスト補完picks（bt_YYYY-MM-DD.json）。
+
+    Haruki決定（2026-08-17, issue #12）: 累計金額はBT補完込みの1本で勝負し、
+    BT率を表示して読者が意識的に割り引く。補完picksは当時入手可能だった
+    データのみで再現生成する（因果順守）。実picksに存在する機体は対象外。
+    """
+    f = PICKS_DIR / f"bt_{day:%Y-%m-%d}.json"
+    if not f.exists():
+        return {}
+    data = json.loads(f.read_text(encoding="utf-8"))
+    return {name: (set(v["charge"]), set(v["discharge"]))
+            for name, v in data.items() if not name.startswith("_")}
+
+
 def picks_meta(day: pd.Timestamp) -> dict:
     f = PICKS_DIR / f"{day:%Y-%m-%d}.json"
     if not f.exists():
@@ -114,6 +129,10 @@ def build_ledger(df: pd.DataFrame) -> pd.DataFrame:
         row["weekshape"] = sim.run_day(today, *sim.choose_split(pred)) if pred is not None else 0.0
         for name, (c, d) in load_picks(day).items():
             row[name] = sim.run_day(today, c, d)
+        for name, (c, d) in load_picks_bt(day).items():
+            if name not in row:
+                row[name] = sim.run_day(today, c, d)
+                row[f"bt_{name}"] = 1
         row["oracle"] = sim.run_day(today, *sim.choose_split(today))
         rows.append(row)
     return pd.DataFrame(rows).set_index("date") if rows else pd.DataFrame()
@@ -184,8 +203,23 @@ def plot_ledger(ledger: pd.DataFrame, dest: Path) -> None:
     fig.patch.set_facecolor(SURFACE)
     ax.set_facecolor(SURFACE)
     ax.plot(cum.index, cum["oracle"], color=MUTED, lw=1.4, ls="--", label="oracle (bound)")
+    has_bt = False
     for name in names:
-        ax.plot(cum.index, cum[name], color=COLORS[name], lw=2.0, label=name)
+        btc = f"bt_{name}"
+        bt = (ledger[btc].fillna(0) == 1) if btc in ledger.columns else None
+        if bt is not None and bt.any():
+            # 参戦前BT補完区間は点線（ファクトシート流: 線種がシミュレーションを語る）
+            has_bt = True
+            fwd_days = ledger.index[ledger[name].notna() & ~bt]
+            e0 = fwd_days.min() if len(fwd_days) else cum.index[-1]
+            ax.plot(cum.loc[:e0].index, cum.loc[:e0, name], color=COLORS[name],
+                    lw=1.8, ls=(0, (4, 3)), alpha=0.8)
+            ax.plot(cum.loc[e0:].index, cum.loc[e0:, name], color=COLORS[name],
+                    lw=2.0, label=name)
+        else:
+            ax.plot(cum.index, cum[name], color=COLORS[name], lw=2.0, label=name)
+    if has_bt:
+        ax.plot([], [], color=INK2, lw=1.2, ls=(0, (4, 3)), label="dashed = BT infill")
     # 終端の直接ラベルは累積線では衝突しやすいため置かない。
     # 低コントラスト色の緩和はレポート内の成績テーブル（table view）が担う
     # 信号「強」の日をhybrid線上に打点
@@ -343,40 +377,65 @@ def report(ledger: pd.DataFrame, picks, meta, target, anatomy_latest: str = "") 
         lines += ["## 累計成績", "", "（フォワード対象日の価格はまだ公表されていない。初日の答え合わせを待て）", ""]
     else:
         days = len(ledger)
-        strat_names = [c for c in ledger.columns if c not in ("signal", "oracle")]
+        strat_names = [c for c in ledger.columns
+                       if c not in ("signal", "oracle") and not c.startswith("bt_")]
         # 対oracleは「出場日ベース」: 各機体が出場した日のoracle合計で割る。
         # 円の絶対額は当日の値幅（レバレッジ）に依存し時変するため、
         # 在籍時期が違う機体を円/日で比べると不公平（Haruki指摘 2026-08-17, issue #12）
         stats = {}
         for n in strat_names:
             mask = ledger[n].notna()
-            played = int(mask.sum())
-            tot = float(ledger.loc[mask, n].sum())
-            orc = float(ledger.loc[mask, "oracle"].sum())
-            # 対clock差（同日ペア）: 同じ日を戦った常設ベンチとの差をoracle比ptで。
-            # 対oracle%は値幅のスケールしか正規化できず、時代の「取りやすさ」の差が
-            # 残る（Haruki指摘 2026-08-17）。同日のclockには難易度も等しく効くため、
-            # ペア差は一次近似で時代補正になる（時代をまたぐ比較の橋）
-            clk = float(ledger.loc[mask, "clock"].sum())
-            stats[n] = (played, tot,
-                        tot / orc * 100 if orc else 0.0,
-                        (tot - clk) / orc * 100 if orc else 0.0)
-        order = sorted(strat_names, key=lambda n: -stats[n][3])
+            btcol = ledger[f"bt_{n}"].fillna(0) if f"bt_{n}" in ledger.columns else None
+            fwd = mask & (btcol != 1) if btcol is not None else mask
+            played, btdays = int(mask.sum()), int(mask.sum() - fwd.sum())
+            tot = float(ledger.loc[mask, n].sum())          # BT補完込みの金額（勝負の1本）
+            # レート系（対oracle・対clock差）は事前コミット済みのフォワード日のみで計算。
+            # 対clock差=同日ペア差: 対oracle%が消せない「時代の取りやすさ」を
+            # 常設ベンチ経由で一次補正（Haruki指摘 2026-08-17）
+            orc = float(ledger.loc[fwd, "oracle"].sum())
+            clk = float(ledger.loc[fwd, "clock"].sum())
+            ftot = float(ledger.loc[fwd, n].sum())
+            stats[n] = (played, btdays, tot,
+                        ftot / orc * 100 if orc else 0.0,
+                        (ftot - clk) / orc * 100 if orc else 0.0)
+        order = sorted(strat_names, key=lambda n: -stats[n][2])  # 金額で勝負（Haruki決定）
         lines += ["![cumulative P&L](forward_pnl.png)", "",
                   f"## 累計成績（リーグ{days}日目）", "",
-                  "| 機体 | 出場 | 累計損益 | 対oracle（出場日） | 対clock差（同日, pt） |",
+                  "| 機体 | 累計損益 | BT率 | 対oracle（Fwd） | 対clock差（Fwd, pt） |",
                   "|---|---|---|---|---|"]
         for n in order:
-            p_, t_, pct, dpt = stats[n]
-            lines.append(f"| {n} | {p_}日 | {t_:,.0f}円 | {pct:.1f}% | {dpt:+.1f} |")
+            p_, bt_, t_, pct, dpt = stats[n]
+            btcell = f"{bt_ / p_ * 100:.0f}%（{bt_}/{p_}日）" if bt_ else "0%"
+            lines.append(f"| {n} | {t_:,.0f}円 | {btcell} | {pct:.1f}% | {dpt:+.1f} |")
         o_tot = float(ledger["oracle"].sum())
-        lines.append(f"| oracle | {days}日 | {o_tot:,.0f}円 | 100.0% | — |")
+        lines.append(f"| oracle | {o_tot:,.0f}円 | 0% | 100.0% | — |")
         lines.append("")
-        lines.append("物差しは4層: **累計円**=ストック（時代の値幅込み・堀の指標）／"
-                     "**対oracle%**=値幅のスケールを正規化／**対clock差**=同じ日を戦った常設ベンチとのペア差"
-                     "（その時代の取りやすさを一次補正。時代をまたぐ機体比較はこれを使う）／"
-                     "**直接対決**（下表）=完全対等だが共通日のみ。下の層ほど公平で、使える日数は減る")
-        common = ledger[strat_names].notna().all(axis=1)
+        lines.append("累計損益は**BT補完込み**（参戦前の欠場日を、当時入手可能だったデータのみで"
+                     "再現したバックテストで補完。BT率＝そのうち事前コミットでない日の割合。割り引いて読む）。"
+                     "**対oracle%と対clock差は事前コミット済みのフォワード日のみ**で計算——"
+                     "対oracle%は値幅のスケールを、対clock差（常設ベンチとの同日ペア差）は"
+                     "時代の取りやすさを一次補正する。完全対等の比較は下の直接対決（共通日のみ）")
+        # 期間別（週別）: フォワードだけに集中して見る手段（Haruki要望）
+        wk = ledger.index.to_series().dt.strftime("%G-W%V")
+        weeks = sorted(wk.unique())
+        lines += ["", "## 期間別（ISO週別、*=BT補完を含む）", "",
+                  "| 週 | " + " | ".join(strat_names + ["oracle"]) + " |",
+                  "|" + "---|" * (len(strat_names) + 2)]
+        for w in weeks:
+            sel = ledger[wk == w]
+            cells = []
+            for n in strat_names + ["oracle"]:
+                v = float(sel[n].dropna().sum()) if n in sel else 0.0
+                star = ""
+                if f"bt_{n}" in sel.columns and (sel[f"bt_{n}"].fillna(0) == 1).any():
+                    star = "*"
+                cells.append(f"{v:,.0f}{star}")
+            lines.append(f"| {w} | " + " | ".join(cells) + " |")
+        fwd_only = ledger[strat_names].notna()
+        for n in strat_names:
+            if f"bt_{n}" in ledger.columns:
+                fwd_only[n] &= ledger[f"bt_{n}"].fillna(0) != 1
+        common = fwd_only.all(axis=1)
         cdays = int(common.sum())
         if cdays:
             lines += ["", f"## 直接対決（全機体出場日 {cdays}日のみ）", "",
