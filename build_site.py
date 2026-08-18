@@ -18,7 +18,8 @@ DOCS = ROOT / "docs"
 JST = ZoneInfo("Asia/Tokyo")
 
 DOT = {"weekshape": "#2a78d6", "tenki": "#eb6834",
-       "hybrid": "#1baf7a", "clock": "#eda100", "tenki_v2": "#9b6bd3", "tenki_v3": "#c44e52", "oracle": "#898781"}
+       "hybrid": "#1baf7a", "clock": "#eda100", "tenki_v2": "#9b6bd3", "tenki_v3": "#c44e52",
+       "tenki_v4": "#6b7f2e", "oracle": "#898781"}
 
 
 def read_power():
@@ -51,7 +52,8 @@ def read_csv(path):
 def power_table(p):
     strat = {n: v for n, v in p["totals"].items() if n != "oracle"}
     pct = {n: p["fwd_tot"][n] / (p["orc_fwd"].get(n) or 1) * 100 for n in strat}
-    leader = max(pct, key=pct.get)  # 並びと首位は対oracle（Fwd）＝実力順（Haruki指定）
+    fwd_has = {n for n in strat if p["btdays"].get(n, 0) < p["played"].get(n, 0)}
+    leader = max((n for n in fwd_has), key=pct.get, default=max(pct, key=pct.get))  # 実力首位はフォワード実績のある機体から
     rows = []
     order = sorted(strat.items(), key=lambda kv: -pct[kv[0]]) + [("oracle", p["totals"]["oracle"])]
     for n, v in order:
@@ -60,10 +62,12 @@ def power_table(p):
         delta = f"<span class='{'pos' if last >= 0 else 'neg'}'>{last:+,.0f}</span>"
         bt = p["btdays"].get(n, 0)
         btcell = f"{bt / p['played'][n] * 100:.0f}%" if bt else "—"
+        pcell = ("—" if (n != "oracle" and bt == p["played"].get(n, 0))
+                 else f"{(100.0 if n == 'oracle' else pct[n]):.1f}%")
         rows.append(
             f"<tr{cls}><td><span class='dot' style='background:{DOT.get(n, '#888')}'></span>{n}</td>"
             f"<td>{v:,.0f}円</td><td>{btcell}</td>"
-            f"<td>{(100.0 if n == 'oracle' else pct[n]):.1f}%</td><td>{delta}</td></tr>")
+            f"<td>{pcell}</td><td>{delta}</td></tr>")
     return "".join(rows)
 
 
