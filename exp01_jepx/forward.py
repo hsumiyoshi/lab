@@ -59,6 +59,24 @@ def _dev_series(upto_day: pd.Timestamp) -> pd.Series:
     return dev[dev.index < upto_day]
 
 
+def dev_signed_text(rad_forecast, day: pd.Timestamp, dev, thr) -> str:
+    """乖離の符号つき表示（issue #11）。判定は従来どおり絶対値、これは表示専用。
+
+    符号が見えない絶対値表示が「強=晴れて暑い日」という人間とAI双方の
+    誤読を3日間許した（2026-08-16に発覚）ため、方向を常に添える。
+    """
+    if rad_forecast is None or dev is None or thr is None:
+        return ""
+    norm = sim.WEATHER_A.loc[sim.WEATHER_A.index < day, "rad"].tail(28).mean() \
+        if sim.WEATHER_A is not None else None
+    if norm is None or pd.isna(norm):
+        return f"乖離 {dev:.0f}（閾値 {thr:.0f}）"
+    signed = rad_forecast - norm
+    arrow = "普段より晴れる" if signed > 0 else "普段より曇る"
+    return (f"乖離 {signed:+.0f} W/m2（{arrow}方向。直近28日平均 {norm:.0f}、"
+            f"判定は絶対値 {dev:.0f} vs 閾値 {thr:.0f}）")
+
+
 def rad_dev(day: pd.Timestamp, rad_forecast: float | None = None):
     """対象日の乖離と、対象日前日までの75%閾値を返す"""
     wa = sim.WEATHER_A
@@ -268,7 +286,7 @@ def day_anatomy(df: pd.DataFrame, day: pd.Timestamp) -> str:
              else "未確定（実測は約5日遅れ）")
     if rad_f is not None and dev is not None and thr is not None:
         lines.append(f"- 因子: 日射予報 {rad_f:.0f} W/m2 / 実測 {rad_a} / "
-                     f"平年乖離 {dev:.0f}（閾値 {thr:.0f}）")
+                     + dev_signed_text(rad_f, day, dev, thr))
     else:
         lines.append("- 因子: picksの_meta欠落")
     cheap = today.idxmin()
@@ -454,7 +472,8 @@ def report(ledger: pd.DataFrame, picks, meta, target, anatomy_latest: str = "") 
                       anatomy_latest]
     lines += [f"## 明日のpicks（受渡日 {target.date()}、信号: {meta['signal']}）", ""]
     if meta["dev"] is not None:
-        lines.append(f"日射予報の平年乖離 {meta['dev']:.0f} W/m2（閾値 {meta['thr']:.0f}）")
+        lines.append("日射予報の" + dev_signed_text(meta.get("rad_forecast"), target,
+                                                    meta["dev"], meta["thr"]))
     lines += ["", "| 機体 | 充電（買い） | 放電（売り） |", "|---|---|---|"]
     for n in picks:
         if picks.get(n):
