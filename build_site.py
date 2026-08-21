@@ -8,6 +8,7 @@ docs/index.html を生成する。置換契約はテンプレート冒頭コメ�
 
 import base64
 import csv
+import json
 import re
 from datetime import datetime
 from pathlib import Path
@@ -97,7 +98,22 @@ def rule_svg(key):
     return f"<div class='flow'>{m.group(1)}</div>" if m else ""
 
 
-def league_panels(veg, qk):
+def ai_score_body(ai):
+    if not ai or not ai.get("rounds"):
+        return "<div class='empty'><span class='pulse'></span>初回ラウンド準備中</div>"
+    r = ai["rounds"][-1]
+    head = "<tr><th>命題（" + r["id"] + "・判定日つき）</th><th>外挿</th><th>回帰</th><th>構造</th><th>結果</th></tr>"
+    trs = ""
+    for q in r["questions"]:
+        oc = "—" if q["outcome"] is None else ("○" if q["outcome"] else "×")
+        trs += ("<tr><td>" + q["q"] + "（" + q["resolve"][5:].replace("-", "/") + "）</td>"
+                + "".join(f"<td>{q['pred'][k]:.2f}</td>" for k in ("外挿AI", "回帰AI", "構造AI"))
+                + f"<td>{oc}</td></tr>")
+    note = "<p class='tnote'>" + r.get("provenance", "") + "。確率は各人格の主観確率（1.00=確実に起きる）</p>"
+    return f"<table>{head}{trs}</table>{note}"
+
+
+def league_panels(veg, qk, ai):
     """左ナビで切り替わるリーグ別パネル（ルール／成績表／当日・次イベントの3ブロック）"""
     GHB = "https://github.com/hsumiyoshi/lab/blob/main"
     def card(title, body):
@@ -178,6 +194,19 @@ def league_panels(veg, qk):
               + fig("exp07_satellite/reports/ndvi_chart.png", "NDVIと入荷量の3年比較"),
               empty("判定 2027年7月頃（東京市場の入荷実績で）"),
               f"{GHB}/exp07_satellite/predictions.md"),
+        panel("lg-ai",
+              "互いに矛盾する推論スタイルを凍結した3つのAI人格が、毎週同じ公開情報だけを与えられた"
+              "独立セッションとして、今週のリーグの結末に確率で賭ける（互いの答えは見えない）。"
+              "採点はBrier（(確率−結果)²・低いほど良い）。常に0.5と答える臆病者ベンチ（Brier 0.25）に勝てない人格は没",
+              machines([
+                  ("外挿AI", "#eb6834", "直近の傾向はそのまま続く。機構の説明より最新データの勢いを信じる"),
+                  ("回帰AI", "#2a78d6", "極端な観測は平均に戻る。少数標本の好成績は幻。基準率を最重視"),
+                  ("構造AI", "#1baf7a", "機構で説明できる予測だけを信じる。因果の筋が通らない傾向は雑音"),
+                  ("臆病者", "#eda100", "すべての問いに0.5と答える脳死ベンチマーク（Brier 0.25）"),
+              ]),
+              ai_score_body(ai),
+              empty("次回: 毎週水曜に新ラウンドの賭けを公開、前週分を採点"),
+              f"{GHB}/ai_league.json"),
     ])
 
 
@@ -186,6 +215,7 @@ def timeline(veg, qk):
         ("毎日 13:30", "⚡ 電力リーグ採点（picksは毎朝7:00に自動提出）"),
         ("8/17 (月) 14:00", "🌏 地震リーグ初戦の採点"),
         ("8/19 (水) 14:00", "🥬 青果リーグ初戦の採点"),
+        ("毎週水曜", "🤖 AIリーグ: 3人格の賭けを公開・前週分を採点"),
         ("2027年1月〜", "🏠 不動産の事前登録予測を判定"),
         ("2027年6月", "🛰 衛星の出荷週予測をコミット（7月に判定）"),
     ]
@@ -196,6 +226,7 @@ def build():
     tpl = (ROOT / "site_template.html").read_text(encoding="utf-8")
     p = read_power()
     veg = read_csv("exp02_vegetable/reports/veg_ledger.csv")
+    ai = json.loads((ROOT / "ai_league.json").read_text(encoding="utf-8")) if (ROOT / "ai_league.json").exists() else None
     qk = read_csv("exp05_quake/reports/quake_ledger.csv")
     now = datetime.now(JST)
 
@@ -205,7 +236,7 @@ def build():
                 .replace("{{UPDATED}}", f"{now:%Y-%m-%d %H:%M}")
                 .replace("{{POWER_TABLE}}", power_table(p) if p else "")
                 .replace("{{LATEST_LINE}}", latest_line(p) if p else "初日の採点待ち")
-                .replace("{{LEAGUE_PANELS}}", league_panels(veg, qk))
+                .replace("{{LEAGUE_PANELS}}", league_panels(veg, qk, ai))
                 .replace("{{TIMELINE}}", timeline(veg, qk)))
     for src_name, path in (("forward_pnl.png", "exp01_jepx/reports/forward_pnl.png"),
                            ("latest_anatomy.png", None)):

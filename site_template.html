@@ -283,6 +283,7 @@ transition:border-color .2s}
 <a href="#lg-quake">🌏 地震<span class="sub">週次</span></a>
 <a href="#lg-re">🏠 不動産<span class="sub">四半期</span></a>
 <a href="#lg-sat">🛰 衛星<span class="sub">年次</span></a>
+<a href="#lg-ai">🤖 AI<span class="sub">週次</span></a>
 </nav>
 <div class="panels">
 <article id="pg-top" class="panel on"><section><div class="flow" role="img" aria-label="仕組み: 凍結、提出、採点、台帳の4ステップ">
@@ -519,7 +520,7 @@ transition:border-color .2s}
 </div>
 <script>
 (function(){
-var ids=["pg-top","lg-power","lg-veg","lg-quake","lg-re","lg-sat"];
+var ids=["pg-top","lg-power","lg-veg","lg-quake","lg-re","lg-sat","lg-ai"];
 function show(id){
   document.querySelectorAll(".panel").forEach(function(p){p.classList.toggle("on",p.id===id)});
   document.querySelectorAll(".lnav a").forEach(function(a){a.classList.toggle("on",a.getAttribute("href")==="#"+id)});
