@@ -18,6 +18,7 @@ oracle は事後の上限参照値としてのみ記載。
 
 import json
 import time
+import urllib.error
 import urllib.request
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -26,11 +27,26 @@ from zoneinfo import ZoneInfo
 import pandas as pd
 
 
-def _get_json(url: str, tries: int = 4):
+def _get_json(url: str, tries: int = 5):
+    """気象APIのGET。429（レート制限）は待ち時間を別枠で長く取る。
+
+    2026-08-22: Open-Meteoの429で提出ジョブが落ちた。2/4/8秒の待機は
+    レート制限の解除には短すぎる（サーバ側の窓は分単位）。429だけ
+    Retry-Afterを尊重し、無ければ30/60/120/240秒と伸ばす。
+    """
     for attempt in range(tries):
         try:
             with urllib.request.urlopen(url, timeout=60) as res:
                 return json.load(res)
+        except urllib.error.HTTPError as e:
+            if attempt == tries - 1:
+                raise
+            if e.code == 429:
+                wait = int(e.headers.get("Retry-After") or 0) or 30 * (2 ** attempt)
+                print(f"  429 レート制限 → {wait}秒待機（{attempt + 1}/{tries - 1}回目）")
+                time.sleep(min(wait, 300))
+            else:
+                time.sleep(2 ** (attempt + 1))
         except Exception:
             if attempt == tries - 1:
                 raise
