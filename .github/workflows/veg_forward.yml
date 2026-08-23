@@ -17,7 +17,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install pandas matplotlib
+      - run: pip install -r requirements.txt
       - name: Fetch market data
         working-directory: exp02_vegetable
         run: python3 fetch.py
@@ -33,3 +33,14 @@ jobs:
           git add exp02_vegetable/reports docs
           git diff --cached --quiet && echo "no changes" || git commit -m "veg forward: $(date -u +%Y-%m-%d) weekly"
           git push
+      - name: Record failure (落ちたことを台帳に残す)
+        if: failure()
+        run: |
+          git config user.name "incident-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git pull --rebase --autostash origin main || true
+          mkdir -p docs
+          echo "| $(date -u +%Y-%m-%dT%H:%MZ) | ${{ github.workflow }} | [run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) | 未対応 |" >> docs/incidents.md
+          git add docs/incidents.md
+          git commit -m "incident: ${{ github.workflow }} が失敗" || true
+          git push || true

@@ -32,3 +32,14 @@ jobs:
           git add exp10_disaster/picks exp10_disaster/data exp10_disaster/reports
           git diff --cached --quiet && echo "no changes" || git commit -m "disaster: $(date -u +%Y-%m-%d) 取込・提出・採点"
           git push
+      - name: Record failure (落ちたことを台帳に残す)
+        if: failure()
+        run: |
+          git config user.name "incident-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git pull --rebase --autostash origin main || true
+          mkdir -p docs
+          echo "| $(date -u +%Y-%m-%dT%H:%MZ) | ${{ github.workflow }} | [run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) | 未対応 |" >> docs/incidents.md
+          git add docs/incidents.md
+          git commit -m "incident: ${{ github.workflow }} が失敗" || true
+          git push || true

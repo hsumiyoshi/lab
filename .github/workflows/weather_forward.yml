@@ -27,3 +27,14 @@ jobs:
           git add exp03_weather/picks exp03_weather/data exp03_weather/reports
           git diff --cached --quiet && echo "no changes" || git commit -m "weather: $(date -u +%Y-%m-%d) 提出と採点"
           git push
+      - name: Record failure (落ちたことを台帳に残す)
+        if: failure()
+        run: |
+          git config user.name "incident-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git pull --rebase --autostash origin main || true
+          mkdir -p docs
+          echo "| $(date -u +%Y-%m-%dT%H:%MZ) | ${{ github.workflow }} | [run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) | 未対応 |" >> docs/incidents.md
+          git add docs/incidents.md
+          git commit -m "incident: ${{ github.workflow }} が失敗" || true
+          git push || true

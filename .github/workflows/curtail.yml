@@ -28,3 +28,14 @@ jobs:
           git add exp08_curtail/picks exp08_curtail/data exp08_curtail/reports
           git diff --cached --quiet && echo "no changes" || git commit -m "curtail: $(date -u +%Y-%m-%dT%H)Z"
           git push
+      - name: Record failure (落ちたことを台帳に残す)
+        if: failure()
+        run: |
+          git config user.name "incident-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git pull --rebase --autostash origin main || true
+          mkdir -p docs
+          echo "| $(date -u +%Y-%m-%dT%H:%MZ) | ${{ github.workflow }} | [run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) | 未対応 |" >> docs/incidents.md
+          git add docs/incidents.md
+          git commit -m "incident: ${{ github.workflow }} が失敗" || true
+          git push || true

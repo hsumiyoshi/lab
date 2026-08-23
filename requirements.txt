@@ -1,0 +1,6 @@
+# 全リーグ共通の依存（2026-08-23）。
+# 青果CIが「pip install pandas だけ」でmatplotlib未導入により落ち続けていた事故を受け、
+# 依存の宣言を1箇所に集約する。各ワークフローは必ずこのファイルからインストールする。
+pandas
+matplotlib
+pandera
