@@ -1,0 +1,30 @@
+name: exp08 curtailment league
+
+on:
+  schedule:
+    - cron: "0 22 * * *"   # 07:00 JST 提出（九電の17:00発表より10時間早い＝あと出し不可）
+    - cron: "10 8 * * *"   # 17:10 JST 取込と採点
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  curtail:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Submit (07:00 JST) or collect+score (17:10 JST)
+        working-directory: exp08_curtail
+        run: |
+          if [ "$(date -u +%H)" = "22" ]; then python3 curtail.py; else python3 curtail.py collect; fi
+      - name: Commit
+        run: |
+          git config user.name "curtail-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add exp08_curtail/picks exp08_curtail/data exp08_curtail/reports
+          git diff --cached --quiet && echo "no changes" || git commit -m "curtail: $(date -u +%Y-%m-%dT%H)Z"
+          git push
