@@ -146,6 +146,13 @@
   "id": "EQ1561190",
   "type": "EQ"
  },
+ "EQ1561344": {
+  "alert": "Green",
+  "country": "Japan",
+  "from": "2026-08-23",
+  "id": "EQ1561344",
+  "type": "EQ"
+ },
  "FL1103888": {
   "alert": "Green",
   "country": "United States",
@@ -284,6 +291,13 @@
   "country": null,
   "from": "2026-08-22",
   "id": "TC1001308",
+  "type": "TC"
+ },
+ "TC1001309": {
+  "alert": "Green",
+  "country": null,
+  "from": "2026-08-23",
+  "id": "TC1001309",
   "type": "TC"
  },
  "WF1030137": {
@@ -3378,6 +3392,314 @@
   "country": "Russian Federation",
   "from": "2026-08-13",
   "id": "WF1030991",
+  "type": "WF"
+ },
+ "WF1030992": {
+  "alert": "Green",
+  "country": "Australia",
+  "from": "2026-08-21",
+  "id": "WF1030992",
+  "type": "WF"
+ },
+ "WF1030993": {
+  "alert": "Green",
+  "country": "Australia",
+  "from": "2026-08-20",
+  "id": "WF1030993",
+  "type": "WF"
+ },
+ "WF1030994": {
+  "alert": "Green",
+  "country": "Australia",
+  "from": "2026-08-19",
+  "id": "WF1030994",
+  "type": "WF"
+ },
+ "WF1030995": {
+  "alert": "Green",
+  "country": "Brazil",
+  "from": "2026-08-15",
+  "id": "WF1030995",
+  "type": "WF"
+ },
+ "WF1030996": {
+  "alert": "Green",
+  "country": "Papua New Guinea",
+  "from": "2026-08-14",
+  "id": "WF1030996",
+  "type": "WF"
+ },
+ "WF1030997": {
+  "alert": "Green",
+  "country": "Indonesia",
+  "from": "2026-08-14",
+  "id": "WF1030997",
+  "type": "WF"
+ },
+ "WF1030998": {
+  "alert": "Green",
+  "country": "Russian Federation",
+  "from": "2026-08-11",
+  "id": "WF1030998",
+  "type": "WF"
+ },
+ "WF1030999": {
+  "alert": "Green",
+  "country": "Brazil",
+  "from": "2026-08-11",
+  "id": "WF1030999",
+  "type": "WF"
+ },
+ "WF1031000": {
+  "alert": "Green",
+  "country": "Russian Federation",
+  "from": "2026-08-21",
+  "id": "WF1031000",
+  "type": "WF"
+ },
+ "WF1031001": {
+  "alert": "Green",
+  "country": "Russian Federation",
+  "from": "2026-08-18",
+  "id": "WF1031001",
+  "type": "WF"
+ },
+ "WF1031002": {
+  "alert": "Green",
+  "country": "Russian Federation",
+  "from": "2026-08-16",
+  "id": "WF1031002",
+  "type": "WF"
+ },
+ "WF1031003": {
+  "alert": "Green",
+  "country": "Russian Federation",
+  "from": "2026-08-15",
+  "id": "WF1031003",
+  "type": "WF"
+ },
+ "WF1031004": {
+  "alert": "Green",
+  "country": "Russian Federation",
+  "from": "2026-08-11",
+  "id": "WF1031004",
+  "type": "WF"
+ },
+ "WF1031005": {
+  "alert": "Green",
+  "country": "Botswana",
+  "from": "2026-08-21",
+  "id": "WF1031005",
+  "type": "WF"
+ },
+ "WF1031006": {
+  "alert": "Green",
+  "country": "Botswana",
+  "from": "2026-08-21",
+  "id": "WF1031006",
+  "type": "WF"
+ },
+ "WF1031007": {
+  "alert": "Green",
+  "country": "Angola",
+  "from": "2026-08-21",
+  "id": "WF1031007",
+  "type": "WF"
+ },
+ "WF1031008": {
+  "alert": "Green",
+  "country": "Angola",
+  "from": "2026-08-21",
+  "id": "WF1031008",
+  "type": "WF"
+ },
+ "WF1031009": {
+  "alert": "Green",
+  "country": "Angola",
+  "from": "2026-08-20",
+  "id": "WF1031009",
+  "type": "WF"
+ },
+ "WF1031010": {
+  "alert": "Green",
+  "country": "Angola",
+  "from": "2026-08-20",
+  "id": "WF1031010",
+  "type": "WF"
+ },
+ "WF1031011": {
+  "alert": "Green",
+  "country": "Mozambique",
+  "from": "2026-08-20",
+  "id": "WF1031011",
+  "type": "WF"
+ },
+ "WF1031012": {
+  "alert": "Green",
+  "country": "Zambia",
+  "from": "2026-08-20",
+  "id": "WF1031012",
+  "type": "WF"
+ },
+ "WF1031013": {
+  "alert": "Green",
+  "country": "Zambia",
+  "from": "2026-08-19",
+  "id": "WF1031013",
+  "type": "WF"
+ },
+ "WF1031014": {
+  "alert": "Green",
+  "country": "The Democratic Republic of Congo",
+  "from": "2026-08-19",
+  "id": "WF1031014",
+  "type": "WF"
+ },
+ "WF1031015": {
+  "alert": "Green",
+  "country": "Mozambique",
+  "from": "2026-08-19",
+  "id": "WF1031015",
+  "type": "WF"
+ },
+ "WF1031016": {
+  "alert": "Green",
+  "country": "Angola",
+  "from": "2026-08-19",
+  "id": "WF1031016",
+  "type": "WF"
+ },
+ "WF1031017": {
+  "alert": "Green",
+  "country": "The Democratic Republic of Congo",
+  "from": "2026-08-19",
+  "id": "WF1031017",
+  "type": "WF"
+ },
+ "WF1031018": {
+  "alert": "Green",
+  "country": "Zambia",
+  "from": "2026-08-18",
+  "id": "WF1031018",
+  "type": "WF"
+ },
+ "WF1031019": {
+  "alert": "Green",
+  "country": "Mozambique",
+  "from": "2026-08-18",
+  "id": "WF1031019",
+  "type": "WF"
+ },
+ "WF1031020": {
+  "alert": "Green",
+  "country": "Mozambique",
+  "from": "2026-08-18",
+  "id": "WF1031020",
+  "type": "WF"
+ },
+ "WF1031021": {
+  "alert": "Green",
+  "country": "The Democratic Republic of Congo",
+  "from": "2026-08-17",
+  "id": "WF1031021",
+  "type": "WF"
+ },
+ "WF1031022": {
+  "alert": "Green",
+  "country": "Mozambique",
+  "from": "2026-08-17",
+  "id": "WF1031022",
+  "type": "WF"
+ },
+ "WF1031023": {
+  "alert": "Green",
+  "country": "The Democratic Republic of Congo",
+  "from": "2026-08-17",
+  "id": "WF1031023",
+  "type": "WF"
+ },
+ "WF1031024": {
+  "alert": "Green",
+  "country": "Zambia",
+  "from": "2026-08-17",
+  "id": "WF1031024",
+  "type": "WF"
+ },
+ "WF1031025": {
+  "alert": "Green",
+  "country": "The Democratic Republic of Congo",
+  "from": "2026-08-17",
+  "id": "WF1031025",
+  "type": "WF"
+ },
+ "WF1031026": {
+  "alert": "Green",
+  "country": "Angola",
+  "from": "2026-08-17",
+  "id": "WF1031026",
+  "type": "WF"
+ },
+ "WF1031027": {
+  "alert": "Green",
+  "country": "Zambia",
+  "from": "2026-08-16",
+  "id": "WF1031027",
+  "type": "WF"
+ },
+ "WF1031028": {
+  "alert": "Green",
+  "country": "Russian Federation",
+  "from": "2026-08-16",
+  "id": "WF1031028",
+  "type": "WF"
+ },
+ "WF1031029": {
+  "alert": "Green",
+  "country": "Angola",
+  "from": "2026-08-16",
+  "id": "WF1031029",
+  "type": "WF"
+ },
+ "WF1031030": {
+  "alert": "Green",
+  "country": "Mozambique",
+  "from": "2026-08-16",
+  "id": "WF1031030",
+  "type": "WF"
+ },
+ "WF1031031": {
+  "alert": "Green",
+  "country": "Zambia",
+  "from": "2026-08-16",
+  "id": "WF1031031",
+  "type": "WF"
+ },
+ "WF1031032": {
+  "alert": "Green",
+  "country": "The Democratic Republic of Congo",
+  "from": "2026-08-16",
+  "id": "WF1031032",
+  "type": "WF"
+ },
+ "WF1031033": {
+  "alert": "Green",
+  "country": "The Democratic Republic of Congo",
+  "from": "2026-08-12",
+  "id": "WF1031033",
+  "type": "WF"
+ },
+ "WF1031034": {
+  "alert": "Green",
+  "country": "The Democratic Republic of Congo",
+  "from": "2026-08-10",
+  "id": "WF1031034",
+  "type": "WF"
+ },
+ "WF1031035": {
+  "alert": "Green",
+  "country": "The Democratic Republic of Congo",
+  "from": "2026-08-10",
+  "id": "WF1031035",
   "type": "WF"
  }
 }
