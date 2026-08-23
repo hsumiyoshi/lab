@@ -9,9 +9,6 @@
    "refetch": "python3 exp01_jepx/fetch.py（年度指定）",
    "note": "市場価格。全戦略の採点根拠",
    "state": {
-    "bytes": 1676989,
-    "sha256": "02db83120ff3e92ec77fffb6545b51ca21ff69f9924c655e64786219a418bb22",
-    "lines": 6481,
     "checked": "2026-08-23"
    }
   },
@@ -23,9 +20,6 @@
    "refetch": "python3 exp01_jepx/fetch.py 2025",
    "note": "前年度の価格",
    "state": {
-    "bytes": 4463497,
-    "sha256": "796d10916b1c457cdcb5e9a17161020296864418bc93d94b6aaad2b0f827ba28",
-    "lines": 17521,
     "checked": "2026-08-23"
    }
   },
@@ -79,9 +73,6 @@
    "refetch": "python3 exp02_vegetable/fetch.py",
    "note": "きゅうり等の日次単価",
    "state": {
-    "bytes": 95604,
-    "sha256": "e6906e057ae174386d36e16c70c77c4704a7d997b0495fefac08e98906307dc7",
-    "lines": 2298,
     "checked": "2026-08-23"
    }
   },
@@ -93,9 +84,6 @@
    "refetch": "同上",
    "note": "トマト等",
    "state": {
-    "bytes": 98558,
-    "sha256": "92a9ee5648a9ee3a31b7009f72180ce470fff86c24874b52925b189a5f0a9222",
-    "lines": 2564,
     "checked": "2026-08-23"
    }
   },
@@ -107,9 +95,6 @@
    "refetch": "同上",
    "note": "キャベツ等",
    "state": {
-    "bytes": 147920,
-    "sha256": "29ced682f740aeaac7ca2409be0fa74a91e2eee3b7ee4b2cea46db5f354b094b",
-    "lines": 3591,
     "checked": "2026-08-23"
    }
   },
@@ -121,9 +106,6 @@
    "refetch": "同上",
    "note": "レタス等",
    "state": {
-    "bytes": 143363,
-    "sha256": "3c27bdf62ebaa556ddec98075584691afc6e1aa7493b2300a4dd6d215fd2f305",
-    "lines": 3739,
     "checked": "2026-08-23"
    }
   },
@@ -214,9 +196,6 @@
    "refetch": "計算し直せるが時系列の継続は自分だけ",
    "note": "嬬恋のNDVI",
    "state": {
-    "bytes": 2601,
-    "sha256": "88c343273be3f2f72f02fa3b4f0085b36c8083e3d03bfd7e36b1d8ce87bd5e45",
-    "lines": 66,
     "checked": "2026-08-23"
    }
   },
