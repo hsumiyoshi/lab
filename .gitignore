@@ -4,6 +4,13 @@ __pycache__/
 venv/
 .ipynb_checkpoints/
 data/
+# 例外: 気象CSVはコミットする（issue #18/#19 由来）。
+# gitignoreしていた頃はCIが毎日フル履歴を再取得し、それがOpen-Meteoの429を
+# 招いて提出ジョブを落としていた。0.5MBなのでgit本体に置き、差分だけ取りに行く。
+!exp01_jepx/data/
+exp01_jepx/data/*
+!exp01_jepx/data/weather_actual.csv
+!exp01_jepx/data/weather_forecast.csv
 output/
 .DS_Store
 .apikey
