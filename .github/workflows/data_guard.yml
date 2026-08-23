@@ -1,0 +1,29 @@
+name: data guard
+
+# データ保全の番人。全リーグのCIが走った後に照合し、消失・縮小・破損があれば赤くする。
+on:
+  schedule:
+    - cron: "0 13 * * *"   # 22:00 JST（その日の収集がすべて終わった後）
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Verify + update manifest
+        run: python3 data_guard.py --update
+      - name: Commit
+        if: always()
+        run: |
+          git config user.name "data-guard"
+          git config user.email "actions@users.noreply.github.com"
+          git add data_manifest.json docs/data_health.md
+          git diff --cached --quiet && echo "no changes" || git commit -m "data guard: $(date -u +%Y-%m-%d) 保全状態を更新"
+          git push || true

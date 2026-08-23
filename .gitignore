@@ -17,6 +17,7 @@ exp01_jepx/data/*
 !exp08_curtail/data/
 !exp10_disaster/data/
 !exp11_books/data/
+!exp04_realestate/data_archive/
 output/
 .DS_Store
 .apikey
