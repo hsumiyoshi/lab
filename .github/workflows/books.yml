@@ -1,0 +1,28 @@
+name: exp11 books ranking league
+
+on:
+  schedule:
+    - cron: "0 22 * * 3"   # 木曜07:00 JST（トーハンの週次公表後に取得・採点・提出）
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  books:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Fetch + score + submit
+        working-directory: exp11_books
+        run: python3 books.py
+      - name: Commit
+        run: |
+          git config user.name "books-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add exp11_books/picks exp11_books/data exp11_books/reports
+          git diff --cached --quiet && echo "no changes" || git commit -m "books: $(date -u +%Y-%m-%d) 取得・採点・提出"
+          git push
