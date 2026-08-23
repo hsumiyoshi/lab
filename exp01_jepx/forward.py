@@ -42,6 +42,7 @@ HERE = Path(__file__).parent
 OUT = HERE / "output"
 JST = ZoneInfo("Asia/Tokyo")
 FORWARD_START = pd.Timestamp("2026-08-14")
+CONTRACT_ISSUES: list = []   # 契約検査の結果（レポート先頭に自己申告する）
 FREEZE_NOTE = "戦略凍結: 2026-08-12 / フォワード開始: 2026-08-14受渡分"
 
 STRAT_NAMES = ["clock", "weekshape", "haruki_tenki", "haruki_hybrid", "oracle"]
@@ -206,9 +207,30 @@ def plot_ledger(ledger: pd.DataFrame, dest: Path) -> None:
 
 # ---------------- レポート ----------------
 
+def absence_warnings(ledger, days: int = 7) -> list:
+    """気象入力が落ちて天気系が全滅した日を警告として先頭に出す（issue #18）。
+
+    サイレント劣化を止めた代償として欠場日が生まれる。欠場が黙って混ざると
+    「弱かった」と誤読されるため、直近の欠測は台帳の先頭で自己申告する。
+    """
+    fam = [c for c in ("tenki", "tenki_v2", "tenki_v3", "tenki_v4") if c in ledger.columns]
+    if ledger.empty or not fam:
+        return []
+    out = []
+    for day, row in ledger.tail(days).iterrows():
+        if all(pd.isna(row[c]) for c in fam):
+            out.append(f"> ⚠ {pd.Timestamp(day):%-m/%d}受渡: 気象予報の取得に失敗し天気系{len(fam)}機体は**欠場**"
+                       f"（実力ではなく計測の欠測。後日、予報アーカイブからBT補完される）")
+    return (out + [""]) if out else []
+
+
 def report(ledger: pd.DataFrame, picks, meta, target) -> str:
     lines = [f"# JEPX仮想蓄電池 フォワード運用レポート",
              f"", f"{FREEZE_NOTE} / 生成: {datetime.now(JST):%Y-%m-%d %H:%M} JST", ""]
+    lines += absence_warnings(ledger)
+    if CONTRACT_ISSUES:
+        lines += [f"> 🚨 入力データの契約違反 {len(CONTRACT_ISSUES)}件（採点の信頼性に影響）:"] \
+                 + [f">   - {m}" for m in CONTRACT_ISSUES[:5]] + [""]
     if ledger.empty:
         lines += ["## 累計成績", "", "（フォワード対象日の価格はまだ公表されていない。初日の答え合わせを待て）", ""]
     else:
@@ -264,6 +286,21 @@ if __name__ == "__main__":
             print(f"!! weather_{kind} の取得に失敗: {type(e).__name__} {e} → 既存CSVで続行")
     sim.load_weather()
     df = sim.load()
+
+    # 入力の契約検査（2026-08-23・issue #19の副産物）。各リーグに散らさず採点の入口で1回だけ。
+    # 「量」と「スキーマ」の柱＝外部データの形が変わった時に静かに壊れる経路を塞ぐ
+    try:
+        import contracts
+        spot_raw = pd.read_csv(HERE / "data" / f"spot_{datetime.now(JST).year}.csv")
+        spot_raw.columns = [c.strip() for c in spot_raw.columns]
+        issues = contracts.run_all(spot_raw, sim.WEATHER_A, sim.WEATHER_F, HERE / "picks")
+        for msg in issues:
+            print(f"!! 契約違反: {msg}")
+        CONTRACT_ISSUES.extend(issues)
+    except ImportError:
+        print("契約検査: panderaが無いためスキップ")
+    except Exception as e:
+        print(f"契約検査に失敗: {type(e).__name__} {e}")
 
     ledger = build_ledger(df)
     reports = HERE / "reports"  # gitで追跡する（コミット履歴＝改竄不能なフォワード記録）
