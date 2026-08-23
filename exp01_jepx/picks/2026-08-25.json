@@ -15,16 +15,16 @@
  },
  "tenki_v2": {
   "charge": [
-   13,
    14,
    15,
-   16
+   16,
+   17
   ],
   "discharge": [
    34,
-   36,
    37,
-   38
+   38,
+   39
   ]
  },
  "hybrid": {
@@ -43,10 +43,10 @@
  },
  "_meta": {
   "signal": "平常",
-  "rad_forecast": 657.4757142857144,
-  "dev": 11.799081632652928,
+  "rad_forecast": 669.7514285714286,
+  "dev": 0.4766326530613014,
   "thr": 194.11392857142857,
-  "generated_at": "2026-08-23T18:59:28+09:00",
+  "generated_at": "2026-08-24T07:18:24+09:00",
   "absent": {
    "tenki_v3": "insufficient_history",
    "tenki_v4": "insufficient_history"
