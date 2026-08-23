@@ -16,6 +16,7 @@ import csv
 import io
 import json
 import os
+import socket
 import urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -28,11 +29,22 @@ REGIONS = {"japan": "128,30,146,46"}
 SOURCE = "VIIRS_SNPP_NRT"
 
 
+def _force_ipv4():
+    """NASA(EOSDIS)のホストはIPv6を返すが GitHub Runner はIPv6を出られない
+    （2026-08-23に `Errno 101 Network is unreachable` で判明）。IPv4だけを引く。"""
+    orig = socket.getaddrinfo
+
+    def v4_only(host, port, family=0, type=0, proto=0, flags=0):
+        return orig(host, port, socket.AF_INET, type, proto, flags)
+    socket.getaddrinfo = v4_only
+
+
 def fetch(region: str, bbox: str, days: int = 1) -> list:
     key = os.environ.get("FIRMS_MAP_KEY", "").strip()
     if not key:
         print("FIRMS_MAP_KEY 未設定 → スキップ（鍵が入ればこの系統が自動で走り出す）")
         return []
+    _force_ipv4()
     url = f"https://firms.modaps.eosdis.nasa.gov/api/area/csv/{key}/{SOURCE}/{bbox}/{days}"
     req = urllib.request.Request(url, headers={"User-Agent": UA})
     with urllib.request.urlopen(req, timeout=90) as r:
