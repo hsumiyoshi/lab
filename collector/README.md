@@ -97,6 +97,10 @@ SOURCES["xxx"] = {
 - [ ] `data_manifest.json` に追加（`python3 data_guard.py --update` で状態を記録）
 - [ ] `.github/workflows/collector.yml` のスケジュールに載る（既定の2回で足りるか確認）
 - [ ] 本社 `docs/experiments.md` の素材棚に状態を書く
+- [ ] **公開ダッシュボードに載せる**（`build_site.py` のパネル＋`site_template.html` のナビ＋JSのid配列の3箇所）。
+  2026-08-24にリーグを4本作ってここを忘れ、**ダッシュボードだけ6本のまま**になっていた。
+  採点前は「収集中（N件）」、採点後は成績表に切り替わるように書く——空パネルが並ぶと
+  「動いていない」と「まだ始まっていない」が混ざる
 
 ## 5. やめるときの扱い（**自動停止はしない**・2026-08-24 Haruki指示）
 
