@@ -9,6 +9,7 @@
 """
 
 import importlib.util
+import json
 import subprocess
 import sys
 from pathlib import Path
@@ -85,6 +86,13 @@ def main():
               len(rt.check_expectations("t", [{"a": 1}], {"schema": ["a", "b"]})) > 0)
         check("アラート: 正常系は無音",
               len(rt.check_expectations("t", [{"a": 1}], {"rows": [1, 5], "schema": ["a"]})) == 0)
+        # 収集対象を増やす運用の強制: 宣言したソースは必ずマニフェストに載せる
+        # （載せ忘れると保全の番人の視界から外れ、消えても気づけない）
+        man = json.loads((HERE / "data_manifest.json").read_text())
+        paths = {d["path"] for d in man["datasets"]}
+        for name in sc.SOURCES:
+            check(f"マニフェスト登録 {name}", f"collector/data/{name}.json" in paths,
+                  "data_manifest.json に未登録（保全の番人が見ない）")
     except Exception as e:
         check("収集骨格の検査", False, f"{type(e).__name__}: {e}")
 
