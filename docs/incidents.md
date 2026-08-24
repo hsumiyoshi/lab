@@ -9,5 +9,5 @@ CIが落ちるたびにこの表へ1行追記される（`if: failure()` ステ�
 | 2026-08-19T05:34Z | exp02 veg forward weekly | [run](https://github.com/hsumiyoshi/lab/actions/runs/32219960903) | 解決（matplotlib未導入→requirements.txtへ集約 2026-08-23） |
 | 2026-08-21T22:20Z | submit picks（strategies側） | — | 解決（Open-Meteo 429→気象CSVのgit追跡＋長時間バックオフ） |
 | 2026-08-23T09:41Z | exp10 global disaster league | [run](https://github.com/hsumiyoshi/lab/actions/runs/32631678717) | 解決（新リーグのdata/がgitignore＋NASAへIPv6到達不能） |
-| 2026-08-23T22:18Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/32670176818) | 未対応 |
-| 2026-08-24T05:31Z | exp01 forward daily | [run](https://github.com/hsumiyoshi/lab/actions/runs/32693162667) | 未対応 |
+| 2026-08-23T22:18Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/32670176818) | 解決（提出は成功したがpushが他CIと衝突して弾かれた→全CIのpushを再試行つきに 2026-08-24） |
+| 2026-08-24T05:31Z | exp01 forward daily | [run](https://github.com/hsumiyoshi/lab/actions/runs/32693162667) | 解決（コンテナ巻き戻し時のファイルコピー運用がforward.pyを8/13以前へ巻き戻していた 2026-08-24） |

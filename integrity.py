@@ -89,6 +89,42 @@ def main():
             adds = re.search(r"git add ([^\n]+)", body)
             check(bool(adds and adds.group(1).strip()), f"{wf}: git add の対象が空")
 
+    # ⑦ push競合に耐えるか（2026-08-23の出力制御リーグ: 提出は成功したのにpushが
+    #    他ワークフローと衝突して弾かれ、提出が消えかけた。`git push || true` だと
+    #    緑のまま黙ってデータが落ちる＝最悪の形）
+    for wf, body in workflows.items():
+        if "git add" not in body:
+            continue
+        for step in body.split("- name:"):
+            if "git add" not in step or "git push" not in step:
+                continue
+            if "incident-bot" in step:
+                continue  # 障害記録は元の失敗を隠さないため `|| true` が正しい
+            check("pushed=1" in step,
+                  f"{wf}: 成果物のpushが競合に無防備（再試行ループが無い）")
+            check("git push || true" not in step,
+                  f"{wf}: 成果物のpushが `|| true` で失敗を握り潰している")
+
+    # ⑧ 外部ライブラリを使うスクリプトを、依存を入れずに走らせていないか
+    #    （2026-08-19の青果リーグ: matplotlib未導入で4日間落ち続け、しかも
+    #     「CI未発火」と誤診された。依存はrequirements.txtに集約する約束）
+    third = [l.split("#")[0].strip() for l in (HERE / "requirements.txt").read_text().splitlines()]
+    third = [t for t in third if t]
+    for wf, body in workflows.items():
+        if "requirements.txt" in body:
+            continue
+        wd = re.search(r"working-directory: (\S+)", body)
+        for script in re.findall(r"python3 (\S+\.py)", body):
+            cand = (HERE / wd.group(1) / script) if wd else (HERE / script)
+            if not cand.exists():
+                cand = HERE / script
+            if not cand.exists():
+                continue
+            src = cand.read_text()
+            used = [t for t in third if re.search(rf"^\s*(import|from) {t}\b", src, re.M)]
+            check(not used,
+                  f"{wf}: {script} が {'/'.join(used)} を使うのに依存を入れていない")
+
     # ⑥ 収集宣言 → CIで実行されているか（宣言だけして動かないのを防ぐ）
     coll = workflows.get("collector.yml", "")
     check("collect.py" in coll, "collector.yml が collect.py を実行していない")

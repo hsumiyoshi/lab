@@ -25,7 +25,14 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add exp11_books/picks exp11_books/data exp11_books/reports
           git diff --cached --quiet && echo "no changes" || git commit -m "books: $(date -u +%Y-%m-%d) 取得・採点・提出"
-          git push
+          pushed=0
+          for i in 1 2 3 4 5; do
+            if git push; then pushed=1; break; fi
+            echo "push競合。リモートを取り込んで再試行 ($i/5)"
+            git pull --rebase --autostash origin main || true
+            sleep $((i * 3))
+          done
+          [ "$pushed" = "1" ]
       - name: Record failure (落ちたことを台帳に残す)
         if: failure()
         run: |

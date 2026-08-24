@@ -30,4 +30,11 @@ jobs:
           git pull --rebase --autostash origin main || true
           git add collector/data collector/raw docs/incidents.md
           git diff --cached --quiet && echo "no changes" || git commit -m "collect: $(date -u +%Y-%m-%dT%H)Z"
-          git push || true
+          pushed=0
+          for i in 1 2 3 4 5; do
+            if git push; then pushed=1; break; fi
+            echo "push競合。リモートを取り込んで再試行 ($i/5)"
+            git pull --rebase --autostash origin main || true
+            sleep $((i * 3))
+          done
+          [ "$pushed" = "1" ]
