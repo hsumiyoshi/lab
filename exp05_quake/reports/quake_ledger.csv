@@ -1,1 +1,2 @@
-
+week,week_start,actual,flat,omori,omori_params,err_omori,err_flat
+2026-W34,2026-08-17,31,80,50.4,"K=65,c=0.01,p=0.71",0.474,0.929
