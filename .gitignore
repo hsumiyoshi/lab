@@ -16,7 +16,9 @@ exp01_jepx/data/*
 !exp02_vegetable/data/
 !exp01_jepx/data/spot_2025.csv
 !exp01_jepx/data/spot_2026.csv
+!exp07_satellite/data/
 !exp03_weather/data/
+!exp07_satellite/data/
 !exp03_weather/data/raw/
 !exp08_curtail/data/
 !exp08_curtail/data/raw/

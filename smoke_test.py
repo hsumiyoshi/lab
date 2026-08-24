@@ -96,6 +96,11 @@ def main():
     except Exception as e:
         check("収集骨格の検査", False, f"{type(e).__name__}: {e}")
 
+    # ⑥ 配線の整合性（部品が動くかではなく、部品どうしが繋がっているか）
+    r = subprocess.run([sys.executable, str(HERE / "integrity.py")], capture_output=True, text=True)
+    check("整合性チェック", r.returncode == 0,
+          (r.stdout or r.stderr).strip().splitlines()[-1] if (r.stdout or r.stderr) else "失敗")
+
     print()
     if FAILS:
         print(f"❌ {len(FAILS)}件の失敗:")
