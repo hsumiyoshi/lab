@@ -25,6 +25,8 @@ exp01_jepx/data/*
 !exp11_books/data/
 !exp11_books/data/raw/
 !exp04_realestate/data_archive/
+!collector/data/
+!collector/raw/
 output/
 .DS_Store
 .apikey

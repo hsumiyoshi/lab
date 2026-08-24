@@ -72,6 +72,22 @@ def main():
     except Exception as e:
         check("契約検査の動作", False, str(e))
 
+    # ⑤ 収集骨格: 宣言が揃っているか＋アラートが本当に鳴るか（鳴らない検査は無意味）
+    try:
+        sys.path.insert(0, str(HERE / "collector"))
+        rt = import_module(HERE / "collector" / "runtime.py")
+        sc = import_module(HERE / "collector" / "sources.py")
+        for name, spec in sc.SOURCES.items():
+            missing = {"name", "url", "expect", "parser", "grade"} - set(spec)
+            check(f"宣言 {name}", not missing, f"項目が欠けている {sorted(missing)}")
+        check("アラート: 0件を検知", len(rt.check_expectations("t", [], {"rows": [1, 5]})) > 0)
+        check("アラート: 列欠けを検知",
+              len(rt.check_expectations("t", [{"a": 1}], {"schema": ["a", "b"]})) > 0)
+        check("アラート: 正常系は無音",
+              len(rt.check_expectations("t", [{"a": 1}], {"rows": [1, 5], "schema": ["a"]})) == 0)
+    except Exception as e:
+        check("収集骨格の検査", False, f"{type(e).__name__}: {e}")
+
     print()
     if FAILS:
         print(f"❌ {len(FAILS)}件の失敗:")
