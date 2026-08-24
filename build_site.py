@@ -113,25 +113,30 @@ def ai_score_body(ai):
     return f"<table>{head}{trs}</table>{note}"
 
 
-def schedule_note(ledger_rows, weekday: int, hour: int, label: str) -> str:
-    """採点予定の文言を台帳の状態から作る（2026-08-24）。
+def schedule_note(ledger_rows, weekday: int, hour: int, first_scoring: str, label: str) -> str:
+    """採点予定の文言を実態から作る（2026-08-24）。
 
-    固定文字列だと「初戦 8/17週 — 水曜14:00に採点結果がここに載る」のように、
-    **過ぎた予定を未来のことのように書き続ける**（8/19の青果CIは失敗していたのに
-    ダッシュボードは待っているように見えていた）。実態から書く。
+    固定文字列だと過ぎた予定を未来のことのように書き続ける（8/19の青果は失敗していたのに
+    「水曜14:00に載る」と待っている表示のままだった）。一方、**初回ラウンドが終わる前は
+    「採点対象が無い」のが正常**であり、それを失敗と書くのも同じ種類の嘘になる
+    （8/17の地震は成功していたのに「CI失敗」と表示していた）。両方を区別する。
+
+    first_scoring: 初めて採点が成立しうる日時（ラウンドの週が終わった後の最初の採点機会）
     """
     now = datetime.now(JST)
     ahead = (weekday - now.weekday()) % 7
     nxt = (now + timedelta(days=ahead)).replace(hour=hour, minute=0, second=0, microsecond=0)
     if nxt <= now:
         nxt += timedelta(days=7)
-    prev = nxt - timedelta(days=7)
+    first = datetime.fromisoformat(first_scoring).replace(tzinfo=JST)
+
     if ledger_rows:
         return f"次回採点: {nxt:%-m/%d(%a) %H:%M}"
-    if prev < now:
-        return (f"未採点——前回の採点予定 {prev:%-m/%d %H:%M} に結果が出ていない"
-                f"（{label}）。次の機会は {nxt:%-m/%d(%a) %H:%M}")
-    return f"初採点は {nxt:%-m/%d(%a) %H:%M}"
+    if now < first:
+        return f"初採点は {first:%-m/%d(%a) %H:%M}——それまでは収集期間（ラウンドの週が終わるまで採点対象が無い）"
+    prev = nxt - timedelta(days=7)
+    return (f"未採点——採点機会 {prev:%-m/%d %H:%M} を過ぎても結果が出ていない"
+            f"（{label}）。次の機会は {nxt:%-m/%d(%a) %H:%M}")
 
 
 def league_panels(veg, qk, ai, new=None):
@@ -196,9 +201,9 @@ def league_panels(veg, qk, ai, new=None):
               ]),
               (table(veg, ["week", "item", "oracle", "equal", "weekshape8", "stop_rule"],
                      ["週", "品目", "oracle", "均等", "weekshape8", "stop_rule"]) if veg
-               else empty(schedule_note(veg, 2, 14, "CI失敗またはデータ未確定")))
+               else empty(schedule_note(veg, 2, 14, "2026-08-26T14:00", "CI失敗またはデータ未確定")))
               + fig("exp02_vegetable/reports/veg_chart.png", "直近90日の日次単価"),
-              empty(schedule_note(veg, 2, 14, "CI失敗またはデータ未確定")),
+              empty(schedule_note(veg, 2, 14, "2026-08-26T14:00", "CI失敗またはデータ未確定")),
               f"{GHB}/exp02_vegetable/reports/veg_forward.md"),
         panel("lg-quake",
               "大森則（余震が時間のべき乗で減る経験則）をフィットし、熊本余震（2026-07-28 M7.1）の"
@@ -210,9 +215,9 @@ def league_panels(veg, qk, ai, new=None):
               ]),
               (table(qk, ["week", "actual", "omori", "flat", "err_omori", "err_flat"],
                      ["週", "実績", "大森則", "横ばい", "誤差(大森)", "誤差(横ばい)"]) if qk
-               else empty(schedule_note(qk, 0, 14, "CI失敗またはデータ未確定")))
+               else empty(schedule_note(qk, 0, 14, "2026-08-24T14:00", "CI失敗またはデータ未確定")))
               + fig("exp05_quake/reports/quake_forward.png", "日別余震件数と大森則フィット"),
-              empty(schedule_note(qk, 0, 14, "CI失敗またはデータ未確定")),
+              empty(schedule_note(qk, 0, 14, "2026-08-24T14:00", "CI失敗またはデータ未確定")),
               f"{GHB}/exp05_quake/reports/quake_forward.md"),
         panel("lg-re",
               "2026-07-28 熊本地震（M7.1）の直後に、市場への影響を予言してコミット済み。"
