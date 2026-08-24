@@ -37,9 +37,9 @@
    "refetch": "python3 exp01_jepx/weather.py",
    "note": "日射・気温の実測（学習用）",
    "state": {
-    "bytes": 24417,
-    "sha256": "340be0b73d39623def8fc1011148c35ffc6d8c57b254c1681cd9d033e7b12573",
-    "lines": 526,
+    "bytes": 24991,
+    "sha256": "76bf78aea244e31532c0b1ea4c19ee50b9dccdb5248e48723897338e282a26e5",
+    "lines": 538,
     "checked": "2026-08-24"
    }
   },
@@ -51,9 +51,9 @@
    "refetch": "python3 exp01_jepx/weather.py",
    "note": "当時の予報（判断入力）",
    "state": {
-    "bytes": 24532,
-    "sha256": "ef5dac103114843164ec31f7cbfb1632a356d711b8aa2c887226ff046731ea4d",
-    "lines": 531,
+    "bytes": 25096,
+    "sha256": "35ef7edfda47dd869e18659735f24e9cd13f9d8a0f61a399e8ea475d70ebf1b4",
+    "lines": 543,
     "checked": "2026-08-24"
    }
   },
@@ -65,9 +65,9 @@
    "refetch": "再計算不可（提出の事実は再現できない）",
    "note": "フォワード台帳。提出と採点の履歴",
    "state": {
-    "bytes": 1669,
-    "sha256": "e42c59c0c9142742d703be7a4891cc8c3a1b8c5c08afd0a2c2ccc79e6bf0bae4",
-    "lines": 12,
+    "bytes": 1795,
+    "sha256": "d525445631d87f3d0b6e8defce5cc82fb363e15add8477bb225299987377ff90",
+    "lines": 13,
     "checked": "2026-08-24"
    }
   },
@@ -200,9 +200,9 @@
    "refetch": "**不可**（直近約2,000件しか遡れない）",
    "note": "継続収集した者だけが持つ",
    "state": {
-    "bytes": 47270,
-    "sha256": "2088e59f9cf0b31927c8473630e1b46992eef8a84abd50d74de2d4a100e82be3",
-    "lines": 772,
+    "bytes": 50798,
+    "sha256": "ffa8f72ca8d6828b87ae7db1656e81f5c5bd26874e548ec0aae460386bf3e102",
+    "lines": 826,
     "checked": "2026-08-24"
    }
   },
@@ -242,9 +242,9 @@
    "refetch": "**不可**（当日分しか表示されない）",
    "note": "出力制御見通しの履歴",
    "state": {
-    "bytes": 77,
-    "sha256": "26f731aad1efaf90a012fac28bcf43c891ce2fc14cfb97b6864db0285ff979ad",
-    "lines": 5,
+    "bytes": 102,
+    "sha256": "9a9cf1d579b5eac411ba8df27831f14368e02d763e594d247b60d87e3ef9fae4",
+    "lines": 6,
     "checked": "2026-08-24"
    }
   },
@@ -338,9 +338,9 @@
    "refetch": "**不可**（当日分しか表示されない）",
    "note": "出力制御見通しの全行（本土＋離島×3日）",
    "state": {
-    "bytes": 1559,
-    "sha256": "cffbc39f4d915ddbd5471b5e364852d7b90ed133c9b73818e3bd76f45ac51921",
-    "lines": 65,
+    "bytes": 2078,
+    "sha256": "b1ac617cab0aeaf276549e3afa0ad9ee8d3d4e43ba74814b7a08f82dafece346",
+    "lines": 86,
     "checked": "2026-08-24"
    }
   },
