@@ -37,9 +37,22 @@ def _get(url: str, tries: int = 3):
                 raise
 
 
+def _save_raw(name: str, obj) -> None:
+    """生情報の保存（2026-08-24・Haruki方針「取れる生情報はできるだけ残す。HTMLは不要、中身が残ればいい」）。
+
+    上書き・巻き取りで消える発表は、抽出後の1数値だけ残しても後から問い直せない。
+    装飾は捨て、構造化された中身をそのまま日付つきで積む。
+    """
+    d = HERE / "data" / "raw"
+    d.mkdir(parents=True, exist_ok=True)
+    f = d / f"{name}_{datetime.now(JST):%Y-%m-%d}.json"
+    f.write_text(json.dumps(obj, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+
+
 def jma_tomorrow_max(target) -> float | None:
     """気象庁の府県天気予報から対象日の最高気温を取る（17:00発表を想定）。"""
     j = _get(f"https://www.jma.go.jp/bosai/forecast/data/forecast/{AREA}.json")
+    _save_raw("jma_forecast", j)          # 発表そのものを保存（天気・降水確率・週間も含む）
     for series in j[0]["timeSeries"]:
         a = series["areas"][0]
         if "temps" not in a:

@@ -17,9 +17,13 @@ exp01_jepx/data/*
 !exp01_jepx/data/spot_2025.csv
 !exp01_jepx/data/spot_2026.csv
 !exp03_weather/data/
+!exp03_weather/data/raw/
 !exp08_curtail/data/
+!exp08_curtail/data/raw/
 !exp10_disaster/data/
+!exp10_disaster/data/raw/
 !exp11_books/data/
+!exp11_books/data/raw/
 !exp04_realestate/data_archive/
 output/
 .DS_Store

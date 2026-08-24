@@ -47,10 +47,20 @@ def fetch_top10() -> dict:
         if re.match(r"^本体[\d,]+円", t):
             g = buf[-4:]
             items.append({"title": g[0], "author": g[1] if len(g) > 1 else "",
-                          "publisher": g[2] if len(g) > 2 else ""})
+                          "publisher": g[2] if len(g) > 2 else "", "price": t})
             buf = []
     if len(items) < 10:
         raise RuntimeError(f"トップ10を取り切れない（{len(items)}件）——パーサが壊れた可能性")
+
+    # 生情報の保存（2026-08-24）: 過去4週分しか表示されないページなので、
+    # 抽出後のタイトルだけでなく著者・出版社・本体価格まで含めて残す。
+    # ジャンル別（文芸・ビジネス等）はHTMLに無くPDFのみ——**取れないものは取れないと記録する**
+    d = HERE / "data" / "raw"
+    d.mkdir(parents=True, exist_ok=True)
+    (d / f"tohan_{date}.json").write_text(
+        json.dumps({"date": date, "source": URL, "ranking": "総合",
+                    "note": "ジャンル別ランキングはHTMLに無くPDF提供のみ（2026-08-24確認）",
+                    "items": items}, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     return {"date": date, "top10": items[:10]}
 
 

@@ -46,8 +46,12 @@ def fetch_events() -> list:
             day = datetime.strptime(frm[:25].strip(), "%a, %d %b %Y %H:%M:%S").date()
         except ValueError:
             continue
+        # 生情報の保存（2026-08-24）: 巻き取り式RSSなので、抽出後の5項目だけ残すと
+        # 後から「震源の深さ」「影響人口」「severity」を問い直せない。全タグを保持する。
+        allfields = {k: v.strip() for k, v in re.findall(r"<([\w:]+)>([^<]*)</\1>", item)}
         out.append({"id": f"{etype}{eid}", "type": etype, "from": str(day),
-                    "alert": tag("gdacs:alertlevel"), "country": tag("gdacs:country")})
+                    "alert": tag("gdacs:alertlevel"), "country": tag("gdacs:country"),
+                    "raw": allfields})
     return out
 
 
@@ -60,6 +64,10 @@ def collect():
         if e["id"] not in hist:
             hist[e["id"]] = e
             new += 1
+        elif not hist[e["id"]].get("raw") and e.get("raw"):
+            # 生情報の後付け: 保存を始める前に取り込んだイベントにも、まだ配信に
+            # 残っているうちに全タグを補う（RSSから落ちたら二度と取れない）
+            hist[e["id"]]["raw"] = e["raw"]
     f.parent.mkdir(exist_ok=True)
     f.write_text(json.dumps(hist, ensure_ascii=False, indent=1, sort_keys=True), encoding="utf-8")
     print(f"取込: 新規 {new}件 / 履歴 {len(hist)}件")

@@ -56,6 +56,21 @@ def fetch_outlook() -> dict:
     out = {}
     for (m, d), v in zip(days[:3], honshu):
         out[f"{year}-{int(m):02d}-{int(d):02d}"] = "なし" if v.strip() in ("―", "-", "－") else v.strip()
+    # 生情報の保存: 抽出後のフラグだけでなく、表の全行（離島含む）と発表時刻を残す
+    #（2026-08-24。当日分しか表示されないページなので、後から問い直す手段が他に無い）
+    allrows = []
+    for r_ in rows:
+        cells = [re.sub(r"<[^>]+>", "", c).replace("&nbsp;", " ").strip()
+                 for c in re.findall(r"<t[dh][^>]*>(.*?)</t[dh]>", r_, re.S)]
+        cells = [c for c in cells if c]
+        if cells:
+            allrows.append(cells)
+    rawdir = HERE / "data" / "raw"
+    rawdir.mkdir(parents=True, exist_ok=True)
+    (rawdir / f"kyuden_outlook_{datetime.now(JST):%Y-%m-%d}.json").write_text(
+        json.dumps({"fetched_at": datetime.now(JST).isoformat(timespec="seconds"),
+                    "days": days, "table": allrows}, ensure_ascii=False, separators=(",", ":")),
+        encoding="utf-8")
     return {"published": f"{int(pub.group(1)):02d}-{int(pub.group(2)):02d} "
                          f"{int(pub.group(3)):02d}:{int(pub.group(4)):02d}" if pub else "不明",
             "outlook": out}

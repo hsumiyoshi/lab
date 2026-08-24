@@ -1,1 +1,13 @@
-{}
+{
+ "2026-08-25": {
+  "actual": "なし",
+  "hit": {
+   "always_none": true,
+   "persistence": true
+  },
+  "picks": {
+   "always_none": "なし",
+   "persistence": "なし"
+  }
+ }
+}
