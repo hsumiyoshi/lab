@@ -19,11 +19,13 @@ jobs:
       - name: Fetch + score + submit
         working-directory: exp11_books
         run: python3 books.py
+      - name: Build dashboard（台帳を更新したら必ず作り直す）
+        run: python3 build_site.py
       - name: Commit
         run: |
           git config user.name "books-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add exp11_books/picks exp11_books/data exp11_books/reports
+          git add exp11_books/picks exp11_books/data exp11_books/reports docs
           git diff --cached --quiet && echo "no changes" || git commit -m "books: $(date -u +%Y-%m-%d) 取得・採点・提出"
           pushed=0
           for i in 1 2 3 4 5; do

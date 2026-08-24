@@ -22,11 +22,13 @@ jobs:
       - name: Run forward runner
         working-directory: exp01_jepx
         run: python3 forward.py
+      - name: Build dashboard（台帳を更新したら必ず作り直す）
+        run: python3 build_site.py
       - name: Commit report
         run: |
           git config user.name "forward-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add exp01_jepx/reports exp01_jepx/data/weather_actual.csv exp01_jepx/data/weather_forecast.csv
+          git add exp01_jepx/reports exp01_jepx/data/weather_actual.csv exp01_jepx/data/weather_forecast.csv docs
           git diff --cached --quiet && echo "no changes" || git commit -m "forward: $(date -u +%Y-%m-%d) daily report（気象CSVの差分含む）"
           pushed=0
           for i in 1 2 3 4 5; do

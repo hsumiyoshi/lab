@@ -125,6 +125,19 @@ def main():
             check(not used,
                   f"{wf}: {script} が {'/'.join(used)} を使うのに依存を入れていない")
 
+    # ⑨ 台帳を更新したCIが、ダッシュボードも作り直しているか
+    #    （2026-08-24: 電力の台帳は毎日更新されるのに build_site.py を走らせるのは
+    #     週次の地震・青果CIだけだった＝公開ダッシュボードが最大1週間古い数字を
+    #     出し続けていた。Harukiが「レポートと合ってない」と発見）
+    for wf, body in workflows.items():
+        adds = " ".join(re.findall(r"git add ([^\n]+)", body))
+        if not re.search(r"exp\d+\w*/reports", adds):
+            continue
+        check("build_site.py" in body,
+              f"{wf}: リーグ台帳を更新するのにダッシュボードを作り直していない")
+        check(re.search(r"git add [^\n]*\bdocs\b", body) is not None,
+              f"{wf}: ダッシュボードを作り直しても docs をコミットしていない")
+
     # ⑥ 収集宣言 → CIで実行されているか（宣言だけして動かないのを防ぐ）
     coll = workflows.get("collector.yml", "")
     check("collect.py" in coll, "collector.yml が collect.py を実行していない")

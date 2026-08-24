@@ -21,11 +21,13 @@ jobs:
         working-directory: exp08_curtail
         run: |
           if [ "$(date -u +%H)" = "22" ]; then python3 curtail.py; else python3 curtail.py collect; fi
+      - name: Build dashboard（台帳を更新したら必ず作り直す）
+        run: python3 build_site.py
       - name: Commit
         run: |
           git config user.name "curtail-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add exp08_curtail/picks exp08_curtail/data exp08_curtail/reports
+          git add exp08_curtail/picks exp08_curtail/data exp08_curtail/reports docs
           git diff --cached --quiet && echo "no changes" || git commit -m "curtail: $(date -u +%Y-%m-%dT%H)Z"
           pushed=0
           for i in 1 2 3 4 5; do
