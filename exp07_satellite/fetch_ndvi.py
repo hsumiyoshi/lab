@@ -16,9 +16,23 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import os
+
+# 2026-08-24: COGの読み出しはrasterio(GDAL)が内部でHTTPレンジ取得を行うため、
+# 共通ランタイムに"経路として"寄せるとGDALの部分読み込みという利点を捨てることになる。
+# よって**設定で寄せる**——リトライ・待機・タイムアウトをランタイムと同じ思想に揃える。
+os.environ.setdefault("GDAL_HTTP_MAX_RETRY", "4")
+os.environ.setdefault("GDAL_HTTP_RETRY_DELAY", "2")
+os.environ.setdefault("GDAL_HTTP_TIMEOUT", "60")
+os.environ.setdefault("CPL_VSIL_CURL_USE_HEAD", "NO")     # 余計なHEADを打たない（礼儀）
+os.environ.setdefault("GDAL_DISABLE_READDIR_ON_OPEN", "EMPTY_DIR")  # 無駄な一覧取得を抑制
+
 import rasterio
 from rasterio.warp import transform_bounds
 from rasterio.windows import from_bounds
+
+import pathlib as _pl, sys
+sys.path.insert(0, str(_pl.Path(__file__).resolve().parent.parent / "collector"))
 
 HERE = Path(__file__).parent
 DATA = HERE / "data"
@@ -42,7 +56,12 @@ def stac_search(year: int) -> list[dict]:
     req = urllib.request.Request(
         STAC, data=json.dumps(body).encode(),
         headers={"Content-Type": "application/json"})
-    with urllib.request.urlopen(req, timeout=60) as res:
+    # 2026-08-24: STAC検索も共通ランタイム経由（COGのバイナリ部分読み込みは対象外のまま）
+    from runtime import fetch_bytes
+    import io as _io, contextlib as _ctx
+    _payload = fetch_bytes(req.full_url, data=req.data, headers=dict(req.headers),
+                           interval=1.0, retries=3, timeout=60)
+    with _ctx.nullcontext(_io.BytesIO(_payload)) as res:
         return json.load(res)["features"]
 
 

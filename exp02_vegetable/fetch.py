@@ -15,6 +15,9 @@ import urllib.request
 from datetime import date
 from pathlib import Path
 
+import pathlib as _pl, sys
+sys.path.insert(0, str(_pl.Path(__file__).resolve().parent.parent / "collector"))
+
 import pandas as pd
 
 DATA = Path(__file__).parent / "data"
@@ -35,17 +38,10 @@ def fetch_month(item: str, year: int, month: int) -> pd.DataFrame:
         "baseYear": str(year), "baseMonthFr": str(month),
         "city": CITY_TOKYO, "hinmokuRuibetu": "-1", "hinmokuCode": item,
     }).encode()
-    for attempt in range(4):
-        try:
-            # 2026-08-24: ここはPOST（検索フォーム）。共通ランタイムはGET専用なので未移行。
-            # POST対応が必要になった時点でランタイム側に足す（今は1ソースのために抽象を増やさない）
-            with urllib.request.urlopen(urllib.request.Request(URL, data=body), timeout=60) as res:
-                html = res.read().decode("euc-jp", errors="replace")
-            break
-        except Exception:
-            if attempt == 3:
-                raise
-            time.sleep(2 ** (attempt + 1))
+    # 2026-08-24: 共通ランタイム経由（POST）。Haruki方針「基盤に寄せる安心感を優先」により、
+    # 1ソースのためでもランタイム側にPOSTを足して統一した。礼儀・バックオフ・429対応が付く
+    from runtime import fetch_bytes
+    html = fetch_bytes(URL, data=body, interval=2.0, retries=4, timeout=60).decode("euc-jp", errors="replace")
     tables = re.findall(r"<table[^>]*>(.*?)</table>", html, re.S)
     if len(tables) < 2:
         return pd.DataFrame()
