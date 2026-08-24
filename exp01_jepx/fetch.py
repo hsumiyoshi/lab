@@ -10,7 +10,11 @@
 """
 
 import sys
+import pathlib
+import sys
 import urllib.request
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / "collector"))
 from datetime import date
 from pathlib import Path
 
@@ -27,7 +31,14 @@ def fetch(fy: int) -> Path:
     dest = DATA_DIR / f"spot_{fy}.csv"
     url = URL.format(fy=fy)
     print(f"fetch {url}")
-    with urllib.request.urlopen(url, timeout=60) as res:
+    # 2026-08-24: HTTPは共通ランタイム経由（礼儀・バックオフ・429対応を1箇所に集約）。
+    # **bytes版を使う**——cp932の往復デコードでCSVの中身が変わる事故を避けるため
+    from runtime import fetch_bytes
+    _payload = fetch_bytes(url, interval=2.0, retries=4)
+    class _R:
+        def read(self):
+            return _payload
+    with __import__("contextlib").nullcontext(_R()) as res:
         raw = res.read()
     if len(raw) < 1000:
         raise RuntimeError(f"{url}: 応答が小さすぎる（{len(raw)}bytes）。年度が存在しない可能性")

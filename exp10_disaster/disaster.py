@@ -19,8 +19,13 @@
 import json
 import re
 import urllib.request
+import sys as _sys, pathlib as _pl
+_sys.path.insert(0, str(_pl.Path(__file__).resolve().parent.parent / "collector"))
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+
+import pathlib as _pl, sys
+sys.path.insert(0, str(_pl.Path(__file__).resolve().parent.parent / "collector"))  # 共通ランタイム
 
 UTC = timezone.utc
 JST = timezone(timedelta(hours=9))
@@ -31,9 +36,8 @@ TARGET_TYPE = "WF"
 
 
 def fetch_events() -> list:
-    req = urllib.request.Request(RSS, headers={"User-Agent": UA})
-    with urllib.request.urlopen(req, timeout=60) as r:
-        x = r.read().decode("utf-8", errors="replace")
+    from runtime import fetch as _rt
+    x = _rt(RSS, interval=2.0, retries=4, ua=UA)
     out = []
     for item in re.findall(r"<item>(.*?)</item>", x, re.S):
         def tag(t):

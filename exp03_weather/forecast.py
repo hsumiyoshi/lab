@@ -15,8 +15,13 @@
 
 import json
 import urllib.request
+import sys as _sys, pathlib as _pl
+_sys.path.insert(0, str(_pl.Path(__file__).resolve().parent.parent / "collector"))
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+
+import pathlib as _pl, sys
+sys.path.insert(0, str(_pl.Path(__file__).resolve().parent.parent / "collector"))  # 共通ランタイム
 
 JST = timezone(timedelta(hours=9))
 HERE = Path(__file__).resolve().parent
@@ -30,8 +35,8 @@ DEBIAS_WINDOW = 30
 def _get(url: str, tries: int = 3):
     for i in range(tries):
         try:
-            with urllib.request.urlopen(url, timeout=30) as r:
-                return json.loads(r.read())
+            from runtime import fetch as _rt
+            return json.loads(_rt(url, interval=1.0, retries=3))
         except Exception:
             if i == tries - 1:
                 raise

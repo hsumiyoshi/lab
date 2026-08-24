@@ -37,6 +37,8 @@ def fetch_month(item: str, year: int, month: int) -> pd.DataFrame:
     }).encode()
     for attempt in range(4):
         try:
+            # 2026-08-24: ここはPOST（検索フォーム）。共通ランタイムはGET専用なので未移行。
+            # POST対応が必要になった時点でランタイム側に足す（今は1ソースのために抽象を増やさない）
             with urllib.request.urlopen(urllib.request.Request(URL, data=body), timeout=60) as res:
                 html = res.read().decode("euc-jp", errors="replace")
             break

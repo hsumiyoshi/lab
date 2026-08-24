@@ -18,8 +18,13 @@ import json
 import os
 import socket
 import urllib.request
+import sys as _sys, pathlib as _pl
+_sys.path.insert(0, str(_pl.Path(__file__).resolve().parent.parent / "collector"))
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+
+import pathlib as _pl, sys
+sys.path.insert(0, str(_pl.Path(__file__).resolve().parent.parent / "collector"))  # 共通ランタイム
 
 UTC = timezone.utc
 HERE = Path(__file__).resolve().parent
@@ -44,11 +49,9 @@ def fetch(region: str, bbox: str, days: int = 1) -> list:
     if not key:
         print("FIRMS_MAP_KEY 未設定 → スキップ（鍵が入ればこの系統が自動で走り出す）")
         return []
-    _force_ipv4()
+    from runtime import fetch as _rt
     url = f"https://firms.modaps.eosdis.nasa.gov/api/area/csv/{key}/{SOURCE}/{bbox}/{days}"
-    req = urllib.request.Request(url, headers={"User-Agent": UA})
-    with urllib.request.urlopen(req, timeout=90) as r:
-        text = r.read().decode("utf-8", errors="replace")
+    text = _rt(url, interval=2.0, retries=3, ipv4=True, ua=UA, timeout=90)   # IPv4強制は共通機能へ
     rows = list(csv.DictReader(io.StringIO(text)))
     print(f"FIRMS {region}: {len(rows)}検知")
     return rows

@@ -13,10 +13,15 @@ tmean = 9-21時平均気温の全国指数（需要規模の概算比で加重�
 import json
 import time
 import urllib.request
+import sys as _sys, pathlib as _pl
+_sys.path.insert(0, str(_pl.Path(__file__).resolve().parent.parent / "collector"))
 from datetime import date, timedelta
 from pathlib import Path
 
 import pandas as pd
+
+import pathlib as _pl, sys
+sys.path.insert(0, str(_pl.Path(__file__).resolve().parent.parent / "collector"))  # 共通ランタイム
 
 DATA = Path(__file__).parent / "data"
 START = "2025-03-01"
@@ -47,7 +52,10 @@ def fetch_point(kind: str, lat: float, lon: float) -> pd.DataFrame:
            f"&hourly=temperature_2m,shortwave_radiation&timezone=Asia%2FTokyo")
     for attempt in range(4):
         try:
-            with urllib.request.urlopen(url, timeout=120) as res:
+            from runtime import fetch as _rt
+            import io as _io, contextlib as _ctx
+            # 429のRetry-After尊重とホスト別レート制限を共通化（8/21-22の提出ジョブ停止の対策）
+            with _ctx.nullcontext(_io.StringIO(_rt(url, interval=2.0, retries=5, timeout=120))) as res:
                 j = json.load(res)
             break
         except Exception:

@@ -40,9 +40,43 @@ def _force_ipv4_once():
     _force_ipv4_once.done = True
 
 
+def fetch_bytes(url: str, *, interval: float = 1.5, retries: int = 4, ipv4: bool = False,
+                ua: str = UA_DEFAULT, timeout: int = 60) -> bytes:
+    """礼儀つきGET（バイト列）。CSVやバイナリはこちらを使う——**文字コードの往復で
+    中身が変わる事故を避けるため**、デコードは呼び出し側の責任にする。"""
+    if ipv4:
+        _force_ipv4_once()
+    host = url.split("/")[2]
+    wait = interval - (time.time() - _last_fetch.get(host, 0))
+    if wait > 0:
+        time.sleep(wait)
+    req = urllib.request.Request(url, headers={"User-Agent": ua, "Accept-Encoding": "gzip"})
+    for attempt in range(retries):
+        try:
+            with urllib.request.urlopen(req, timeout=timeout) as r:
+                raw = r.read()
+                if r.headers.get("Content-Encoding") == "gzip":
+                    raw = gzip.decompress(raw)
+            _last_fetch[host] = time.time()
+            return raw
+        except urllib.error.HTTPError as e:
+            if attempt == retries - 1:
+                raise CollectError(f"{url}: HTTP {e.code}") from e
+            if e.code == 429:
+                w = int(e.headers.get("Retry-After") or 0) or 30 * (2 ** attempt)
+                print(f"  429 → {min(w,300)}秒待機")
+                time.sleep(min(w, 300))
+            else:
+                time.sleep(2 ** (attempt + 1))
+        except Exception as e:
+            if attempt == retries - 1:
+                raise CollectError(f"{url}: {type(e).__name__} {e}") from e
+            time.sleep(2 ** (attempt + 1))
+
+
 def fetch(url: str, *, interval: float = 1.5, retries: int = 4, ipv4: bool = False,
           ua: str = UA_DEFAULT, timeout: int = 40, encoding: str = "utf-8") -> str:
-    """礼儀つきGET。同一ホストへは interval 秒以上あける。429はRetry-Afterを尊重。"""
+    """礼儀つきGET（文字列）。HTML/JSON向け。"""
     if ipv4:
         _force_ipv4_once()
     host = url.split("/")[2]

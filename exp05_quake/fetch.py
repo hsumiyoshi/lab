@@ -7,14 +7,26 @@ code 551 = 地震情報。1リクエスト100件、オフセットで遡る。
 
 import json
 import time
+import pathlib
+import sys
 import urllib.request
 from pathlib import Path
 
 import pandas as pd
 
+import pathlib as _pl, sys
+sys.path.insert(0, str(_pl.Path(__file__).resolve().parent.parent / "collector"))  # 共通ランタイム
+
 DATA = Path(__file__).parent / "data"
 URL = "https://api.p2pquake.net/v2/history?codes=551&limit=100&offset={off}"
 PAGES = 20  # 100件×20 = 直近2,000イベント
+
+
+def _rt():
+    """共通ランタイムのfetch（礼儀・バックオフ・429対応）を借りる。"""
+    sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / "collector"))
+    from runtime import fetch as rt_fetch
+    return rt_fetch
 
 
 def fetch() -> pd.DataFrame:
@@ -24,7 +36,10 @@ def fetch() -> pd.DataFrame:
         req = urllib.request.Request(url, headers={"User-Agent": "lab-exp05/0.1 (personal research)"})
         for attempt in range(4):
             try:
-                with urllib.request.urlopen(req, timeout=60) as res:
+                from runtime import fetch as _rt
+                _txt = _rt(url, interval=1.0, retries=4)
+                import io as _io, contextlib as _ctx
+                with _ctx.nullcontext(_io.StringIO(_txt)) as res:
                     batch = json.load(res)
                 break
             except Exception:
