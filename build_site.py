@@ -113,7 +113,7 @@ def ai_score_body(ai):
     return f"<table>{head}{trs}</table>{note}"
 
 
-def league_panels(veg, qk, ai):
+def league_panels(veg, qk, ai, new=None):
     """左ナビで切り替わるリーグ別パネル（ルール／成績表／当日・次イベントの3ブロック）"""
     GHB = "https://github.com/hsumiyoshi/lab/blob/main"
     def card(title, body):
@@ -125,6 +125,28 @@ def league_panels(veg, qk, ai):
         trs = "".join("<tr>" + "".join(f"<td>{r.get(c, chr(8212))}</td>" for c in cols) + "</tr>"
                       for r in rows[-6:])
         return f"<table><tr>{th}</tr>{trs}</table>"
+    def mae_table(led, unit):
+        """誤差型の台帳（{日付: {err: {機体: 値}}}）から平均誤差の表を作る。"""
+        rows = [v for v in led.values() if isinstance(v, dict) and v.get("err")]
+        if not rows:
+            return empty("初採点待ち")
+        names = sorted({k for r in rows for k in r["err"]})
+        body = "".join(
+            f"<tr><td>{n}</td><td>{sum(r['err'][n] for r in rows if n in r['err'])/max(1,len([r for r in rows if n in r['err']])):.2f}</td>"
+            f"<td>{len([r for r in rows if n in r['err']])}</td></tr>" for n in names)
+        return f"<table><tr><th>機体</th><th>平均誤差({unit})</th><th>出場</th></tr>{body}</table>"
+
+    def hit_table(led):
+        """的中型の台帳（{日付: {hit: {機体: bool}}}）から的中率の表を作る。"""
+        rows = [v for v in led.values() if isinstance(v, dict) and v.get("hit")]
+        if not rows:
+            return empty("初採点待ち")
+        names = sorted({k for r in rows for k in r["hit"]})
+        body = "".join(
+            f"<tr><td>{n}</td><td>{sum(1 for r in rows if r['hit'].get(n))}/{len(rows)}</td>"
+            f"<td>{sum(1 for r in rows if r['hit'].get(n))/len(rows):.0%}</td></tr>" for n in names)
+        return f"<table><tr><th>機体</th><th>的中</th><th>的中率</th></tr>{body}</table>"
+
     def machines(items):
         cards = "".join(
             f"<div class='mc'><span class='mdot' style='background:{c}'></span>"
@@ -194,6 +216,57 @@ def league_panels(veg, qk, ai):
               + fig("exp07_satellite/reports/ndvi_chart.png", "NDVIと入荷量の3年比較"),
               empty("判定 2027年7月頃（東京市場の入荷実績で）"),
               f"{GHB}/exp07_satellite/predictions.md"),
+        panel("lg-weather",
+              "気象庁の17:00発表を常設ベンチにして、翌日の東京の最高気温を当てにいく。"
+              "国家予算の予報が相手なので、**負けても「どの条件で負けるか」が分かる**のが狙い",
+              machines([
+                  ("jma", "#eda100", "気象庁の発表そのまま（強敵ベンチ）"),
+                  ("persistence", "#898781", "今日の実績＝明日の予測（脳死ベンチ）"),
+                  ("openmeteo", "#2a78d6", "別モデル（Open-Meteo）の予報"),
+                  ("blend", "#1baf7a", "気象庁とOpen-Meteoの平均"),
+                  ("debias", "#eb6834", "直近30日の自分の系統誤差を差し引く"),
+              ]),
+              (mae_table(new.get("weather", {}), "℃") if new and new.get("weather")
+               else empty("初採点待ち（提出は毎日18:00 JST）")),
+              empty("次回: 毎日18:00に提出、翌々日に採点"),
+              f"{GHB}/exp03_weather/reports/weather_forward.md"),
+        panel("lg-curtail",
+              "九電が17:00に出す「翌日の再エネ出力制御の見通し」を、**発表の10時間前に**当てる。"
+              "実績量は非公表と分かったため、予測対象を『九電が出す見通しそのもの』に設計変更した",
+              machines([
+                  ("always_none", "#898781", "常に「なし」（脳死ベンチ）"),
+                  ("persistence", "#eda100", "今日と同じ（脳死ベンチ2）"),
+              ]),
+              (hit_table(new.get("curtail_led", {})) if new and new.get("curtail_led")
+               else empty(f"収集中（{len(new.get('curtail_hist', {})) if new else 0}日分）。"
+                          "夏は制御がほぼ出ないので本番は春と秋")),
+              empty("提出 07:00 / 採点 17:10 JST"),
+              f"{GHB}/exp08_curtail/reports/curtail_forward.md"),
+        panel("lg-disaster",
+              "全球の災害イベント（GDACS）が明日いくつ立ち上がるかを当てる。"
+              "**RSSは巻き取り式で古いものが落ちる**ため、毎日取り込まないと後から遡れない——"
+              "継続そのものが資産になる型",
+              machines([
+                  ("persistence", "#eda100", "今日と同じ件数（脳死ベンチ）"),
+                  ("ma7", "#2a78d6", "直近7日平均"),
+                  ("FIRMS", "#eb6834", "参考: 衛星が観測した熱異常のピクセル数（人の集計との差を見る）"),
+              ]),
+              (mae_table(new.get("disaster_led", {}), "件") if new and new.get("disaster_led")
+               else empty(f"収集中（イベント{len(new.get('disaster_ev', {})) if new else 0}件）")),
+              empty("毎日07:00 JSTに取込・提出・採点"),
+              f"{GHB}/exp10_disaster/reports/disaster_forward.md"),
+        panel("lg-books",
+              "今週のベストセラー上位10冊のうち、来週も残るのは何冊か。"
+              "1位当ては運の比重が大きいので、**ヒットの持続性そのもの**を測る設計にした",
+              machines([
+                  ("all_stay", "#898781", "10冊すべて残る（脳死ベンチ）"),
+                  ("persistence", "#eda100", "前回の実績と同じ"),
+                  ("mean", "#2a78d6", "過去の平均"),
+              ]),
+              (mae_table(new.get("books_led", {}), "冊") if new and new.get("books_led")
+               else empty(f"収集中（{len(new.get('books_rank', {})) if new else 0}週分）。初採点は8/27")),
+              empty("毎週木曜07:00 JSTに取得・採点・提出"),
+              f"{GHB}/exp11_books/reports/books_forward.md"),
         panel("lg-ai",
               "互いに矛盾する推論スタイルを凍結した3つのAI人格が、毎週同じ公開情報だけを与えられた"
               "独立セッションとして、今週のリーグの結末に確率で賭ける（互いの答えは見えない）。"
@@ -228,6 +301,21 @@ def build():
     veg = read_csv("exp02_vegetable/reports/veg_ledger.csv")
     ai = json.loads((ROOT / "ai_league.json").read_text(encoding="utf-8")) if (ROOT / "ai_league.json").exists() else None
     qk = read_csv("exp05_quake/reports/quake_ledger.csv")
+    # 新設4リーグ（2026-08-23開設）。台帳はJSON。無ければ空で描く
+    def read_json(path):
+        f = ROOT / path
+        try:
+            return json.loads(f.read_text())
+        except Exception:
+            return {}
+    new = {"weather": read_json("exp03_weather/data/ledger.json"),
+           "curtail_led": read_json("exp08_curtail/data/ledger.json"),
+           "curtail_hist": read_json("exp08_curtail/data/outlook_history.json"),
+           "disaster_led": read_json("exp10_disaster/data/ledger.json"),
+           "disaster_ev": read_json("exp10_disaster/data/events.json"),
+           "firms": read_json("exp10_disaster/data/firms_daily.json"),
+           "books_led": read_json("exp11_books/data/ledger.json"),
+           "books_rank": read_json("exp11_books/data/rankings.json")}
     now = datetime.now(JST)
 
     html = re.sub(r"<!--SAMPLE-->.*?<!--/SAMPLE-->", "", tpl, flags=re.S)
@@ -236,7 +324,7 @@ def build():
                 .replace("{{UPDATED}}", f"{now:%Y-%m-%d %H:%M}")
                 .replace("{{POWER_TABLE}}", power_table(p) if p else "")
                 .replace("{{LATEST_LINE}}", latest_line(p) if p else "初日の採点待ち")
-                .replace("{{LEAGUE_PANELS}}", league_panels(veg, qk, ai))
+                .replace("{{LEAGUE_PANELS}}", league_panels(veg, qk, ai, new))
                 .replace("{{TIMELINE}}", timeline(veg, qk)))
     for src_name, path in (("forward_pnl.png", "exp01_jepx/reports/forward_pnl.png"),
                            ("latest_anatomy.png", None)):

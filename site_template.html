@@ -281,6 +281,10 @@ transition:border-color .2s}
 <a href="#lg-power">⚡ 電力<span class="sub">毎日</span></a>
 <a href="#lg-veg">🥬 青果<span class="sub">週次</span></a>
 <a href="#lg-quake">🌏 地震<span class="sub">週次</span></a>
+<a href="#lg-weather">🌡 気象<span class="sub">毎日</span></a>
+<a href="#lg-curtail">🔌 出力制御<span class="sub">毎日</span></a>
+<a href="#lg-disaster">🔥 全球災害<span class="sub">毎日</span></a>
+<a href="#lg-books">📚 書籍<span class="sub">週次</span></a>
 <a href="#lg-re">🏠 不動産<span class="sub">四半期</span></a>
 <a href="#lg-sat">🛰 衛星<span class="sub">年次</span></a>
 <a href="#lg-ai">🤖 AI<span class="sub">週次</span></a>
@@ -520,7 +524,7 @@ transition:border-color .2s}
 </div>
 <script>
 (function(){
-var ids=["pg-top","lg-power","lg-veg","lg-quake","lg-re","lg-sat","lg-ai"];
+var ids=["pg-top","lg-power","lg-veg","lg-quake","lg-weather","lg-curtail","lg-disaster","lg-books","lg-re","lg-sat","lg-ai"];
 function show(id){
   document.querySelectorAll(".panel").forEach(function(p){p.classList.toggle("on",p.id===id)});
   document.querySelectorAll(".lnav a").forEach(function(a){a.classList.toggle("on",a.getAttribute("href")==="#"+id)});
