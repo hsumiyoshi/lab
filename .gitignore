@@ -13,6 +13,9 @@ exp01_jepx/data/*
 !exp01_jepx/data/weather_forecast.csv
 # 新リーグのdata/は台帳そのもの（巻き取り式RSSや外部ページの取り込み履歴＝後から遡れない）。
 # 2026-08-23: 無視したままCIを回して「収集はしたがコミットされない」を踏んだため明示的に許可する
+!exp02_vegetable/data/
+!exp01_jepx/data/spot_2025.csv
+!exp01_jepx/data/spot_2026.csv
 !exp03_weather/data/
 !exp08_curtail/data/
 !exp10_disaster/data/
