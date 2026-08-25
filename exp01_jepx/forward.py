@@ -417,9 +417,24 @@ def absence_warnings(ledger, days: int = 7) -> list:
         return []
     out = []
     for day, row in ledger.tail(days).iterrows():
-        if all(pd.isna(row[c]) for c in fam):
-            out.append(f"> ⚠ {pd.Timestamp(day):%-m/%d}受渡: 気象予報の取得に失敗し天気系{len(fam)}機体は**欠場**"
-                       f"（実力ではなく計測の欠測。後日、予報アーカイブからBT補完される）")
+        if not all(pd.isna(row[c]) for c in fam):
+            continue
+        # 理由を**推測しない**。picksが届いているかで原因が分かれる（2026-08-26受渡:
+        # 提出そのものがpush競合で失われたのに「気象の取得失敗」と書いていた）
+        f = PICKS_DIR / f"{pd.Timestamp(day):%Y-%m-%d}.json"
+        if not f.exists():
+            why = ("**提出が届いていない**（picksファイルが無い＝strategies側のCIが"
+                   "落ちたか、pushが他のCIと衝突して失われた。気象とは別の原因）")
+        else:
+            try:
+                reasons = set(json.loads(f.read_text()).get("_meta", {})
+                              .get("absent", {}).values())
+            except Exception:
+                reasons = set()
+            why = (f"気象予報の取得に失敗（{'/'.join(sorted(reasons))}）"
+                   if reasons else "提出は届いたが天気系の入力が揃わなかった")
+        out.append(f"> ⚠ {pd.Timestamp(day):%-m/%d}受渡: {why}のため天気系{len(fam)}機体は"
+                   f"**欠場**（実力ではなく計測の欠測。後日、予報アーカイブからBT補完される）")
     return (out + [""]) if out else []
 
 
