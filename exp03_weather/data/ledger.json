@@ -1,1 +1,19 @@
-{}
+{
+ "2026-08-24": {
+  "actual": 33.3,
+  "picks": {
+   "jma": 34.0,
+   "debias": 34.0,
+   "openmeteo": 32.3,
+   "blend": 33.1,
+   "persistence": 30.6
+  },
+  "err": {
+   "jma": 0.7,
+   "debias": 0.7,
+   "openmeteo": 1.0,
+   "blend": 0.2,
+   "persistence": 2.7
+  }
+ }
+}
