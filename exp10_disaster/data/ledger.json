@@ -1,1 +1,13 @@
-{}
+{
+ "2026-08-24": {
+  "actual": 3,
+  "err": {
+   "ma7": 27,
+   "persistence": 8
+  },
+  "picks": {
+   "ma7": 30,
+   "persistence": 11
+  }
+ }
+}
