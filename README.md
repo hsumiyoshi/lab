@@ -1,4 +1,48 @@
-# lab — 没頭実験場
+# lab — prediction leagues that score themselves
+
+**I run 10 prediction leagues against real-world data. Every prediction is committed
+to git *before* the outcome exists, so I cannot move the goalposts afterwards.
+The losses stay in the ledger.**
+
+📊 **[Live dashboard](https://hsumiyoshi.github.io/lab/)** — updated daily by CI
+
+Each league has three things: a **dumb baseline** it must beat, an **oracle**
+(the best possible result in hindsight) to measure against, and a **scoring date
+fixed in advance**. Right now my weather-driven strategies are ahead of the
+clockwork baseline on the electricity league — but they lost three days straight
+in mid-August, and that record is still there.
+
+**Why git?** A commit timestamp is a notary that costs nothing. Day-ahead
+electricity prices are published at 10:00 JST; my picks are committed at 07:00 JST.
+Anyone can check the history and see the order of events.
+
+| | |
+|---|---|
+| Leagues running | 10 (electricity, vegetables, earthquakes, weather, curtailment, disasters, books, real estate, satellite, AI) |
+| Electricity league | day 14 of forward operation, 12 committed pick files |
+| Code | this repo (public). Private strategies submit picks via Actions — the participant flow, rehearsed on myself |
+
+---
+
+# lab — 予測を出してから採点される実験場
+
+**現実のデータに対して10のリーグを回しています。予測は結果が出る前にgitへコミットするので、
+後から動かせません。負けた記録も台帳に残したままです。**
+
+📊 **[ダッシュボード](https://hsumiyoshi.github.io/lab/)** — CIが毎日更新
+
+各リーグには3つが必ずあります: 越えるべき**脳死ベンチ**、後から見た最善である**oracle**、
+そして**事前に決めた採点日**。いま電力リーグでは天気を読む機体が時計どおりの脳死ベンチを
+上回っていますが、8月中旬には3日連続で負けており、その記録もそのまま残っています。
+
+**なぜgitか**: コミット時刻はタダで手に入る公証です。翌日渡しの電力価格は10:00 JSTに
+公表され、こちらのpicksは07:00 JSTにコミットされます。**順序は誰でも履歴で確認できます。**
+
+---
+
+以下は運用のための内部文書です。
+
+## リポジトリの方針
 
 物理世界×データの実験リポジトリ。実験ごとにディレクトリを切る。
 
