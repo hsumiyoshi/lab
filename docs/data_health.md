@@ -1,6 +1,6 @@
 # データ健全性（保全の番人）
 
-生成: 2026-08-26 22:56 JST / 登録 26件 / 合計 23.2MB
+生成: 2026-08-28 07:51 JST / 登録 26件 / 合計 23.4MB
 
 **方針**: 格付け(A/B/C)は価値の判定であり、保全の可否ではない。**全件を守る**——再取得可能でも、取り直せる保証は外部（API廃止・仕様変更・サイト改変）に依存するため。
 
@@ -12,18 +12,18 @@
 | `exp05_quake/archive/quakes.csv` | A | append | 50KB | 変化なし | P2P地震情報API |
 | `exp03_weather/data/ledger.json` | A | append | 1KB | OK | 自前の採点 |
 | `exp08_curtail/data/outlook_history.json` | A | append | 0KB | OK | 九電でんき予報 |
-| `exp08_curtail/data/ledger.json` | A | append | 1KB | OK | 自前の採点 |
-| `exp10_disaster/data/events.json` | A | append | 1.0MB | OK | GDACS RSS |
+| `exp08_curtail/data/ledger.json` | A | append | 1KB | 変化なし | 自前の採点 |
+| `exp10_disaster/data/events.json` | A | append | 1.1MB | OK | GDACS RSS |
 | `exp10_disaster/data/ledger.json` | A | append | 0KB | OK | 自前の採点 |
 | `exp10_disaster/data/firms_daily.json` | A | append | 0KB | OK | NASA FIRMS（要キー） |
-| `exp11_books/data/rankings.json` | A | append | 2KB | 変化なし | トーハン週間ベストセラー |
-| `exp11_books/data/ledger.json` | A | append | 0KB | 未生成（正常） | 自前の採点 |
-| `collector/data/kyuden_curtail.json` | A | append | 3KB | OK | 九電でんき予報（収集基盤） |
+| `exp11_books/data/rankings.json` | A | append | 4KB | OK | トーハン週間ベストセラー |
+| `exp11_books/data/ledger.json` | A | append | 0KB | OK | 自前の採点 |
+| `collector/data/kyuden_curtail.json` | A | append | 4KB | OK | 九電でんき予報（収集基盤） |
 | `collector/data/tohan_books.json` | A | append | 6KB | 変化なし | トーハン週間ベストセラー（収集基盤） |
 | `exp07_satellite/data/tsumagoi_ndvi.csv` | B | append | 3KB | 変化なし | Sentinel-2 AWS公開COG |
-| `exp01_jepx/data/spot_2026.csv` | C | append | 1.7MB | 変化なし | JEPX公式CSV |
+| `exp01_jepx/data/spot_2026.csv` | C | append | 1.8MB | OK | JEPX公式CSV |
 | `exp01_jepx/data/spot_2025.csv` | C | append | 4.3MB | 変化なし | JEPX公式CSV |
-| `exp01_jepx/data/weather_actual.csv` | C | append | 24KB | 変化なし | Open-Meteo archive |
+| `exp01_jepx/data/weather_actual.csv` | C | append | 25KB | OK | Open-Meteo archive |
 | `exp01_jepx/data/weather_forecast.csv` | C | append | 25KB | 変化なし | Open-Meteo historical-forecast |
 | `exp02_vegetable/data/veg_31700.csv` | C | append | 93KB | 変化なし | 東京都中央卸売市場（ベジ探） |
 | `exp02_vegetable/data/veg_33400.csv` | C | append | 96KB | 変化なし | 同上 |
