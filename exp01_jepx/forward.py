@@ -232,46 +232,104 @@ GRID, BASE, SURFACE = "#e1e0d9", "#c3c2b7", "#fcfcfb"
 
 
 def plot_ledger(ledger: pd.DataFrame, dest: Path) -> None:
+    """oracle到達率(%)の累積推移。ベンチマーク(clock)を基準線として明示する。
+
+    縦軸は「答えを見た理論上限(oracle)の何%を取れたか」。各機体の線は
+    **事前コミット済みのフォワード日だけ**を累積するので、終端の値は
+    成績表の「対oracle（Fwd）」と一致する（BT補完日は比率に混ぜない）。
+
+    clockの到達率に水平線を引き、その下を塗る。clockは「毎日同じ時間に売買する」
+    だけの脳死ベンチで、電力価格の日内周期のせいで予測ゼロでも高い到達率が出る。
+    この帯を描かないと、90%台という数字を実力と誤読する（規約2「脳死との差」）。
+
+    図の中の文字はASCIIのみ。CIランナーに日本語フォントが無く豆腐になるため、
+    日本語の説明はHTML側のキャプションが持つ。
+    """
     import matplotlib.pyplot as plt
+    MIN_D = 4  # 累積比が暴れる立ち上がりは描かない（分母が小さく数日で±15pt振れる）
     names = [n for n in COLORS if n in ledger.columns]
-    cum = ledger[names + ["oracle"]].fillna(0.0).cumsum()  # 欠場日は0（参加せず稼がず）
-    fig, ax = plt.subplots(figsize=(10, 5))
+
+    def rate(name):
+        """その機体のフォワード日だけを累積した到達率(%)の系列。"""
+        mask = ledger[name].notna()
+        btc = f"bt_{name}"
+        if btc in ledger.columns:
+            mask &= ledger[btc].fillna(0) != 1
+        idx = ledger.index[mask]
+        if len(idx) < MIN_D:
+            return None
+        num = ledger.loc[idx, name].cumsum()
+        den = ledger.loc[idx, "oracle"].cumsum()
+        r = (num / den.where(den > 0) * 100).iloc[MIN_D - 1:]
+        return r.dropna()
+
+    series = {n: s for n in names if (s := rate(n)) is not None and len(s)}
+    if not series:
+        return
+    fig, ax = plt.subplots(figsize=(10, 5.2))
     fig.patch.set_facecolor(SURFACE)
     ax.set_facecolor(SURFACE)
-    ax.plot(cum.index, cum["oracle"], color=MUTED, lw=1.4, ls="--", label="oracle (bound)")
-    has_bt = False
-    for name in names:
-        btc = f"bt_{name}"
-        bt = (ledger[btc].fillna(0) == 1) if btc in ledger.columns else None
-        if bt is not None and bt.any():
-            # 参戦前BT補完区間は点線（ファクトシート流: 線種がシミュレーションを語る）
-            has_bt = True
-            fwd_days = ledger.index[ledger[name].notna() & ~bt]
-            e0 = fwd_days.min() if len(fwd_days) else cum.index[-1]
-            ax.plot(cum.loc[:e0].index, cum.loc[:e0, name], color=COLORS[name],
-                    lw=1.8, ls=(0, (4, 3)), alpha=0.8)
-            ax.plot(cum.loc[e0:].index, cum.loc[e0:, name], color=COLORS[name],
-                    lw=2.0, label=name)
-        else:
-            ax.plot(cum.index, cum[name], color=COLORS[name], lw=2.0, label=name)
-    if has_bt:
-        ax.plot([], [], color=INK2, lw=1.2, ls=(0, (4, 3)), label="dashed = BT infill")
-    # 終端の直接ラベルは累積線では衝突しやすいため置かない。
-    # 低コントラスト色の緩和はレポート内の成績テーブル（table view）が担う
-    # 信号「強」の日をhybrid線上に打点
-    strong = ledger.index[ledger["signal"] == "強"]
-    if len(strong) and "hybrid" in cum.columns:
-        ax.plot(strong, cum.loc[strong, "hybrid"], "o",
-                color=COLORS["hybrid"], ms=5, mec=SURFACE, mew=1.2)
-    ax.set_title("Virtual battery forward test — cumulative P&L (JPY, 10kWh)",
-                 color=INK, fontsize=11)
-    ax.grid(color=GRID, lw=0.7)
-    for s in ("top", "right"):
-        ax.spines[s].set_visible(False)
-    for s in ("left", "bottom"):
-        ax.spines[s].set_color(BASE)
+
+    # ベンチマーク帯: clockの到達率より下＝予測がベンチに負けている領域
+    bench = float(series["clock"].iloc[-1]) if "clock" in series else None
+    if bench is not None:
+        ax.axhspan(0, bench, color=BASE, alpha=0.16, lw=0, zorder=0)
+        ax.axhline(bench, color=INK2, lw=1.2, zorder=1)
+
+    last_x = max(s.index[-1] for s in series.values())
+    first_x = min(s.index[0] for s in series.values())
+
+    # 縦軸は勝負が起きている帯だけに寄せる。0%からの余白は情報を持たず、
+    # 見せたい差（ベンチ82%台 vs 首位91%台）を潰してしまう
+    lo = min([float(s.min()) for s in series.values()] + ([bench] if bench else []))
+    ax.set_ylim(max(0.0, lo - 4), 103)
+
+    ax.axhline(100, color=MUTED, lw=1.2, ls="--", zorder=1)
+
+    # 終端ラベルの衝突回避: y昇順に並べ、最小間隔を満たすまで押し上げる
+    ends = sorted(((float(s.iloc[-1]), n, s) for n, s in series.items()))
+    span = (103 - max(0.0, lo - 4))
+    gap = span * 0.042
+    last_x_off = last_x + (last_x - first_x) * 0.035
+    placed, prev = [], None
+    for y, n, s in ends:
+        yy = y if prev is None else max(y, prev + gap)
+        placed.append((yy, y, n, s))
+        prev = yy
+    for yy, y, n, s in placed:
+        is_bench = n == "clock"
+        ax.plot(s.index, s.values, color=COLORS[n], marker="o", ms=2.6,
+                lw=2.4 if is_bench else 1.9, zorder=3 if is_bench else 2)
+        if is_bench:
+            continue  # clockの終端ラベルは下のベンチマーク注記が兼ねる（線と重なるため）
+        # 引き出し線はデータの線と混同されないよう細い灰色にする
+        ax.annotate(f"{n} {y:.1f}%", xy=(s.index[-1], y), xytext=(last_x_off, yy),
+                    textcoords="data", color=COLORS[n], fontsize=8.5, va="center",
+                    zorder=4, annotation_clip=False,
+                    arrowprops=dict(arrowstyle="-", lw=0.6, color=MUTED,
+                                    shrinkA=0, shrinkB=3))
+    ax.annotate("oracle 100%", xy=(last_x_off, 100), xytext=(0, 6),
+                textcoords="offset points", color=MUTED, fontsize=8.5,
+                va="bottom", zorder=4, annotation_clip=False)
+    if bench is not None:
+        ax.annotate(f"benchmark  clock {bench:.1f}%", xy=(last_x_off, bench),
+                    xytext=(0, 6), textcoords="offset points",
+                    color=INK2, fontsize=8.5, va="bottom", fontweight="bold",
+                    zorder=4, annotation_clip=False)
+        ax.annotate("no forecast at all", xy=(last_x_off, bench),
+                    xytext=(0, -9), textcoords="offset points",
+                    color=MUTED, fontsize=7.8, va="center",
+                    zorder=4, annotation_clip=False)
+
+    ax.set_ylabel("% of oracle (cumulative, forward days only)",
+                  color=INK2, fontsize=9)
+    ax.grid(color=GRID, lw=0.7, axis="y")
+    for sp in ("top", "right"):
+        ax.spines[sp].set_visible(False)
+    for sp in ("left", "bottom"):
+        ax.spines[sp].set_color(BASE)
     ax.tick_params(colors=INK2, labelsize=8.5)
-    ax.legend(loc="upper left", fontsize=8.5, frameon=False, labelcolor=INK2)
+    ax.set_xlim(right=last_x + (last_x - first_x) * 0.30)
     fig.tight_layout()
     fig.savefig(dest, dpi=130, facecolor=SURFACE)
     plt.close(fig)

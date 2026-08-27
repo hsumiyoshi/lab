@@ -58,17 +58,26 @@ def power_table(p):
     rows = []
     order = sorted(strat.items(), key=lambda kv: -pct[kv[0]]) + [("oracle", p["totals"]["oracle"])]
     for n, v in order:
-        last = float(p["last"][n]) if p["last"][n] else 0.0
-        cls = " class='lead'" if n == leader else ""
-        delta = f"<span class='{'pos' if last >= 0 else 'neg'}'>{last:+,.0f}</span>"
+        # 最終行に値が無い＝その日は欠場。0円と書くと「参加して稼げなかった」に
+        # 読めてしまう（issue #18「欠測を実力と誤読させない」と同じ病気）
+        raw = p["last"][n]
+        last = float(raw) if raw else None
+        cls = (" class='lead'" if n == leader
+               else " class='aside'" if n in ('clock', 'oracle') else "")
+        delta = ("<span class='abs' title='この日は提出が無く欠場'>欠場</span>"
+                 if last is None else
+                 f"<span class='{'pos' if last >= 0 else 'neg'}'>{last:+,.0f}</span>")
         bt = p["btdays"].get(n, 0)
         btcell = f"{bt / p['played'][n] * 100:.0f}%" if bt else "—"
         pcell = ("—" if (n != "oracle" and bt == p["played"].get(n, 0))
                  else f"{(100.0 if n == 'oracle' else pct[n]):.1f}%")
+        # 並びは対oracle順。それを2列目に置かないと、左端の「累計」が
+        # 昇順にも降順にも見えず、表が壊れているように読める
+        tag = ("<span class='tag'>ベンチ</span>" if n == "clock"
+               else "<span class='tag'>参照</span>" if n == "oracle" else "")
         rows.append(
-            f"<tr{cls}><td><span class='dot' style='background:{DOT.get(n, '#888')}'></span>{n}</td>"
-            f"<td>{v:,.0f}円</td><td>{btcell}</td>"
-            f"<td>{pcell}</td><td>{delta}</td></tr>")
+            f"<tr{cls}><td><span class='dot' style='background:{DOT.get(n, '#888')}'></span>{n}{tag}</td>"
+            f"<td>{pcell}</td><td>{v:,.0f}円</td><td>{btcell}</td><td>{delta}</td></tr>")
     return "".join(rows)
 
 
@@ -310,10 +319,30 @@ def league_panels(veg, qk, ai, new=None):
 
 
 def timeline(veg, qk):
+    """これからの予定。日付は直書きせずcronの曜日から計算する。
+
+    以前は「8/17(月) 地震リーグ初戦」のように固定文字列で持っていたため、
+    その日を過ぎても「これからの予定」に残り続けていた（過去が未来として並ぶ）。
+    """
+    now = datetime.now(JST)
+
+    def nxt(weekday, hh, mm):
+        """次に来るその曜日の時刻。今日ちょうどでも過ぎていれば翌週にする。"""
+        d = now.replace(hour=hh, minute=mm, second=0, microsecond=0)
+        ahead = (weekday - d.weekday()) % 7
+        if ahead == 0 and d <= now:
+            ahead = 7
+        return d + timedelta(days=ahead)
+
+    def prev(rows):
+        return f"（前回 {rows[-1]['week']}）" if rows and rows[-1].get("week") else ""
+
+    WD = "月火水木金土日"
+    q, v = nxt(0, 14, 0), nxt(2, 14, 0)   # quake_forward: 月14:00 / veg_forward: 水14:00
     items = [
         ("毎日 13:30", "⚡ 電力リーグ採点（picksは毎朝7:00に自動提出）"),
-        ("8/17 (月) 14:00", "🌏 地震リーグ初戦の採点"),
-        ("8/19 (水) 14:00", "🥬 青果リーグ初戦の採点"),
+        (f"{q:%-m/%d} ({WD[q.weekday()]}) 14:00", f"🌏 地震リーグの採点{prev(qk)}"),
+        (f"{v:%-m/%d} ({WD[v.weekday()]}) 14:00", f"🥬 青果リーグの採点{prev(veg)}"),
         ("毎週水曜", "🤖 AIリーグ: 3人格の賭けを公開・前週分を採点"),
         ("2027年1月〜", "🏠 不動産の事前登録予測を判定"),
         ("2027年6月", "🛰 衛星の出荷週予測をコミット（7月に判定）"),
