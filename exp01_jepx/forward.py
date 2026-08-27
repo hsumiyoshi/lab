@@ -158,12 +158,25 @@ def build_ledger(df: pd.DataFrame) -> pd.DataFrame:
         if not signal:
             dev, thr = rad_dev(day)
             signal = "強" if (dev is not None and dev >= thr) else "平常"
-        row = {"date": day, "signal": signal,
-               "clock": sim.run_day(today, *sim.strat_clock())}
-        pred = sim.pred_weekshape(hist, today, day)
-        row["weekshape"] = sim.run_day(today, *sim.choose_split(pred)) if pred is not None else 0.0
+        row = {"date": day, "signal": signal}
         for name, (c, d) in load_picks(day).items():
             row[name] = sim.run_day(today, c, d)
+        # ベースライン2機体は2026-08-27まで、提出せず採点時にコードから再計算していた。
+        # 先読みは無かったが「価格公表前にコミット済み」だけが当てはまらず、
+        # ロジックを書き換えれば過去の成績も動いた（Haruki判断「A」で提出型へ移行）。
+        # 提出が無い日——移行前と、提出そのものが落ちた日——だけ再計算で埋め、
+        # 事前コミットでないことを rc_ 列に残す。黙って埋めると成績表で区別できなくなる
+        if "clock" not in row:
+            row["clock"] = sim.run_day(today, *sim.strat_clock())
+            row["rc_clock"] = 1
+        if "weekshape" not in row:
+            # 提出側と同じく today は渡さない。pred_weekshape は現在この引数を
+            # 使っていないが、採点時だけ実価格を渡す形を残すと、いつか誰かが
+            # 使った瞬間に先読みになる（2026-08-27に疑って確認した箇所）
+            pred = sim.pred_weekshape(hist, None, day)
+            if pred is not None:
+                row["weekshape"] = sim.run_day(today, *sim.choose_split(pred))
+                row["rc_weekshape"] = 1
         for name, (c, d) in load_picks_bt(day).items():
             if name not in row:
                 row[name] = sim.run_day(today, c, d)
@@ -249,12 +262,16 @@ def plot_ledger(ledger: pd.DataFrame, dest: Path) -> None:
     MIN_D = 4  # 累積比が暴れる立ち上がりは描かない（分母が小さく数日で±15pt振れる）
     names = [n for n in COLORS if n in ledger.columns]
 
-    def rate(name):
-        """その機体のフォワード日だけを累積した到達率(%)の系列。"""
+    def rate(name, precommitted_only=True):
+        """到達率(%)の累積系列。既定は事前コミット済みの日だけ（表と同じ基準）。"""
         mask = ledger[name].notna()
-        btc = f"bt_{name}"
-        if btc in ledger.columns:
-            mask &= ledger[btc].fillna(0) != 1
+        if precommitted_only:
+            # BT補完（参戦前の穴埋め）も再計算（提出が無い日）も、価格公表前に
+            # コミットされていないので除く。成績表の対oracleと同じ分母になる
+            for pre in ("bt_", "rc_"):
+                col = f"{pre}{name}"
+                if col in ledger.columns:
+                    mask &= ledger[col].fillna(0) != 1
         idx = ledger.index[mask]
         if len(idx) < MIN_D:
             return None
@@ -270,8 +287,16 @@ def plot_ledger(ledger: pd.DataFrame, dest: Path) -> None:
     fig.patch.set_facecolor(SURFACE)
     ax.set_facecolor(SURFACE)
 
-    # ベンチマーク帯: clockの到達率より下＝予測がベンチに負けている領域
-    bench = float(series["clock"].iloc[-1]) if "clock" in series else None
+    # ベンチマーク帯: clockの到達率より下＝予測がベンチに負けている領域。
+    # clockが事前コミットの日をまだ持たない移行期は全日ベースで引く——基準線を
+    # 消すと「90%台は実力か」を判断する手がかりがページから無くなる。
+    # clockは strat_clock() が引数を取らない完全固定ルールなので、再計算しても
+    # 結果は動かない（weekshapeと違ってパラメータが無い）。ただし明記はする
+    bench_recomputed = "clock" not in series
+    bseries = series.get("clock")
+    if bseries is None:
+        bseries = rate("clock", precommitted_only=False)
+    bench = float(bseries.iloc[-1]) if bseries is not None and len(bseries) else None
     if bench is not None:
         ax.axhspan(0, bench, color=BASE, alpha=0.16, lw=0, zorder=0)
         ax.axhline(bench, color=INK2, lw=1.2, zorder=1)
@@ -316,7 +341,9 @@ def plot_ledger(ledger: pd.DataFrame, dest: Path) -> None:
                     xytext=(0, 6), textcoords="offset points",
                     color=INK2, fontsize=8.5, va="bottom", fontweight="bold",
                     zorder=4, annotation_clip=False)
-        ax.annotate("no forecast at all", xy=(last_x_off, bench),
+        ax.annotate("no forecast at all"
+                    + ("  (recomputed)" if bench_recomputed else ""),
+                    xy=(last_x_off, bench),
                     xytext=(0, -9), textcoords="offset points",
                     color=MUTED, fontsize=7.8, va="center",
                     zorder=4, annotation_clip=False)
@@ -508,16 +535,25 @@ def report(ledger: pd.DataFrame, picks, meta, target, anatomy_latest: str = "") 
     else:
         days = len(ledger)
         strat_names = [c for c in ledger.columns
-                       if c not in ("signal", "oracle") and not c.startswith("bt_")]
+                       if c not in ("signal", "oracle") and not c.startswith(("bt_", "rc_"))]
         # 対oracleは「出場日ベース」: 各機体が出場した日のoracle合計で割る。
         # 円の絶対額は当日の値幅（レバレッジ）に依存し時変するため、
         # 在籍時期が違う機体を円/日で比べると不公平（Haruki指摘 2026-08-17, issue #12）
         stats = {}
         for n in strat_names:
             mask = ledger[n].notna()
-            btcol = ledger[f"bt_{n}"].fillna(0) if f"bt_{n}" in ledger.columns else None
-            fwd = mask & (btcol != 1) if btcol is not None else mask
-            played, btdays = int(mask.sum()), int(mask.sum() - fwd.sum())
+            # 「事前でない日」= BT補完（参戦前の穴埋め）＋ 再計算（提出が無い日）。
+            # どちらも価格公表前にコミットされていないので、レートの分母から外す
+            notpre = pd.Series(False, index=ledger.index)
+            for pre in ("bt_", "rc_"):
+                col = f"{pre}{n}"
+                if col in ledger.columns:
+                    notpre |= ledger[col].fillna(0) == 1
+            fwd = mask & ~notpre
+            played = int(mask.sum())
+            btdays = int((mask & notpre).sum())
+            rc = ledger[f"rc_{n}"].fillna(0) == 1 if f"rc_{n}" in ledger.columns else None
+            rcdays = int((mask & rc).sum()) if rc is not None else 0
             tot = float(ledger.loc[mask, n].sum())          # BT補完込みの金額（勝負の1本）
             # レート系（対oracle・対clock差）は事前コミット済みのフォワード日のみで計算。
             # 対clock差=同日ペア差: 対oracle%が消せない「時代の取りやすさ」を
@@ -525,26 +561,33 @@ def report(ledger: pd.DataFrame, picks, meta, target, anatomy_latest: str = "") 
             orc = float(ledger.loc[fwd, "oracle"].sum())
             clk = float(ledger.loc[fwd, "clock"].sum())
             ftot = float(ledger.loc[fwd, n].sum())
+            allo = float(ledger.loc[mask, "oracle"].sum())
             stats[n] = (played, btdays, tot,
                         ftot / orc * 100 if orc else 0.0,
-                        (ftot - clk) / orc * 100 if orc else 0.0)
+                        (ftot - clk) / orc * 100 if orc else 0.0,
+                        rcdays,
+                        tot / allo * 100 if allo else 0.0)
         order = sorted(strat_names, key=lambda n: -stats[n][3])  # 並びは対oracle（Fwd）＝実力順（Haruki指定）
         lines += ["![cumulative P&L](forward_pnl.png)", "",
                   f"## 累計成績（リーグ{days}日目）", "",
-                  "| 機体 | 累計損益 | BT率 | 対oracle（Fwd） | 対clock差（Fwd, pt） |",
+                  "| 機体 | 累計損益 | 事前でない日 | 対oracle（事前コミット日） | 対clock差（pt） |",
                   "|---|---|---|---|---|"]
         for n in order:
-            p_, bt_, t_, pct, dpt = stats[n]
-            btcell = f"{bt_ / p_ * 100:.0f}%（{bt_}/{p_}日）" if bt_ else "0%"
-            if bt_ == p_:  # 全日BT補完＝フォワード実績ゼロ（レートは未計測）
-                lines.append(f"| {n} | {t_:,.0f}円 | {btcell} | — | — |")
+            p_, bt_, t_, pct, dpt, rc_, allpct = stats[n]
+            kind = ("再計算" if rc_ == bt_ else "BT補完" if rc_ == 0
+                    else f"BT{bt_ - rc_}日+再計算{rc_}日")
+            btcell = f"{bt_ / p_ * 100:.0f}%（{bt_}/{p_}日・{kind}）" if bt_ else "0%"
+            if bt_ == p_:
+                # 事前コミット済みの日がゼロ＝レートは未計測。全日ベースの参考値は
+                # 括弧で残す（消すとベンチマークそのものが表から消える）
+                lines.append(f"| {n} | {t_:,.0f}円 | {btcell} | — （参考 {allpct:.1f}%） | — |")
             else:
                 lines.append(f"| {n} | {t_:,.0f}円 | {btcell} | {pct:.1f}% | {dpt:+.1f} |")
         o_tot = float(ledger["oracle"].sum())
-        lines.append(f"| oracle | {o_tot:,.0f}円 | 0% | 100.0% | — |")
+        lines.append(f"| oracle | {o_tot:,.0f}円 | — | 100.0% | — |")
         lines.append("")
         lines.append("累計損益は**BT補完込み**（参戦前の欠場日を、当時入手可能だったデータのみで"
-                     "再現したバックテストで補完。BT率＝そのうち事前コミットでない日の割合。割り引いて読む）。"
+                     "再現したバックテストで補完）。**事前でない日**＝価格公表前にコミットされていない日。内訳は**BT補完**（参戦前の穴埋め）と**再計算**（提出が無く採点時にコードから作った日）。clockとweekshapeは2026-08-27まで提出型ではなかったため、それ以前は全日が再計算。"
                      "**対oracle%と対clock差は事前コミット済みのフォワード日のみ**で計算——"
                      "対oracle%は値幅のスケールを、対clock差（常設ベンチとの同日ペア差）は"
                      "時代の取りやすさを一次補正する。完全対等の比較は下の直接対決（共通日のみ）")

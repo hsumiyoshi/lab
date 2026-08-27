@@ -31,9 +31,17 @@ def read_power():
     if not rows:
         return None
     names = [c for c in rows[0]
-             if c not in ("date", "signal") and not c.startswith("bt_")]
+             if c not in ("date", "signal") and not c.startswith(("bt_", "rc_"))]
     def is_bt(r, n):
-        return r.get(f"bt_{n}", "") in ("1", "1.0")
+        """「事前でない日」= BT補完（参戦前の穴埋め）または再計算（提出が無い日）。
+
+        どちらも価格公表前にコミットされていないので、レートの分母から外す。
+        clockとweekshapeは2026-08-27まで提出型ではなく、それ以前は全日が再計算。
+        """
+        return any(r.get(f"{pre}{n}", "") in ("1", "1.0") for pre in ("bt_", "rc_"))
+
+    def is_rc(r, n):
+        return r.get(f"rc_{n}", "") in ("1", "1.0")
     # 累計はBT補完込みの金額（Haruki決定 2026-08-17, issue #12）。
     # レート（対oracle）は事前コミット済みフォワード日のみで計算
     totals = {n: sum(float(r[n]) for r in rows if r[n]) for n in names}
@@ -41,7 +49,10 @@ def read_power():
     played = {n: sum(1 for r in rows if r[n]) for n in names}
     fwd_tot = {n: sum(float(r[n]) for r in rows if r[n] and not is_bt(r, n)) for n in names}
     orc_fwd = {n: sum(float(r["oracle"]) for r in rows if r[n] and not is_bt(r, n)) for n in names}
+    rcdays = {n: sum(1 for r in rows if r[n] and is_rc(r, n)) for n in names}
+    orc_all = {n: sum(float(r["oracle"]) for r in rows if r[n]) for n in names}
     return {"days": len(rows), "totals": totals, "btdays": btdays, "played": played,
+            "rcdays": rcdays, "orc_all": orc_all,
             "fwd_tot": fwd_tot, "orc_fwd": orc_fwd, "last": rows[-1]}
 
 
@@ -68,9 +79,18 @@ def power_table(p):
                  if last is None else
                  f"<span class='{'pos' if last >= 0 else 'neg'}'>{last:+,.0f}</span>")
         bt = p["btdays"].get(n, 0)
-        btcell = f"{bt / p['played'][n] * 100:.0f}%" if bt else "—"
-        pcell = ("—" if (n != "oracle" and bt == p["played"].get(n, 0))
-                 else f"{(100.0 if n == 'oracle' else pct[n]):.1f}%")
+        rc = p["rcdays"].get(n, 0)
+        kind = "再計算" if rc and rc == bt else "BT補完" if bt and not rc else "BT+再計算"
+        btcell = f"{bt / p['played'][n] * 100:.0f}%<span class='tag'>{kind}</span>" if bt else "—"
+        if n == "oracle":
+            pcell = "100.0%"
+        elif bt == p["played"].get(n, 0):
+            # 事前コミット済みの日がゼロ＝実力のレートは未計測。全日ベースの
+            # 参考値を薄く残す（消すとベンチマークそのものが表から消える）
+            ref = p["totals"][n] / (p["orc_all"].get(n) or 1) * 100
+            pcell = f"—<span class='abs'> 参考 {ref:.1f}%</span>"
+        else:
+            pcell = f"{pct[n]:.1f}%"
         # 並びは対oracle順。それを2列目に置かないと、左端の「累計」が
         # 昇順にも降順にも見えず、表が壊れているように読める
         tag = ("<span class='tag'>ベンチ</span>" if n == "clock"

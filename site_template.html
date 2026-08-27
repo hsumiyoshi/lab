@@ -13,7 +13,7 @@
     step3: プレースホルダを実データで置換:
            {{DAYS}}        フォワード日数（数値のみ）
            {{UPDATED}}     最終更新 "YYYY-MM-DD HH:MM"（JST）
-           {{POWER_TABLE}} 順位表の<tr>群（td5列: 機体/対oracle/累計/BT率/直近日。class: dot/lead/aside/tag/pos/neg）
+           {{POWER_TABLE}} 順位表の<tr>群（td5列: 機体/対oracle/累計/事前でない日/直近日。class: dot/lead/aside/tag/abs/pos/neg）
            {{LATEST_LINE}} 直近日の1行テキスト
            {{LEAGUES}}     <li><b>名前</b><span>状態</span></li> 群
     画像: forward_pnl.png / latest_anatomy.png（相対パス固定）
@@ -368,12 +368,9 @@ transition:border-color .2s}
     <li>gitのコミット履歴が、改竄不能なタイムスタンプ＝公証になる</li>
     <li>負けた記録も削除しない。全履歴が誰でも検証できる</li>
   </ol>
-  <p class="caveat"><b>例外を先に書いておく。</b>
-    ベンチマークの <span class="mono">clock</span> と <span class="mono">weekshape</span> だけは
-    picksを提出せず、採点時にコードから再計算している。使うのは受渡日より前のデータだけで先読みは無いが、
-    <b>この2つは「事前コミット」ではない</b>——予測ロジックを書き換えれば過去の成績も変わる。
-    強さの主張はpicksを提出している機体で読んでほしい。
-    <a href="https://github.com/hsumiyoshi/lab/blob/main/exp01_jepx/sim.py">該当コード</a></p>
+  <p class="caveat"><b>移行中の状態を書いておく。</b>
+    ベンチマークの <span class="mono">clock</span> と <span class="mono">weekshape</span> は、2026-08-27まで picks を提出せず採点時にコードから再計算していた。受渡日より前のデータしか使っていないので先読みは無いが、<b>「公表前にコミット済み」だけが当てはまらなかった</b>——ロジックを書き換えれば過去の成績も動く。同日から他の機体と同じく毎朝の提出に切り替えたので、<b>これ以降の日は事前コミットになる</b>。それ以前の日は成績表で「再計算」と表示し、実力のレートからは外してある。
+    <a href="https://github.com/hsumiyoshi/lab/blob/main/exp01_jepx/picks">提出済みpicks</a></p>
   <div class="links">
     <a href="https://github.com/hsumiyoshi/lab">GitHub（コードと台帳）</a>
     <a href="https://github.com/hsumiyoshi/lab/blob/main/CHANGELOG.md">工事ログ</a>
@@ -502,7 +499,7 @@ transition:border-color .2s}
   <div class="tblwrap">
     <table>
       <thead>
-        <tr><th>機体</th><th>対oracle</th><th>累計</th><th>BT率</th><th>直近日</th></tr>
+        <tr><th>機体</th><th>対oracle</th><th>累計</th><th>事前でない日</th><th>直近日</th></tr>
       </thead>
       <tbody>
         <!--TPL:{{POWER_TABLE}}/TPL--><!--SAMPLE-->
@@ -514,9 +511,9 @@ transition:border-color .2s}
       </tbody>
     </table>
   </div>
-  <p class="tnote">並びは<b>対oracle</b>順＝答えを見た理論上限に対する到達率（事前コミット済みのフォワード日のみで計算）。<b>clock</b>は予測を一切しない脳死ベンチ、<b>oracle</b>は答えを見た上限で、どちらも順位には入らない。BT率＝累計のうち参戦前バックテスト補完の日の割合——事前コミットではない分、割り引いて読む</p>
+  <p class="tnote">並びは<b>対oracle</b>順＝答えを見た理論上限に対する到達率。<b>価格公表前にコミットされた日だけ</b>で計算する。<b>clock</b>は予測を一切しない脳死ベンチ、<b>oracle</b>は答えを見た上限で、どちらも順位には入らない。<b>事前でない日</b>＝公表前にコミットされていない日で、内訳は<b>BT補完</b>（参戦前の穴埋め）と<b>再計算</b>（提出が無く採点時にコードから作った日）。この列が100%の機体は実力のレートが未計測なので「参考」の値を薄く出す</p>
   <div class="fig"><img src="forward_pnl.png" alt="oracle到達率の推移。clockのベンチマーク線と、その下の帯を灰色で示す" loading="lazy"></div>
-  <p class="tnote">縦軸は<b>上限の何%を取れたか</b>。灰色の帯は<b>予測を一切しなくても届く領域</b>——clockは毎日同じ時間に売買するだけだが、電力価格の日内周期のせいで上限の8割強に達する。つまり勝負はこの帯の上、<b>残り2割弱の奪い合い</b>で起きている。90%台という数字を実力と読まないための線。立ち上がりは分母が小さく比率が暴れるため、各機体4日目から描く</p>
+  <p class="tnote">縦軸は<b>上限の何%を取れたか</b>。灰色の帯は<b>予測を一切しなくても届く領域</b>——clockは毎日同じ時間に売買するだけだが、電力価格の日内周期のせいで上限の8割強に達する。つまり勝負はこの帯の上、<b>残り2割弱の奪い合い</b>で起きている。90%台という数字を実力と読まないための線。立ち上がりは分母が小さく比率が暴れるため、各機体4日目から描く。<b>clockとweekshapeにまだ線が無いのは、提出型への切り替えが2026-08-27だから</b>——それ以前は再計算＝事前コミットではないので描かない。基準線だけは全日ベースで引いている（clockは引数を取らない固定ルールなので再計算しても値が動かない）</p>
 </section>
 
 <!-- 5. 今日は？ -->
