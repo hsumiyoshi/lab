@@ -1,0 +1,16 @@
+{
+ "2026-08-18": {
+  "actual": 7,
+  "err": {
+   "all_stay": 3,
+   "mean": 3,
+   "persistence": 3
+  },
+  "picks": {
+   "all_stay": 10,
+   "mean": 10,
+   "persistence": 10
+  },
+  "scored_against": "2026-08-25"
+ }
+}
