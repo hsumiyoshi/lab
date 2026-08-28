@@ -29,14 +29,7 @@ jobs:
           git config user.email "actions@users.noreply.github.com"
           git add exp08_curtail/picks exp08_curtail/data exp08_curtail/reports docs
           git diff --cached --quiet && echo "no changes" || git commit -m "curtail: $(date -u +%Y-%m-%dT%H)Z"
-          pushed=0
-          for i in 1 2 3 4 5; do
-            if git push; then pushed=1; break; fi
-            echo "push競合。リモートを取り込んで再試行 ($i/5)"
-            git pull --rebase --autostash origin main || true
-            sleep $((i * 3))
-          done
-          [ "$pushed" = "1" ]
+          bash scripts/push_with_retry.sh
       - name: Record failure (落ちたことを台帳に残す)
         if: failure()
         run: |

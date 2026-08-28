@@ -92,16 +92,34 @@ def main():
     # ⑦ push競合に耐えるか（2026-08-23の出力制御リーグ: 提出は成功したのにpushが
     #    他ワークフローと衝突して弾かれ、提出が消えかけた。`git push || true` だと
     #    緑のまま黙ってデータが落ちる＝最悪の形）
+    #    2026-08-28: 各ワークフローに同じリトライ片を10本コピーしていたのを
+    #    scripts/push_with_retry.sh に一本化した。あわせて「生成物の衝突は
+    #    作り直して解く」を実装（それまでは `|| true` が衝突を握り潰し、
+    #    rebase途中のまま5回試して落ちていた）。
+    #    **この検査自体が一度穴を開けた**——インライン片を消した時、片の存在を
+    #    見ていた20項目が生成されなくなり、項目数が139→119に落ちた。
+    #    「何を見ているか」ではなく「何が守られているか」で書く
+    pushsh = HERE / "scripts" / "push_with_retry.sh"
+    check(pushsh.exists(), "scripts/push_with_retry.sh が無い（pushの共通口）")
+    if pushsh.exists():
+        # コメント行を落としてから見る。**素の文字列一致だとコメントに当たって
+        # 通ってしまう**——故障注入で `python3 build_site.py` を `true` に
+        # 差し替えたのに検査が緑のままだった（2026-08-28）
+        s = "\n".join(l for l in pushsh.read_text().splitlines()
+                      if not l.lstrip().startswith("#"))
+        check("--diff-filter=U" in s, "push_with_retry.sh: 衝突しているパスを見ていない")
+        check("python3 build_site.py" in s, "push_with_retry.sh: 生成物を作り直していない")
+        check("rebase --abort" in s, "push_with_retry.sh: 解決できない衝突を中止していない")
     for wf, body in workflows.items():
         if "git add" not in body:
             continue
         for step in body.split("- name:"):
-            if "git add" not in step or "git push" not in step:
+            if "git add" not in step:
                 continue
             if "incident-bot" in step:
                 continue  # 障害記録は元の失敗を隠さないため `|| true` が正しい
-            check("pushed=1" in step,
-                  f"{wf}: 成果物のpushが競合に無防備（再試行ループが無い）")
+            check("push_with_retry.sh" in step,
+                  f"{wf}: 成果物のpushが共通口(scripts/push_with_retry.sh)を通っていない")
             check("git push || true" not in step,
                   f"{wf}: 成果物のpushが `|| true` で失敗を握り潰している")
 
