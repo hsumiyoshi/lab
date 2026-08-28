@@ -18,6 +18,7 @@ ROOT = Path(__file__).parent
 DOCS = ROOT / "docs"
 JST = ZoneInfo("Asia/Tokyo")
 
+MIN_RATE_DAYS = 4  # レートを実力として出すのに要る事前コミット日数
 DOT = {"weekshape": "#2a78d6", "tenki": "#eb6834",
        "hybrid": "#1baf7a", "clock": "#eda100", "tenki_v2": "#9b6bd3", "tenki_v3": "#c44e52",
        "tenki_v4": "#6b7f2e", "oracle": "#898781"}
@@ -84,11 +85,12 @@ def power_table(p):
         btcell = f"{bt / p['played'][n] * 100:.0f}%<span class='tag'>{kind}</span>" if bt else "—"
         if n == "oracle":
             pcell = "100.0%"
-        elif bt == p["played"].get(n, 0):
-            # 事前コミット済みの日がゼロ＝実力のレートは未計測。全日ベースの
-            # 参考値を薄く残す（消すとベンチマークそのものが表から消える）
+        elif p["played"].get(n, 0) - bt < MIN_RATE_DAYS:
+            # 事前コミット日が少なすぎるレートは実力として出さない。移行1日目に
+            # clockが55.6%と出て、全日ベースの82.2%とかけ離れた（2026-08-28）
             ref = p["totals"][n] / (p["orc_all"].get(n) or 1) * 100
-            pcell = f"—<span class='abs'> 参考 {ref:.1f}%</span>"
+            pre = p["played"].get(n, 0) - bt
+            pcell = f"—<span class='abs'> 参考 {ref:.1f}%・事前{pre}日</span>"
         else:
             pcell = f"{pct[n]:.1f}%"
         # 並びは対oracle順。それを2列目に置かないと、左端の「累計」が

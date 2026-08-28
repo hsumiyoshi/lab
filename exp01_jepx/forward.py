@@ -240,6 +240,7 @@ def make_picks(df: pd.DataFrame, target: pd.Timestamp) -> dict:
 COLORS = {"weekshape": "#2a78d6", "tenki": "#eb6834",
           "hybrid": "#1baf7a", "clock": "#eda100", "tenki_v2": "#9b6bd3", "tenki_v3": "#c44e52",
           "tenki_v4": "#6b7f2e"}
+MIN_RATE_DAYS = 4  # レートを実力として出すのに要る事前コミット日数
 INK, INK2, MUTED = "#0b0b0b", "#52514e", "#898781"
 GRID, BASE, SURFACE = "#e1e0d9", "#c3c2b7", "#fcfcfb"
 
@@ -577,10 +578,13 @@ def report(ledger: pd.DataFrame, picks, meta, target, anatomy_latest: str = "") 
             kind = ("再計算" if rc_ == bt_ else "BT補完" if rc_ == 0
                     else f"BT{bt_ - rc_}日+再計算{rc_}日")
             btcell = f"{bt_ / p_ * 100:.0f}%（{bt_}/{p_}日・{kind}）" if bt_ else "0%"
-            if bt_ == p_:
-                # 事前コミット済みの日がゼロ＝レートは未計測。全日ベースの参考値は
-                # 括弧で残す（消すとベンチマークそのものが表から消える）
-                lines.append(f"| {n} | {t_:,.0f}円 | {btcell} | — （参考 {allpct:.1f}%） | — |")
+            # 事前コミット済みが MIN_RATE_DAYS 未満ならレートを出さない。
+            # 2026-08-28に clock/weekshape が移行1日目で 55.6% / 56.2% と表示され、
+            # 全日ベースの 82.2% / 86.9% とかけ離れた——**n=1の比を実力として並べると
+            # ベンチマークが簡単に超えられるように見える**。日数を書いて参考値に落とす
+            if p_ - bt_ < MIN_RATE_DAYS:
+                lines.append(f"| {n} | {t_:,.0f}円 | {btcell} | — （参考 {allpct:.1f}%"
+                             f"・事前{p_ - bt_}日） | — |")
             else:
                 lines.append(f"| {n} | {t_:,.0f}円 | {btcell} | {pct:.1f}% | {dpt:+.1f} |")
         o_tot = float(ledger["oracle"].sum())
