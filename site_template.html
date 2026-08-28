@@ -140,6 +140,9 @@ tr:last-child td{border-bottom:none}
 .neg{color:#d64545}
 @media (prefers-color-scheme:dark){.neg{color:#e2726c}}
 .tnote{color:var(--muted);font-size:.72rem;margin-top:8px}
+/* 表の上に置く勝敗の1行。数字の羅列だけでは誰が勝っているか読めないため */
+.verdict{font-size:.82rem;color:var(--ink2);margin:0 0 10px;padding:8px 11px;
+  background:var(--bg);border:1px solid var(--line);border-radius:9px;line-height:1.6}
 /* 自分に不利な但し書き。目立たせすぎず、隠しもしない */
 .caveat{margin-top:14px;padding:11px 13px;border-radius:10px;background:var(--bg);
   border:1px solid var(--line);color:var(--ink2);font-size:.76rem;line-height:1.65}

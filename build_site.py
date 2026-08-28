@@ -177,12 +177,77 @@ def league_panels(veg, qk, ai, new=None):
         return f"<section><div class='head'><h2>{title}</h2></div>{body}</section>"
     def empty(msg):
         return f"<div class='empty'><span class='pulse'></span>{msg}</div>"
+    def _f(r, c):
+        try:
+            return float(r.get(c, ""))
+        except (TypeError, ValueError):
+            return None
+
+    def verdict(rows, machines, bench, oracle=None, lower=False, unit="", label=None):
+        """表の上に**勝敗を1行で置く**。
+
+        2026-08-28にHarukiの指摘「電気しかやってない」で全パネルを見直した結果、
+        電力で直したのと同じ病気が9リーグに残っていた——**数字が並ぶだけで、誰が
+        勝っているのかも脳死ベンチとの差も読めない**。青果は3機体が同点（その週は
+        誰でも正解できた）なのにそう読めず、地震は誤差0.474対0.929で大森則の勝ちなのに
+        列を見比べないと分からなかった。**標本の少なさも書く**——n=1やn=2で
+        「勝っている」と書くと、電力で潰したのと同じ誤読を別の場所で作る。
+        """
+        if not rows:
+            return ""
+        # 列名（err_omori など）をそのまま出すと読者に意味が伝わらない
+        lb = (label or {}).get
+        agg = {}
+        for m in machines + [bench] + ([oracle] if oracle else []):
+            vs = [v for r in rows if (v := _f(r, m)) is not None]
+            if vs:
+                agg[m] = sum(vs) / len(vs) if lower else sum(vs)
+        if bench not in agg or not any(m in agg for m in machines):
+            return ""
+        best = min if lower else max
+        top = best((m for m in machines if m in agg), key=lambda m: agg[m])
+        d = agg[bench] - agg[top] if lower else agg[top] - agg[bench]
+        n = len({r.get("week") for r in rows if r.get("week")}) or len(rows)
+        if oracle and oracle in agg and agg[oracle]:
+            rate = f"　対oracle {agg[top] / agg[oracle] * 100:.1f}%"
+        else:
+            rate = ""
+        tn, bn = lb(top, top), lb(bench, bench)
+        if abs(d) < 1e-9:
+            head = f"<b>{tn}</b> とベンチ（{bn}）が同値——<b>この標本では差がついていない</b>"
+        elif d > 0:
+            head = f"首位 <b>{tn}</b>　ベンチ（{bn}）との差 <b>+{d:,.3g}{unit}</b>{rate}"
+        else:
+            head = f"<b>ベンチ（{bn}）に負けている</b>　差 {d:,.3g}{unit}{rate}"
+        warn = f"　<span class='abs'>※標本 {n}{'週' if n else ''}——判断には足りない</span>" if n < 4 else ""
+        return f"<p class='verdict'>{head}{warn}</p>"
+
     def table(rows, cols, headers):
         th = "".join(f"<th>{h}</th>" for h in headers)
         trs = "".join("<tr>" + "".join(f"<td>{r.get(c, chr(8212))}</td>" for c in cols) + "</tr>"
                       for r in rows[-6:])
         return f"<table><tr>{th}</tr>{trs}</table>"
-    def mae_table(led, unit):
+    def _agg_verdict(agg, counts, bench, lower, unit, fmt):
+        """集計済みの {機体: 値} から勝敗の1行を作る。表の上に置く。"""
+        if bench not in agg or len(agg) < 2:
+            return ""
+        best = min if lower else max
+        others = [m for m in agg if m != bench]
+        if not others:
+            return ""
+        top = best(others, key=lambda m: agg[m])
+        d = agg[bench] - agg[top] if lower else agg[top] - agg[bench]
+        n = max(counts.values()) if counts else 0
+        if abs(d) < 1e-9:
+            head = f"<b>{top}</b> とベンチ（{bench}）が同値——<b>この標本では差がついていない</b>"
+        elif d > 0:
+            head = f"首位 <b>{top}</b>　ベンチ（{bench}）との差 <b>+{fmt(d)}{unit}</b>"
+        else:
+            head = f"<b>ベンチ（{bench}）に負けている</b>　差 {fmt(d)}{unit}"
+        warn = (f"　<span class='abs'>※標本 {n}回——判断には足りない</span>" if n < 4 else "")
+        return f"<p class='verdict'>{head}{warn}</p>"
+
+    def mae_table(led, unit, bench=None):
         """誤差型の台帳（{日付: {err: {機体: 値}}}）から平均誤差の表を作る。"""
         rows = [v for v in led.values() if isinstance(v, dict) and v.get("err")]
         if not rows:
@@ -191,9 +256,13 @@ def league_panels(veg, qk, ai, new=None):
         body = "".join(
             f"<tr><td>{n}</td><td>{sum(r['err'][n] for r in rows if n in r['err'])/max(1,len([r for r in rows if n in r['err']])):.2f}</td>"
             f"<td>{len([r for r in rows if n in r['err']])}</td></tr>" for n in names)
-        return f"<table><tr><th>機体</th><th>平均誤差({unit})</th><th>出場</th></tr>{body}</table>"
+        agg = {n: sum(r["err"][n] for r in rows if n in r["err"])
+                  / max(1, len([r for r in rows if n in r["err"]])) for n in names}
+        cnt = {n: len([r for r in rows if n in r["err"]]) for n in names}
+        head = _agg_verdict(agg, cnt, bench, True, unit, lambda x: f"{x:.2f}") if bench else ""
+        return head + f"<table><tr><th>機体</th><th>平均誤差({unit})</th><th>出場</th></tr>{body}</table>"
 
-    def hit_table(led):
+    def hit_table(led, bench=None):
         """的中型の台帳（{日付: {hit: {機体: bool}}}）から的中率の表を作る。"""
         rows = [v for v in led.values() if isinstance(v, dict) and v.get("hit")]
         if not rows:
@@ -202,7 +271,10 @@ def league_panels(veg, qk, ai, new=None):
         body = "".join(
             f"<tr><td>{n}</td><td>{sum(1 for r in rows if r['hit'].get(n))}/{len(rows)}</td>"
             f"<td>{sum(1 for r in rows if r['hit'].get(n))/len(rows):.0%}</td></tr>" for n in names)
-        return f"<table><tr><th>機体</th><th>的中</th><th>的中率</th></tr>{body}</table>"
+        agg = {n: sum(1 for r in rows if r["hit"].get(n)) / len(rows) * 100 for n in names}
+        cnt = {n: len(rows) for n in names}
+        head = _agg_verdict(agg, cnt, bench, False, "pt", lambda x: f"{x:.0f}") if bench else ""
+        return head + f"<table><tr><th>機体</th><th>的中</th><th>的中率</th></tr>{body}</table>"
 
     def machines(items):
         cards = "".join(
@@ -214,6 +286,9 @@ def league_panels(veg, qk, ai, new=None):
         uri = data_uri(path)
         return (f"<div class='fig'><img src='{uri}' alt='{alt}'></div>" if uri else "")
     def panel(pid, rule_html, mcards, score_body, today_body, link):
+        # 説明文をマークダウンのつもりで書いていたため `**強調**` が生で出ていた
+        # （2026-08-28に新設4リーグで4箇所発見）。HTMLに直して出す
+        rule_html = re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", rule_html)
         return (f"<article id='{pid}' class='panel'>"
                 + card("📖 ルールと出場機体", f"<div class='meta'>{rule_html}</div>{mcards}")
                 + card("🏆 成績表", score_body)
@@ -230,8 +305,10 @@ def league_panels(veg, qk, ai, new=None):
                   ("first_day", "#eb6834", "週の初日に即売り（保存リスク回避の慣行）"),
                   ("oracle", "#898781", "週内最高値の日に売った場合の理論上限（参照値）"),
               ]),
-              (table(veg, ["week", "item", "oracle", "equal", "weekshape8", "stop_rule"],
-                     ["週", "品目", "oracle", "均等", "weekshape8", "stop_rule"]) if veg
+              (verdict(veg, ["weekshape8", "stop_rule", "first_day"], "equal",
+                       oracle="oracle", unit="円", label={"equal": "均等出荷"})
+               + table(veg, ["week", "item", "oracle", "equal", "weekshape8", "stop_rule"],
+                       ["週", "品目", "oracle", "均等", "weekshape8", "stop_rule"]) if veg
                else empty(schedule_note(veg, 2, 14, "2026-08-26T14:00", "CI失敗またはデータ未確定")))
               + fig("exp02_vegetable/reports/veg_chart.png", "直近90日の日次単価"),
               empty(schedule_note(veg, 2, 14, "2026-08-26T14:00", "CI失敗またはデータ未確定")),
@@ -244,8 +321,10 @@ def league_panels(veg, qk, ai, new=None):
                   ("omori", "#eb6834", "改良大森則 n(t)=K/(t+c)^p を毎週フィットして外挿"),
                   ("oracle", "#898781", "実績そのもの（誤差ゼロの参照値）"),
               ]),
-              (table(qk, ["week", "actual", "omori", "flat", "err_omori", "err_flat"],
-                     ["週", "実績", "大森則", "横ばい", "誤差(大森)", "誤差(横ばい)"]) if qk
+              (verdict(qk, ["err_omori"], "err_flat", lower=True,
+                       label={"err_omori": "大森則", "err_flat": "横ばい"})
+               + table(qk, ["week", "actual", "omori", "flat", "err_omori", "err_flat"],
+                       ["週", "実績", "大森則", "横ばい", "誤差(大森)", "誤差(横ばい)"]) if qk
                else empty(schedule_note(qk, 0, 14, "2026-08-24T14:00", "CI失敗またはデータ未確定")))
               + fig("exp05_quake/reports/quake_forward.png", "日別余震件数と大森則フィット"),
               empty(schedule_note(qk, 0, 14, "2026-08-24T14:00", "CI失敗またはデータ未確定")),
@@ -283,7 +362,7 @@ def league_panels(veg, qk, ai, new=None):
                   ("blend", "#1baf7a", "気象庁とOpen-Meteoの平均"),
                   ("debias", "#eb6834", "直近30日の自分の系統誤差を差し引く"),
               ]),
-              (mae_table(new.get("weather", {}), "℃") if new and new.get("weather")
+              (mae_table(new.get("weather", {}), "℃", bench="persistence") if new and new.get("weather")
                else empty("初採点待ち（提出は毎日18:00 JST）")),
               empty("次回: 毎日18:00に提出、翌々日に採点"),
               f"{GHB}/exp03_weather/reports/weather_forward.md"),
@@ -294,7 +373,7 @@ def league_panels(veg, qk, ai, new=None):
                   ("always_none", "#898781", "常に「なし」（脳死ベンチ）"),
                   ("persistence", "#eda100", "今日と同じ（脳死ベンチ2）"),
               ]),
-              (hit_table(new.get("curtail_led", {})) if new and new.get("curtail_led")
+              (hit_table(new.get("curtail_led", {}), bench="always_none") if new and new.get("curtail_led")
                else empty(f"収集中（{len(new.get('curtail_hist', {})) if new else 0}日分）。"
                           "夏は制御がほぼ出ないので本番は春と秋")),
               empty("提出 07:00 / 採点 17:10 JST"),
@@ -308,7 +387,7 @@ def league_panels(veg, qk, ai, new=None):
                   ("ma7", "#2a78d6", "直近7日平均"),
                   ("FIRMS", "#eb6834", "参考: 衛星が観測した熱異常のピクセル数（人の集計との差を見る）"),
               ]),
-              (mae_table(new.get("disaster_led", {}), "件") if new and new.get("disaster_led")
+              (mae_table(new.get("disaster_led", {}), "件", bench="persistence") if new and new.get("disaster_led")
                else empty(f"収集中（イベント{len(new.get('disaster_ev', {})) if new else 0}件）")),
               empty("毎日07:00 JSTに取込・提出・採点"),
               f"{GHB}/exp10_disaster/reports/disaster_forward.md"),
@@ -320,7 +399,7 @@ def league_panels(veg, qk, ai, new=None):
                   ("persistence", "#eda100", "前回の実績と同じ"),
                   ("mean", "#2a78d6", "過去の平均"),
               ]),
-              (mae_table(new.get("books_led", {}), "冊") if new and new.get("books_led")
+              (mae_table(new.get("books_led", {}), "冊", bench="all_stay") if new and new.get("books_led")
                else empty(f"収集中（{len(new.get('books_rank', {})) if new else 0}週分）。初採点は8/27")),
               empty("毎週木曜07:00 JSTに取得・採点・提出"),
               f"{GHB}/exp11_books/reports/books_forward.md"),
