@@ -16,6 +16,7 @@
            {{POWER_TABLE}} 順位表の<tr>群（td5列: 機体/対oracle/累計/事前でない日/直近日。class: dot/lead/aside/tag/abs/pos/neg）
            {{LATEST_LINE}} 直近日の1行テキスト
            {{LEAGUES}}     <li><b>名前</b><span>状態</span></li> 群
+           {{SCOREBOARD}} 全リーグの現在地（table.board。td3列: リーグ/採点/結果）
     画像: forward_pnl.png / latest_anatomy.png（相対パス固定）
 -->
 <style>
@@ -141,6 +142,14 @@ tr:last-child td{border-bottom:none}
 @media (prefers-color-scheme:dark){.neg{color:#e2726c}}
 .tnote{color:var(--muted);font-size:.72rem;margin-top:8px}
 /* 表の上に置く勝敗の1行。数字の羅列だけでは誰が勝っているか読めないため */
+.board td.st{color:var(--muted);font-size:.76rem;white-space:nowrap}
+.board td.vd{text-align:left;font-size:.8rem;line-height:1.5;white-space:normal}
+.board td:first-child{white-space:nowrap}
+@media (max-width:560px){.board td.vd{font-size:.74rem}}
+.abouttxt{font-size:.86rem;color:var(--ink2);line-height:1.85;margin-bottom:10px}
+.en{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+.en h3{font-size:.82rem;letter-spacing:.06em;color:var(--muted);font-weight:600;margin-bottom:8px}
+.en p{font-size:.84rem;color:var(--ink2);line-height:1.75;margin-bottom:9px}
 .verdict{font-size:.82rem;color:var(--ink2);margin:0 0 10px;padding:8px 11px;
   background:var(--bg);border:1px solid var(--line);border-radius:9px;line-height:1.6}
 /* 自分に不利な但し書き。目立たせすぎず、隠しもしない */
@@ -237,6 +246,9 @@ border-radius:11px;color:var(--ink);text-decoration:none;font-size:.86rem;backgr
 transition:border-color .2s}
 .lnav a:hover{border-color:var(--accent)}
 .lnav a.on{border-color:var(--accent);font-weight:700}
+.ldot{display:inline-block;width:9px;height:9px;border-radius:50%;flex:none}
+.board th{text-align:left}
+.board th:nth-child(2){text-align:right}
 .lnav .sub{margin-left:auto;font-size:.66rem;color:var(--muted)}
 .panel{display:none}
 .panel.on{display:block}
@@ -291,19 +303,37 @@ transition:border-color .2s}
 
 <div class="app">
 <nav class="lnav">
-<a href="#lg-power">⚡ 電力<span class="sub">毎日</span></a>
-<a href="#lg-veg">🥬 青果<span class="sub">週次</span></a>
-<a href="#lg-quake">🌏 地震<span class="sub">週次</span></a>
-<a href="#lg-weather">🌡 気象<span class="sub">毎日</span></a>
-<a href="#lg-curtail">🔌 出力制御<span class="sub">毎日</span></a>
-<a href="#lg-disaster">🔥 全球災害<span class="sub">毎日</span></a>
-<a href="#lg-books">📚 書籍<span class="sub">週次</span></a>
-<a href="#lg-re">🏠 不動産<span class="sub">四半期</span></a>
-<a href="#lg-sat">🛰 衛星<span class="sub">年次</span></a>
-<a href="#lg-ai">🤖 AI<span class="sub">週次</span></a>
+<a href="#lg-power"><span class="ldot" style="background:#eda100"></span>電力<span class="sub">毎日</span></a>
+<a href="#lg-veg"><span class="ldot" style="background:#1baf7a"></span>青果<span class="sub">週次</span></a>
+<a href="#lg-quake"><span class="ldot" style="background:#8a6a4f"></span>地震<span class="sub">週次</span></a>
+<a href="#lg-weather"><span class="ldot" style="background:#2a78d6"></span>気象<span class="sub">毎日</span></a>
+<a href="#lg-curtail"><span class="ldot" style="background:#eb6834"></span>出力制御<span class="sub">毎日</span></a>
+<a href="#lg-disaster"><span class="ldot" style="background:#d64545"></span>全球災害<span class="sub">毎日</span></a>
+<a href="#lg-books"><span class="ldot" style="background:#7a5ea8"></span>書籍<span class="sub">週次</span></a>
+<a href="#lg-re"><span class="ldot" style="background:#52514e"></span>不動産<span class="sub">四半期</span></a>
+<a href="#lg-sat"><span class="ldot" style="background:#1a9e9e"></span>衛星<span class="sub">年次</span></a>
+<a href="#lg-ai"><span class="ldot" style="background:#898781"></span>AI<span class="sub">週次</span></a>
 </nav>
 <div class="panels">
-<article id="pg-top" class="panel on"><section><div class="flow" role="img" aria-label="仕組み: 凍結、提出、採点、台帳の4ステップ">
+<article id="pg-top" class="panel on">
+
+<!-- 最初に成績を出す。予測の公開実験場と名乗るなら、開いて最初に見えるのは
+     仕組みでも予定でもなく結果であるべき（Haruki指摘 2026-08-28） -->
+<section>
+  <div class="head">
+    <p class="kick">いま何が起きているか</p>
+    <h2>10リーグの現在地</h2>
+  </div>
+  <div class="tblwrap">{{SCOREBOARD}}</div>
+  <p class="tnote"><b>ベンチ</b>＝予測を一切しない脳死の基準。これに勝てないリーグは失敗として残す。
+    <b>採点</b>の回数が少ないものは薄く出す——数回の勝ち負けは実力ではない。
+    各リーグの詳細は左のタブから</p>
+  <div class="fig"><img src="forward_pnl.png" alt="電力リーグ: oracle到達率の推移とベンチマーク線" loading="lazy"></div>
+  <p class="tnote">いちばん長く走っている電力リーグ。縦軸は<b>答えを見た上限の何%を取れたか</b>で、
+    灰色の帯は<b>予測を一切しなくても届く領域</b>。勝負はその上の狭い幅で起きている</p>
+</section>
+
+<section><div class="flow" role="img" aria-label="仕組み: 凍結、提出、採点、台帳の4ステップ">
     <!-- 横フロー（PC） -->
     <svg class="flow-h" viewBox="0 0 640 122" xmlns="http://www.w3.org/2000/svg">
       <path class="f-line" d="M112,46 H196"/>
@@ -382,8 +412,45 @@ transition:border-color .2s}
 </section>
 
 <!-- 予定タイムライン -->
-<section><div class="head"><h2>🗓 これからの予定</h2></div>
-<ul class="tl2"><!--TPL:{{TIMELINE}}/TPL--><!--SAMPLE--><li><b>毎日 13:30</b><span>⚡ 電力リーグ採点</span></li><!--/SAMPLE--></ul>
+<section><div class="head"><h2>これからの予定</h2></div>
+<ul class="tl2"><!--TPL:{{TIMELINE}}/TPL--><!--SAMPLE--><li><b>毎日 13:30</b><span>電力リーグ採点</span></li><!--/SAMPLE--></ul>
+</section>
+
+<!-- 誰がやっているか。無記名のページは「誰かのbot」に見えて、
+     台帳の中身がどれだけ正直でも信用の受け皿が無い（Haruki指摘 2026-08-28） -->
+<section id="about">
+  <div class="head">
+    <p class="kick">誰がやっているか</p>
+    <h2>この実験場について</h2>
+  </div>
+  <p class="abouttxt">個人が一人で運用しています。副業として、平日の数時間と休日だけを使って、
+    <b>50年必要とされる領域で事業を作れるか</b>を確かめるための実験場です。
+    予測を当てること自体が目的ではなく、<b>当たったか外れたかを人に見える形で残し続ける運用が
+    成立するか</b>を試しています。だから負けもそのまま置いてあります。</p>
+  <p class="abouttxt">技術的な手足はほぼAIに任せていて、この台帳もダッシュボードも
+    毎日CIが自動生成しています。人が触るのは設計と判断だけです。</p>
+  <div class="links">
+    <a href="https://github.com/hsumiyoshi">GitHub @hsumiyoshi</a>
+    <a href="https://github.com/hsumiyoshi/lab#lab--prediction-leagues-that-score-themselves">English</a>
+    <a href="https://github.com/hsumiyoshi/lab/issues">質問・指摘はIssuesへ</a>
+  </div>
+
+  <div class="en" lang="en">
+    <h3>In English</h3>
+    <p>I run 10 prediction leagues against real-world data. Every prediction is
+      committed to git <b>before</b> the outcome exists, so the goalposts cannot move
+      afterwards — and the losses stay in the ledger.</p>
+    <p>Each league has three things: a <b>dumb baseline</b> it must beat, an
+      <b>oracle</b> (the best possible result in hindsight) to measure against, and a
+      <b>scoring date fixed in advance</b>. The scoreboard at the top of this page shows
+      where each league stands, including the ones currently losing to their baseline.</p>
+    <p>Why git? A commit timestamp is a notary that costs nothing. Day-ahead electricity
+      prices are published at 10:00 JST; the picks are committed at 07:00 JST. Anyone can
+      check the history and verify the order of events. This page is regenerated from the
+      ledgers by CI every day — no hand edits.</p>
+    <p class="tnote">Charts are rendered in English because the CI runners have no
+      Japanese font; the Japanese captions below each chart explain how to read them.</p>
+  </div>
 </section>
 </article>
 <article id="lg-power" class="panel">
