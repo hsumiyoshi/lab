@@ -246,6 +246,8 @@ border-radius:11px;color:var(--ink);text-decoration:none;font-size:.86rem;backgr
 transition:border-color .2s}
 .lnav a:hover{border-color:var(--accent)}
 .lnav a.on{border-color:var(--accent);font-weight:700}
+.lico{display:inline-block;width:1.15em;text-align:center;font-size:.95em;
+  line-height:1;flex:none;filter:saturate(.85)}
 .ldot{display:inline-block;width:9px;height:9px;border-radius:50%;flex:none}
 .board th{text-align:left}
 .board th:nth-child(2){text-align:right}
@@ -303,16 +305,16 @@ transition:border-color .2s}
 
 <div class="app">
 <nav class="lnav">
-<a href="#lg-power"><span class="ldot" style="background:#eda100"></span>電力<span class="sub">毎日</span></a>
-<a href="#lg-veg"><span class="ldot" style="background:#1baf7a"></span>青果<span class="sub">週次</span></a>
-<a href="#lg-quake"><span class="ldot" style="background:#8a6a4f"></span>地震<span class="sub">週次</span></a>
-<a href="#lg-weather"><span class="ldot" style="background:#2a78d6"></span>気象<span class="sub">毎日</span></a>
-<a href="#lg-curtail"><span class="ldot" style="background:#eb6834"></span>出力制御<span class="sub">毎日</span></a>
-<a href="#lg-disaster"><span class="ldot" style="background:#d64545"></span>全球災害<span class="sub">毎日</span></a>
-<a href="#lg-books"><span class="ldot" style="background:#7a5ea8"></span>書籍<span class="sub">週次</span></a>
-<a href="#lg-re"><span class="ldot" style="background:#52514e"></span>不動産<span class="sub">四半期</span></a>
-<a href="#lg-sat"><span class="ldot" style="background:#1a9e9e"></span>衛星<span class="sub">年次</span></a>
-<a href="#lg-ai"><span class="ldot" style="background:#898781"></span>AI<span class="sub">週次</span></a>
+<a href="#lg-power"><span class="lico">⚡</span>電力<span class="sub">毎日</span></a>
+<a href="#lg-veg"><span class="lico">🥬</span>青果<span class="sub">週次</span></a>
+<a href="#lg-quake"><span class="lico">🌏</span>地震<span class="sub">週次</span></a>
+<a href="#lg-weather"><span class="lico">🌡</span>気象<span class="sub">毎日</span></a>
+<a href="#lg-curtail"><span class="lico">🔌</span>出力制御<span class="sub">毎日</span></a>
+<a href="#lg-disaster"><span class="lico">🔥</span>全球災害<span class="sub">毎日</span></a>
+<a href="#lg-books"><span class="lico">📚</span>書籍<span class="sub">週次</span></a>
+<a href="#lg-re"><span class="lico">🏠</span>不動産<span class="sub">四半期</span></a>
+<a href="#lg-sat"><span class="lico">🛰</span>衛星<span class="sub">年次</span></a>
+<a href="#lg-ai"><span class="lico">🤖</span>AI<span class="sub">週次</span></a>
 </nav>
 <div class="panels">
 <article id="pg-top" class="panel on">
@@ -412,7 +414,7 @@ transition:border-color .2s}
 </section>
 
 <!-- 予定タイムライン -->
-<section><div class="head"><h2>これからの予定</h2></div>
+<section><div class="head"><h2>🗓 これからの予定</h2></div>
 <ul class="tl2"><!--TPL:{{TIMELINE}}/TPL--><!--SAMPLE--><li><b>毎日 13:30</b><span>電力リーグ採点</span></li><!--/SAMPLE--></ul>
 </section>
 

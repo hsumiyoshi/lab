@@ -308,9 +308,9 @@ def league_panels(veg, qk, ai, new=None):
         # （2026-08-28に新設4リーグで4箇所発見）。HTMLに直して出す
         rule_html = re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", rule_html)
         return (f"<article id='{pid}' class='panel'>"
-                + card("ルールと出場機体", f"<div class='meta'>{rule_html}</div>{mcards}")
-                + card("成績表", score_body)
-                + card("当日 / 次のイベント", today_body)
+                + card("📖 ルールと出場機体", f"<div class='meta'>{rule_html}</div>{mcards}")
+                + card("🏆 成績表", score_body)
+                + card("📍 当日 / 次のイベント", today_body)
                 + f"<div class='links'><a href='{link}'>台帳（生データ）</a></div></article>")
     html = "".join([
         panel("lg-veg",
@@ -455,9 +455,9 @@ def league_panels(veg, qk, ai, new=None):
 
 # 採点がまだ始まっていないリーグ。スコアボードで「動いているが未採点」と出す
 NOT_YET = {
-    "不動産": "2026-07-28の地震直後に予言をコミット済み。判定は2027年1月",
-    "衛星": "NDVIを収集中。出荷週の予測は2027年6月にコミット、7月に判定",
-    "AI": "推論3人格が週次で賭ける。毎週水曜に採点",
+    "🏠 不動産": "2026-07-28の地震直後に予言をコミット済み。判定は2027年1月",
+    "🛰 衛星": "NDVIを収集中。出荷週の予測は2027年6月にコミット、7月に判定",
+    "🤖 AI": "推論3人格が週次で賭ける。毎週水曜に採点",
 }
 
 
@@ -475,11 +475,13 @@ def scoreboard(p, summary):
         ok = [n for n in strat if p["played"].get(n, 0) - p["btdays"].get(n, 0) >= MIN_RATE_DAYS]
         if ok:
             top = max(ok, key=pct.get)
-            rows.append(("電力", f"{p['days']}日目",
+            rows.append(("⚡ 電力", f"{p['days']}日目",
                          f"首位 <b>{top}</b>　対oracle {pct[top]:.1f}%", p["days"]))
+    EMO = {"青果": "🥬", "地震": "🌏", "気象": "🌡", "出力制御": "🔌",
+           "全球災害": "🔥", "書籍": "📚"}
     for name, (text, n) in summary.items():
         unit = "週" if name in ("青果", "地震") else "回"
-        rows.append((name, f"{n}{unit}", text, n))
+        rows.append((f'{EMO.get(name, "")} {name}'.strip(), f"{n}{unit}", text, n))
     for name, note in NOT_YET.items():
         rows.append((name, "採点前", note, None))
 
@@ -513,12 +515,12 @@ def timeline(veg, qk):
     WD = "月火水木金土日"
     q, v = nxt(0, 14, 0), nxt(2, 14, 0)   # quake_forward: 月14:00 / veg_forward: 水14:00
     items = [
-        ("毎日 13:30", "<span class='ldot' style='background:#eda100'></span>電力リーグ採点（picksは毎朝7:00に自動提出）"),
-        (f"{q:%-m/%d} ({WD[q.weekday()]}) 14:00", f"<span class='ldot' style='background:#8a6a4f'></span>地震リーグの採点{prev(qk)}"),
-        (f"{v:%-m/%d} ({WD[v.weekday()]}) 14:00", f"<span class='ldot' style='background:#1baf7a'></span>青果リーグの採点{prev(veg)}"),
-        ("毎週水曜", "<span class='ldot' style='background:#898781'></span>AIリーグ: 3人格の賭けを公開・前週分を採点"),
-        ("2027年1月〜", "<span class='ldot' style='background:#52514e'></span>不動産の事前登録予測を判定"),
-        ("2027年6月", "<span class='ldot' style='background:#1a9e9e'></span>衛星の出荷週予測をコミット（7月に判定）"),
+        ("毎日 13:30", "⚡ 電力リーグ採点（picksは毎朝7:00に自動提出）"),
+        (f"{q:%-m/%d} ({WD[q.weekday()]}) 14:00", f"🌏 地震リーグの採点{prev(qk)}"),
+        (f"{v:%-m/%d} ({WD[v.weekday()]}) 14:00", f"🥬 青果リーグの採点{prev(veg)}"),
+        ("毎週水曜", "🤖 AIリーグ: 3人格の賭けを公開・前週分を採点"),
+        ("2027年1月〜", "🏠 不動産の事前登録予測を判定"),
+        ("2027年6月", "🛰 衛星の出荷週予測をコミット（7月に判定）"),
     ]
     return "".join(f"<li><b>{d}</b><span>{s}</span></li>" for d, s in items)
 
