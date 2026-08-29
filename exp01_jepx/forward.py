@@ -502,6 +502,29 @@ def write_anatomy(df: pd.DataFrame, ledger: pd.DataFrame, dest) -> str:
 
 # ---------------- レポート ----------------
 
+def absence_kind(day: pd.Timestamp, name: str) -> str:
+    """欠場の種類を返す: 事故 / 設計棄権 / 補完待ち。
+
+    **この3つを混ぜてはいけない**（2026-08-29・Haruki「欠場日も後から補正して
+    公正に勝負させるべき」への回答）:
+      - **事故**: CI障害などでpicksファイル自体が無い。**補完すべき**
+      - **設計棄権**: 機体が理由つきで出場を辞退した（履歴不足・信号不明）。
+        **補完してはいけない**——埋めると、その機体が出さなかった予測を
+        後から発明することになる
+      - **補完待ち**: 補完すべきだが予報アーカイブ（約5日遅れ）が未到着
+    """
+    f = PICKS_DIR / f"{day:%Y-%m-%d}.json"
+    bt = PICKS_DIR / f"bt_{day:%Y-%m-%d}.json"
+    for src in (f, bt):
+        if src.exists():
+            meta = json.loads(src.read_text(encoding="utf-8")).get("_meta", {})
+            if name in (meta.get("absent") or {}):
+                return "設計棄権"
+    if not f.exists() and not bt.exists():
+        return "補完待ち"
+    return "事故"
+
+
 def absence_warnings(ledger, days: int = 7) -> list:
     """気象入力が落ちて天気系が全滅した日を警告として先頭に出す（issue #18）。
 
@@ -634,6 +657,22 @@ def report(ledger: pd.DataFrame, picks, meta, target, anatomy_latest: str = "") 
                      f"tenkiとhybridが上）。参考として残すが、比較には使わない。"
                      + (f"\n\n⚠ **共通日は{cdays_pre}日しかない。順位は暫定。**"
                         if cdays_pre < 10 else ""))
+        # 欠場の内訳を出す。**補完待ちと設計棄権を混ぜない**——前者は埋めるべき穴、
+        # 後者は埋めてはいけない（機体が出さなかった予測を発明することになる）
+        gaps = {}
+        for n in strat_names:
+            for d in ledger.index[ledger[n].isna()]:
+                gaps.setdefault(absence_kind(d, n), []).append((d, n))
+        if gaps:
+            lines += ["", "### 欠場の内訳", ""]
+            for kind, why in (("補完待ち", "予報アーカイブ（約5日遅れ）の到着後に自動で埋まる。埋まれば全機体が同じ日で戦う"),
+                              ("事故", "picksは作られたが失われた日。手当てが要る"),
+                              ("設計棄権", "機体が理由つきで出場を辞退した日。**補完しない**——埋めると出さなかった予測を発明することになる")):
+                if kind not in gaps:
+                    continue
+                items = ", ".join(f"{d:%-m/%d} {n}" for d, n in sorted(gaps[kind]))
+                lines.append(f"- **{kind}**（{len(gaps[kind])}件）: {items}")
+                lines.append(f"  - {why}")
         # 期間別（週別）: フォワードだけに集中して見る手段（Haruki要望）
         wk = ledger.index.to_series().dt.strftime("%G-W%V")
         weeks = sorted(wk.unique())
