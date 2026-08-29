@@ -162,6 +162,10 @@ tr:last-child td{border-bottom:none}
 .board td.vd{text-align:left;font-size:.8rem;line-height:1.5;white-space:normal}
 .board td:first-child{white-space:nowrap}
 @media (max-width:560px){.board td.vd{font-size:.74rem}}
+.code{background:var(--bg);border:1px solid var(--line);border-radius:9px;
+  padding:11px 13px;font-size:.72rem;line-height:1.6;overflow-x:auto;max-width:100%;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  color:var(--ink2);margin:10px 0;white-space:pre-wrap;word-break:break-word}
 .abouttxt{font-size:.86rem;color:var(--ink2);line-height:1.85;margin-bottom:10px}
 .en{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
 .en h3{font-size:.82rem;letter-spacing:.06em;color:var(--muted);font-weight:600;margin-bottom:8px}
@@ -259,6 +263,13 @@ footer{color:var(--muted);font-size:.74rem;margin-top:26px;line-height:1.8}
 .tl2 li:last-child{border-bottom:none}
 .tl2 b{min-width:110px;color:var(--ink2);font-weight:600;font-variant-numeric:tabular-nums}
 .app{display:grid;grid-template-columns:210px 1fr;gap:14px;align-items:start;margin-top:4px}
+/* **gridの子は既定で min-width:auto** なので、中の広い表に押し広げられて
+   ページ全体が横スクロールしていた（390px幅でAIリーグが3.1倍・電力1.4倍）。
+   .tblwrap の overflow-x が効いていなかったのはこれが原因（2026-08-29の
+   参加者視点レビューで「Brier列が画面外で数字が1つも見えない」と指摘） */
+.panels{min-width:0}
+.panel{min-width:0}
+.panel section{min-width:0;overflow-wrap:anywhere}
 .lnav{position:sticky;top:14px;display:flex;flex-direction:column;gap:7px}
 .lnav a{display:flex;gap:9px;align-items:center;padding:10px 13px;border:1px solid var(--line);
 border-radius:11px;color:var(--ink);text-decoration:none;font-size:.86rem;background:var(--card);
@@ -323,7 +334,7 @@ transition:border-color .2s}
   <p class="lead sub2">用語: <b>フォワード</b>＝バックテストではなく本番運用の日数。
     <b>oracle</b>＝答えを見て動いた場合の理論上限。<b>BT補完</b>＝参戦前や事故で欠けた日を、
     当時入手できたデータだけで後から再現したもの（事前コミットではないので率から外す）。
-    <a href="#about">誰がやっているか / In English</a></p>
+    <a href="#join">参加する</a>　<a href="#about">誰がやっているか / In English</a></p>
   </header>
 
 <!-- 2. 生きているか？ -->
@@ -452,6 +463,41 @@ transition:border-color .2s}
 <!-- 予定タイムライン -->
 <section><div class="head"><h2>🗓 これからの予定</h2></div>
 <ul class="tl2"><!--TPL:{{TIMELINE}}/TPL--><!--SAMPLE--><li><b>毎日 13:30</b><span>電力リーグ採点</span></li><!--/SAMPLE--></ul>
+</section>
+
+<!-- 参加方法。**ページに一言も無かった**（「参加」の語が0回）ため、参加意思が
+     あっても着手する手段が文字通り存在しなかった（2026-08-29の参加者視点レビュー）。
+     フロー自体は2026-08-14に開通していて、CHANGELOGにだけ書かれていた -->
+<section id="join">
+  <div class="head">
+    <p class="kick">やってみたい人へ</p>
+    <h2>参加する</h2>
+  </div>
+  <p class="abouttxt"><b>コードは渡さなくて構いません。</b>出すのは予測（picks）だけです。
+    電力リーグなら、翌日48コマのうち<b>安い4コマで充電・高い4コマで放電</b>する組を選んで、
+    こういうJSONを出すだけ。自分の戦略は手元に残ります。</p>
+  <pre class="code">exp01_jepx/picks/2026-08-30.json
+{
+ "あなたの機体名": {
+   "charge":    [22, 23, 24, 25],   ← 買うコマ（1〜48。1=00:00-00:30）
+   "discharge": [36, 37, 38, 39]    ← 売るコマ
+ }
+}</pre>
+  <p class="abouttxt"><b>締切は受渡日の前日10:00 JST</b>（JEPXが価格を公表する時刻）。
+    これを過ぎた提出はその日の分として数えません——<b>後出しになるから</b>で、
+    実際に運営側も一度この線を越えており、公証の節にその1件を書いてあります。
+    こちらは毎朝7:00に出しています。</p>
+  <p class="abouttxt">途中から参戦しても不利にはなりません。順位は
+    <b>全機体が揃った共通日</b>で付けるので、参戦前の日はあなたの分母に入りません。
+    ただし事前コミットが4日に満たないうちは「参考」表示で、順位には入りません。
+    欠場した日は0円ではなく<b>欠場</b>として扱い、分母から外します。</p>
+  <div class="links">
+    <a href="https://github.com/hsumiyoshi/lab/tree/main/exp01_jepx/picks">提出済みpicksの実物</a>
+    <a href="https://github.com/hsumiyoshi/lab/issues/new">Issueで声をかける</a>
+  </div>
+  <p class="tnote">まだ外部からの参加者はいません。<b>勝っても賞はありません</b>——
+    あるのは、あなたの予測が結果の出る前に公証され、負けも含めて残ることだけです。
+    他リーグへの参加は採点方法がリーグごとに違うので、Issueで相談してください。</p>
 </section>
 
 <!-- 誰がやっているか。無記名のページは「誰かのbot」に見えて、

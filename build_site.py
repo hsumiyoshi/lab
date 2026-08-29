@@ -19,6 +19,16 @@ DOCS = ROOT / "docs"
 JST = ZoneInfo("Asia/Tokyo")
 
 MIN_RATE_DAYS = 4  # レートを実力として出すのに要る事前コミット日数
+
+# **判定に要る標本数はリーグごとに違う。** ページは一律 n<4 で警告していたが、
+# 各リーグの台帳は「判定日 n≥30」「n≥12週」と宣言しており、**ページと台帳で
+# 基準が別物だった**（2026-08-29の運営者視点レビュー）。その結果、標本4回の
+# 全球災害が無警告で「ベンチに負けている」と断定していた——実績が単調減少する
+# 局面では遅行するma7が負けるのは構造上ほぼ自明で、標本が増えれば意味が変わる。
+# **少標本で断定するサイトだという最悪のシグナル**になるので、台帳の宣言を正とする。
+JUDGE_N = {"気象": 30, "全球災害": 30, "書籍": 12, "青果": 12, "地震": 12,
+           "出力制御": 30, "電力": 30}
+DEFAULT_JUDGE_N = 4
 DOT = {"weekshape": "#2a78d6", "tenki": "#eb6834",
        "hybrid": "#1baf7a", "clock": "#eda100", "tenki_v2": "#9b6bd3", "tenki_v3": "#c44e52",
        "tenki_v4": "#6b7f2e", "oracle": "#898781"}
@@ -187,11 +197,12 @@ def ai_score_body(ai):
         board = (f"<p class='verdict'>首位 <b>{best}</b>　Brier {sc[best]:.4f}"
                  f"（臆病者ベンチ {bench:.2f}・低いほど良い）"
                  f"<span class='abs'>　※標本3問——判断には足りない</span></p>"
-                 f"<table><tr><th>人格</th><th>Brier</th><th>ベンチ比</th></tr>{rows}</table>")
+                 f"<div class='tblwrap'><table><tr><th>人格</th><th>Brier</th>"
+                 f"<th>ベンチ比</th></tr>{rows}</table></div>")
     late = r.get("scoring_note")
     ln = f"<p class='caveat'>{late}</p>" if late else ""
     note = "<p class='tnote'>" + r.get("provenance", "") + "。確率は各人格の主観確率（1.00=確実に起きる）</p>"
-    return f"{board}<table>{head}{trs}</table>{note}{ln}"
+    return f"{board}<div class='tblwrap'><table>{head}{trs}</table></div>{note}{ln}"
 
 
 def schedule_note(ledger_rows, weekday: int, hour: int, first_scoring: str, label: str) -> str:
@@ -280,9 +291,12 @@ def league_panels(veg, qk, ai, new=None):
         elif d > 0:
             head = f"首位 <b>{tn}</b>　ベンチ（{bn}）との差 <b>+{d:,.3g}{unit}</b>{rate}"
         else:
-            head = (f"<b>{tn}</b> が<b>ベンチ（{bn}）に負けている</b>"
-                    f"　差 {d:,.3g}{unit}{rate}")
-        warn = f"　<span class='abs'>※標本 {n}{'週' if n else ''}——判断には足りない</span>" if n < 4 else ""
+            weak = n < JUDGE_N.get(key, DEFAULT_JUDGE_N)
+            verb = "ベンチ（{}）を下回っている".format(bn) if weak else f"<b>ベンチ（{bn}）に負けている</b>"
+            head = f"<b>{tn}</b> が{verb}　差 {d:,.3g}{unit}{rate}"
+        need = JUDGE_N.get(key, DEFAULT_JUDGE_N)
+        warn = (f"　<span class='abs'>※標本 {n}／判定に必要 {need}——まだ判断できない</span>"
+                if n < need else "")
         if key:
             SUMMARY[key] = (re.sub(r"<[^>]+>", "", head), n)
         return f"<p class='verdict'>{head}{warn}</p>"
@@ -291,7 +305,8 @@ def league_panels(veg, qk, ai, new=None):
         th = "".join(f"<th>{h}</th>" for h in headers)
         trs = "".join("<tr>" + "".join(f"<td>{r.get(c, chr(8212))}</td>" for c in cols) + "</tr>"
                       for r in rows[-6:])
-        return f"<table><tr>{th}</tr>{trs}</table>"
+        return f"<div class='tblwrap'><table><tr>{th}</tr>{trs}</table></div>"
+
     def _agg_verdict(agg, counts, bench, lower, unit, fmt, key=None, strong=None):
         """集計済みの {機体: 値} から勝敗の1行を作る。表の上に置く。"""
         if bench not in agg or len(agg) < 2:
@@ -308,7 +323,9 @@ def league_panels(veg, qk, ai, new=None):
         elif d > 0:
             head = f"首位 <b>{top}</b>　ベンチ（{bench}）との差 <b>+{fmt(d)}{unit}</b>"
         else:
-            head = f"<b>{top}</b> が<b>ベンチ（{bench}）に負けている</b>　差 {fmt(d)}{unit}"
+            weak = n < JUDGE_N.get(key, DEFAULT_JUDGE_N)
+            verb = f"ベンチ（{bench}）を下回っている" if weak else f"<b>ベンチ（{bench}）に負けている</b>"
+            head = f"<b>{top}</b> が{verb}　差 {fmt(d)}{unit}"
         # 脳死ベンチに勝つのは当然として、**強敵ベンチとの比較も出す**。
         # 気象はjmaを「常設ベンチ（強敵）」と説明しながら勝敗はpersistence基準で、
         # blend(0.74℃)がjma(1.16℃)にも勝っているのに**自分を過小評価していた**
@@ -318,7 +335,9 @@ def league_panels(veg, qk, ai, new=None):
             ds = agg[strong] - agg[top] if lower else agg[top] - agg[strong]
             verb = "も上回っている" if ds > 0 else "には及ばない"
             extra = f"　<b>{strong}</b>（強敵ベンチ {fmt(agg[strong])}{unit}）{verb}"
-        warn = (f"　<span class='abs'>※標本 {n}回——判断には足りない</span>" if n < 4 else "")
+        need = JUDGE_N.get(key, DEFAULT_JUDGE_N)
+        warn = (f"　<span class='abs'>※標本 {n}回／判定に必要 {need}——まだ判断できない</span>"
+                if n < need else "")
         head += extra
         if key:
             SUMMARY[key] = (re.sub(r"<[^>]+>", "", head), n)
@@ -338,7 +357,8 @@ def league_panels(veg, qk, ai, new=None):
         cnt = {n: len([r for r in rows if n in r["err"]]) for n in names}
         head = _agg_verdict(agg, cnt, bench, True, unit, lambda x: f"{x:.2f}", key,
                             strong=strong) if bench else ""
-        return head + f"<table><tr><th>機体</th><th>平均誤差({unit})</th><th>出場</th></tr>{body}</table>"
+        return head + (f"<div class='tblwrap'><table><tr><th>機体</th>"
+                       f"<th>平均誤差({unit})</th><th>出場</th></tr>{body}</table></div>")
 
     def hit_table(led, bench=None, key=None):
         """的中型の台帳（{日付: {hit: {機体: bool}}}）から的中率の表を作る。"""
@@ -352,7 +372,8 @@ def league_panels(veg, qk, ai, new=None):
         agg = {n: sum(1 for r in rows if r["hit"].get(n)) / len(rows) * 100 for n in names}
         cnt = {n: len(rows) for n in names}
         head = _agg_verdict(agg, cnt, bench, False, "pt", lambda x: f"{x:.0f}", key) if bench else ""
-        return head + f"<table><tr><th>機体</th><th>的中</th><th>的中率</th></tr>{body}</table>"
+        return head + (f"<div class='tblwrap'><table><tr><th>機体</th>"
+                       f"<th>的中</th><th>的中率</th></tr>{body}</table></div>")
 
     def machines(items):
         cards = "".join(
