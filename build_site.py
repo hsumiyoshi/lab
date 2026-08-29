@@ -384,6 +384,12 @@ def league_panels(veg, qk, ai, new=None):
                 + card("ルールと出場機体", f"<div class='meta'>{rule_html}</div>{mcards}", kick="何の勝負？")
                 + card("成績表", score_body, kick="成績は？")
                 + card("当日 / 次のイベント", today_body, kick="今日は？")
+                # **リーグを直リンクで開いた人にも公証を見せる。** 公証・About は
+                # 概況パネルの中にあるため、#lg-power を共有された読者は
+                # **このサイトの信用の根拠を一度も見ないまま**詳細だけ読むことになる
+                # （2026-08-29の初見レビュー指摘）
+                + "<p class='backlink'><a href='#pg-top'>← 10リーグの現在地と"
+                  "「なぜ後出しできないか」を見る</a></p>"
                 + f"<div class='links'><a href='{link}'>台帳（生データ）</a></div></article>")
     html = "".join([
         panel("lg-veg",
@@ -499,7 +505,7 @@ def league_panels(veg, qk, ai, new=None):
               empty("毎日07:00 JSTに取込・提出・採点"),
               f"{GHB}/exp10_disaster/reports/disaster_forward.md"),
         panel("lg-books",
-              "今週のベストセラー上位10冊のうち、来週も残るのは何冊か。"
+              "トーハン週間ベストセラー（総合）の上位10冊のうち、来週も残るのは何冊か。"
               "1位当ては運の比重が大きいので、**ヒットの持続性そのもの**を測る設計にした",
               machines([
                   ("all_stay", "#898781", "10冊すべて残る（脳死ベンチ）"),
@@ -636,6 +642,13 @@ def build():
                 .replace("{{LATEST_LINE}}", latest_line(p) if p else "初日の採点待ち")
                 .replace("{{LEAGUE_PANELS}}", panels_html)
                 .replace("{{SCOREBOARD}}", scoreboard(p, summary))
+                # **説明文の数字を直書きしない。** 図を共通日ベースに変えたとき、
+                # キャプションだけ古い値(8割強=80.9%)のまま残り、図(69.1%)と矛盾した
+                # ——「台帳から自動生成・人の手は入らない」と謳うページで生成物同士が
+                # 食い違い、初見レビューで**唯一信用が下がった箇所**になった（2026-08-29）
+                .replace("{{BENCH_PCT}}", f"{p['cbench']:.1f}%" if p and p.get("cbench") else "—")
+                .replace("{{BENCH_REST}}", f"{(100 - p['cbench']) / 10:.0f}割"
+                         if p and p.get("cbench") else "—")
                 .replace("{{TIMELINE}}", timeline(veg, qk)))
     for src_name, path in (("forward_pnl.png", "exp01_jepx/reports/forward_pnl.png"),
                            ("latest_anatomy.png", None)):
