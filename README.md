@@ -4,7 +4,7 @@
 to git *before* the outcome exists, so I cannot move the goalposts afterwards.
 The losses stay in the ledger.**
 
-📊 **[Live dashboard](https://hsumiyoshi.github.io/lab/)** — updated daily by CI
+📊 **[Live dashboard](https://lab.hsumiyoshi.com/)** — updated daily by CI
 
 Each league has three things: a **dumb baseline** it must beat, an **oracle**
 (the best possible result in hindsight) to measure against, and a **scoring date
@@ -29,7 +29,7 @@ Anyone can check the history and see the order of events.
 **現実のデータに対して10のリーグを回しています。予測は結果が出る前にgitへコミットするので、
 後から動かせません。負けた記録も台帳に残したままです。**
 
-📊 **[ダッシュボード](https://hsumiyoshi.github.io/lab/)** — CIが毎日更新
+📊 **[ダッシュボード](https://lab.hsumiyoshi.com/)** — CIが毎日更新
 
 各リーグには3つが必ずあります: 越えるべき**脳死ベンチ**、後から見た最善である**oracle**、
 そして**事前に決めた採点日**。いま電力リーグでは天気を読む機体が時計どおりの脳死ベンチを
