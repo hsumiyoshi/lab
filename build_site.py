@@ -711,6 +711,36 @@ def timeline(veg, qk):
     return "".join(f"<li><b>{d}</b><span>{s}</span></li>" for d, s in items)
 
 
+# Cloudflare Web Analytics の計測トークン。**公開値**（ページのソースに出る前提の
+# もの）なので秘匿しない。空文字なら計測タグも但し書きも出さない——**計測していないのに
+# 「計測している」と書くことを構造で防ぐ**（この2つは必ず同時に出る）。
+# Cookieを使わない方式なので同意バナーは不要。プロキシ（橙の雲）も不要で、
+# **onにしてはいけない**——GitHub Pagesの証明書更新が壊れる。
+CF_BEACON_TOKEN = ""
+
+
+def analytics_tag() -> str:
+    if not CF_BEACON_TOKEN:
+        return ""
+    return ('<script defer src="https://static.cloudflareinsights.com/beacon.min.js" '
+            "data-cf-beacon='{\"token\": \"" + CF_BEACON_TOKEN + "\"}'></script>")
+
+
+def analytics_note() -> str:
+    """計測していることをページに明記する。
+
+    「台帳から自動生成・人の手は入らない」と謳うページで、黙って計測を足すのは
+    筋が通らない。**広告ブロッカーで3〜5割は計測から落ちる**ことも併せて書く——
+    この数字を後から根拠として使うときに、自分が過小である事実を忘れないため。
+    """
+    if not CF_BEACON_TOKEN:
+        return ""
+    return ('  <p class="abouttxt">このページは <b>Cloudflare Web Analytics</b> で'
+            '閲覧数を数えています。Cookieは使わず、個人を識別できる情報は集めません。'
+            '広告ブロッカーを使っている読者は計測されないので、'
+            '<b>実際の閲覧数はここで見える数より多い</b>と考えています。</p>\n')
+
+
 def build():
     tpl = (ROOT / "site_template.html").read_text(encoding="utf-8")
     p = read_power()
@@ -751,6 +781,8 @@ def build():
                 .replace("{{BENCH_REST}}", f"{(100 - p['cbench']) / 10:.0f}割"
                          if p and p.get("cbench") else "—")
                 .replace("{{NOTARY_TABLE}}", notary_table())
+                .replace("{{ANALYTICS}}", analytics_tag())
+                .replace("{{ANALYTICS_NOTE}}", analytics_note())
                 .replace("{{TIMELINE}}", timeline(veg, qk)))
     for src_name, path in (("forward_pnl.png", "exp01_jepx/reports/forward_pnl.png"),
                            ("latest_anatomy.png", None)):
