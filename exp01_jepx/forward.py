@@ -161,6 +161,9 @@ def build_ledger(df: pd.DataFrame) -> pd.DataFrame:
         row = {"date": day, "signal": signal}
         for name, (c, d) in load_picks(day).items():
             row[name] = sim.run_day(today, c, d)
+            if day in POST_PUBLICATION:
+                # 事前コミットではないので、率の分母から外す（rc_と同じ扱い）
+                row[f"rc_{name}"] = 1
         # ベースライン2機体は2026-08-27まで、提出せず採点時にコードから再計算していた。
         # 先読みは無かったが「価格公表前にコミット済み」だけが当てはまらず、
         # ロジックを書き換えれば過去の成績も動いた（Haruki判断「A」で提出型へ移行）。
@@ -241,6 +244,13 @@ COLORS = {"weekshape": "#2a78d6", "tenki": "#eb6834",
           "hybrid": "#1baf7a", "clock": "#eda100", "tenki_v2": "#9b6bd3", "tenki_v3": "#c44e52",
           "tenki_v4": "#6b7f2e"}
 MIN_RATE_DAYS = 4  # レートを実力として出すのに要る事前コミット日数
+
+# **価格公表より後にコミットされたpicksの受渡日。** 事前コミットとして数えない。
+# 2026-08-14分はリポジトリ公開初版のコミット（08-13 23:24 JST）に入っており、
+# その日の価格公表（08-13 10:00 JST）の13時間あと。2026-08-29の敵対的レビューで発覚。
+# 隠さず、率の分母から外して「再計算」と同じ扱いにする。
+# 確認: git log --diff-filter=A --format=%cI -- exp01_jepx/picks/2026-08-14.json
+POST_PUBLICATION = {pd.Timestamp("2026-08-14")}
 INK, INK2, MUTED = "#0b0b0b", "#52514e", "#898781"
 GRID, BASE, SURFACE = "#e1e0d9", "#c3c2b7", "#fcfcfb"
 
@@ -568,11 +578,32 @@ def report(ledger: pd.DataFrame, picks, meta, target, anatomy_latest: str = "") 
                         (ftot - clk) / orc * 100 if orc else 0.0,
                         rcdays,
                         tot / allo * 100 if allo else 0.0)
-        order = sorted(strat_names, key=lambda n: -stats[n][3])  # 並びは対oracle（Fwd）＝実力順（Haruki指定）
+        # **共通日で並べる。** 機体ごとに日集合が違う「対oracle（出場日）」で
+        # 順位を付けていたため、**難しい日を欠場した機体ほど上に来ていた**——
+        # 2026-08-29のFableの敵対的レビューで発覚。tenki_v3が87.0%で首位に見えていたが、
+        # v3の8日間で揃えると tenki 89.7% / hybrid 89.2% が上。v3が良く見えたのは
+        # 立ち上がりの荒れた日(8/14はtenkiが40.7%)と8/22・8/25を背負っていないから。
+        # **欠場はレート上無傷で、皆勤だけが難日を背負う**構造だった。
+        ready = [n for n in strat_names if stats[n][0] - stats[n][1] >= MIN_RATE_DAYS]
+        cmask = pd.Series(True, index=ledger.index)
+        for n in ready:
+            m = ledger[n].notna()
+            for pre_ in ("bt_", "rc_"):
+                col = f"{pre_}{n}"
+                if col in ledger.columns:
+                    m &= ledger[col].fillna(0) != 1
+            cmask &= m
+        cdays_pre = int(cmask.sum())
+        corc_pre = float(ledger.loc[cmask, "oracle"].sum()) if cdays_pre else 0.0
+        cpct = {n: (float(ledger.loc[cmask, n].sum()) / corc_pre * 100
+                    if cdays_pre and corc_pre and n in ready else None)
+                for n in strat_names}
+        order = sorted(strat_names,
+                       key=lambda n: -(cpct[n] if cpct[n] is not None else stats[n][3] - 1000))
         lines += ["![cumulative P&L](forward_pnl.png)", "",
                   f"## 累計成績（リーグ{days}日目）", "",
-                  "| 機体 | 累計損益 | 事前でない日 | 対oracle（事前コミット日） | 対clock差（pt） |",
-                  "|---|---|---|---|---|"]
+                  f"| 機体 | 累計損益 | 事前でない日 | **対oracle（共通{cdays_pre}日）** | 対oracle（各自の出場日） | 対clock差（pt） |",
+                  "|---|---|---|---|---|---|"]
         for n in order:
             p_, bt_, t_, pct, dpt, rc_, allpct = stats[n]
             kind = ("再計算" if rc_ == bt_ else "BT補完" if rc_ == 0
@@ -583,18 +614,26 @@ def report(ledger: pd.DataFrame, picks, meta, target, anatomy_latest: str = "") 
             # 全日ベースの 82.2% / 86.9% とかけ離れた——**n=1の比を実力として並べると
             # ベンチマークが簡単に超えられるように見える**。日数を書いて参考値に落とす
             if p_ - bt_ < MIN_RATE_DAYS:
-                lines.append(f"| {n} | {t_:,.0f}円 | {btcell} | — （参考 {allpct:.1f}%"
+                lines.append(f"| {n} | {t_:,.0f}円 | {btcell} | — | — （参考 {allpct:.1f}%"
                              f"・事前{p_ - bt_}日） | — |")
             else:
-                lines.append(f"| {n} | {t_:,.0f}円 | {btcell} | {pct:.1f}% | {dpt:+.1f} |")
+                c = f"**{cpct[n]:.1f}%**" if cpct[n] is not None else "—"
+                lines.append(f"| {n} | {t_:,.0f}円 | {btcell} | {c} | {pct:.1f}% | {dpt:+.1f} |")
         o_tot = float(ledger["oracle"].sum())
-        lines.append(f"| oracle | {o_tot:,.0f}円 | — | 100.0% | — |")
+        lines.append(f"| oracle | {o_tot:,.0f}円 | — | 100.0% | 100.0% | — |")
         lines.append("")
         lines.append("累計損益は**BT補完込み**（参戦前の欠場日を、当時入手可能だったデータのみで"
                      "再現したバックテストで補完）。**事前でない日**＝価格公表前にコミットされていない日。内訳は**BT補完**（参戦前の穴埋め）と**再計算**（提出が無く採点時にコードから作った日）。clockとweekshapeは2026-08-27まで提出型ではなかったため、それ以前は全日が再計算。"
                      "**対oracle%と対clock差は事前コミット済みのフォワード日のみ**で計算——"
                      "対oracle%は値幅のスケールを、対clock差（常設ベンチとの同日ペア差）は"
-                     "時代の取りやすさを一次補正する。完全対等の比較は下の直接対決（共通日のみ）")
+                     f"時代の取りやすさを一次補正する。\n\n"
+                     f"**順位は「対oracle（共通{cdays_pre}日）」で付ける。** "
+                     f"「各自の出場日」の列は機体ごとに分母の日が違うので、**順位に使うと"
+                     f"難しい日を欠場した機体ほど上に来る**——2026-08-29の敵対的レビューで"
+                     f"実際にそうなっていた（tenki_v3が首位に見えていたが、同じ日で揃えると"
+                     f"tenkiとhybridが上）。参考として残すが、比較には使わない。"
+                     + (f"\n\n⚠ **共通日は{cdays_pre}日しかない。順位は暫定。**"
+                        if cdays_pre < 10 else ""))
         # 期間別（週別）: フォワードだけに集中して見る手段（Haruki要望）
         wk = ledger.index.to_series().dt.strftime("%G-W%V")
         weeks = sorted(wk.unique())

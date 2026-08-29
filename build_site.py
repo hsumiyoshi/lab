@@ -50,10 +50,20 @@ def read_power():
     played = {n: sum(1 for r in rows if r[n]) for n in names}
     fwd_tot = {n: sum(float(r[n]) for r in rows if r[n] and not is_bt(r, n)) for n in names}
     orc_fwd = {n: sum(float(r["oracle"]) for r in rows if r[n] and not is_bt(r, n)) for n in names}
+    # **共通日**（全機体が事前コミットで揃った日）。順位はこれで付ける——
+    # 機体ごとに分母の日が違う率で並べると、難しい日を欠場した機体ほど上に来る
+    # （2026-08-29の敵対的レビューで実際に起きていた）
+    ready = [n for n in names if n != "oracle"
+             and sum(1 for r in rows if r[n] and not is_bt(r, n)) >= MIN_RATE_DAYS]
+    crows = [r for r in rows if all(r[n] and not is_bt(r, n) for n in ready)] if ready else []
+    corc = sum(float(r["oracle"]) for r in crows)
+    cpct = {n: (sum(float(r[n]) for r in crows) / corc * 100 if corc else None)
+            for n in ready}
     rcdays = {n: sum(1 for r in rows if r[n] and is_rc(r, n)) for n in names}
     orc_all = {n: sum(float(r["oracle"]) for r in rows if r[n]) for n in names}
     return {"days": len(rows), "totals": totals, "btdays": btdays, "played": played,
             "rcdays": rcdays, "orc_all": orc_all,
+            "cpct": cpct, "cdays": len(crows),
             "fwd_tot": fwd_tot, "orc_fwd": orc_fwd, "last": rows[-1]}
 
 
@@ -65,10 +75,15 @@ def read_csv(path):
 def power_table(p):
     strat = {n: v for n, v in p["totals"].items() if n != "oracle"}
     pct = {n: p["fwd_tot"][n] / (p["orc_fwd"].get(n) or 1) * 100 for n in strat}
+    cp = p.get("cpct", {})
     fwd_has = {n for n in strat if p["btdays"].get(n, 0) < p["played"].get(n, 0)}
-    leader = max((n for n in fwd_has), key=pct.get, default=max(pct, key=pct.get))  # 実力首位はフォワード実績のある機体から
+    # 首位は**共通日**で決める。出場日ベースだと欠場が有利に働く
+    leader = (max(cp, key=lambda n: cp[n]) if cp
+              else max((n for n in fwd_has), key=pct.get, default=max(pct, key=pct.get)))
     rows = []
-    order = sorted(strat.items(), key=lambda kv: -pct[kv[0]]) + [("oracle", p["totals"]["oracle"])]
+    order = (sorted(strat.items(),
+                    key=lambda kv: -(cp[kv[0]] if cp.get(kv[0]) is not None else pct[kv[0]] - 1000))
+             + [("oracle", p["totals"]["oracle"])])
     for n, v in order:
         # 最終行に値が無い＝その日は欠場。0円と書くと「参加して稼げなかった」に
         # 読めてしまう（issue #18「欠測を実力と誤読させない」と同じ病気）
@@ -91,8 +106,11 @@ def power_table(p):
             ref = p["totals"][n] / (p["orc_all"].get(n) or 1) * 100
             pre = p["played"].get(n, 0) - bt
             pcell = f"—<span class='abs'> 参考 {ref:.1f}%・事前{pre}日</span>"
+        elif cp.get(n) is not None:
+            pcell = (f"{cp[n]:.1f}%<span class='abs'> 出場日 {pct[n]:.1f}%</span>"
+                     if abs(cp[n] - pct[n]) > 0.05 else f"{cp[n]:.1f}%")
         else:
-            pcell = f"{pct[n]:.1f}%"
+            pcell = f"—<span class='abs'> 出場日 {pct[n]:.1f}%</span>"
         # 並びは対oracle順。それを2列目に置かないと、左端の「累計」が
         # 昇順にも降順にも見えず、表が壊れているように読める
         tag = ("<span class='tag'>ベンチ</span>" if n == "clock"
@@ -137,11 +155,35 @@ def ai_score_body(ai):
     trs = ""
     for q in r["questions"]:
         oc = "—" if q["outcome"] is None else ("○" if q["outcome"] else "×")
+        if q.get("resolved_note"):
+            oc += f"<br><span class='abs'>{q['resolved_note']}</span>"
         trs += ("<tr><td>" + q["q"] + "（" + q["resolve"][5:].replace("-", "/") + "）</td>"
                 + "".join(f"<td>{q['pred'][k]:.2f}</td>" for k in ("外挿AI", "回帰AI", "構造AI"))
                 + f"<td>{oc}</td></tr>")
+    # 採点済みならBrierを出す。臆病者ベンチ(0.25)に勝てない人格は没、という規約なので
+    # ベンチとの上下が一目で分かるようにする
+    sc = r.get("scores") or {}
+    board = ""
+    if sc:
+        bench = sc.get("臆病者", 0.25)
+        best = min((k for k in sc if k != "臆病者"), key=lambda k: sc[k], default=None)
+        rows = ""
+        for k, v in sorted(sc.items(), key=lambda kv: kv[1]):
+            is_b = k == "臆病者"
+            cls = " class='aside'" if is_b else ""
+            tag = "<span class='tag'>ベンチ</span>" if is_b else ""
+            judge = ("—" if is_b else
+                     "<span class='pos'>勝ち</span>" if v < bench
+                     else "<span class='neg'>負け</span>")
+            rows += f"<tr{cls}><td>{k}{tag}</td><td>{v:.4f}</td><td>{judge}</td></tr>"
+        board = (f"<p class='verdict'>首位 <b>{best}</b>　Brier {sc[best]:.4f}"
+                 f"（臆病者ベンチ {bench:.2f}・低いほど良い）"
+                 f"<span class='abs'>　※標本3問——判断には足りない</span></p>"
+                 f"<table><tr><th>人格</th><th>Brier</th><th>ベンチ比</th></tr>{rows}</table>")
+    late = r.get("scoring_note")
+    ln = f"<p class='caveat'>{late}</p>" if late else ""
     note = "<p class='tnote'>" + r.get("provenance", "") + "。確率は各人格の主観確率（1.00=確実に起きる）</p>"
-    return f"<table>{head}{trs}</table>{note}"
+    return f"{board}<table>{head}{trs}</table>{note}{ln}"
 
 
 def schedule_note(ledger_rows, weekday: int, hour: int, first_scoring: str, label: str) -> str:
@@ -471,12 +513,13 @@ def scoreboard(p, summary):
     rows = []
     if p:
         strat = {n: v for n, v in p["totals"].items() if n != "oracle"}
-        pct = {n: p["fwd_tot"][n] / (p["orc_fwd"].get(n) or 1) * 100 for n in strat}
-        ok = [n for n in strat if p["played"].get(n, 0) - p["btdays"].get(n, 0) >= MIN_RATE_DAYS]
-        if ok:
-            top = max(ok, key=pct.get)
+        cp = p.get("cpct", {})
+        if cp:
+            top = max(cp, key=lambda n: cp[n])
+            cd = p.get("cdays", 0)
             rows.append(("⚡ 電力", f"{p['days']}日目",
-                         f"首位 <b>{top}</b>　対oracle {pct[top]:.1f}%", p["days"]))
+                         f"首位 <b>{top}</b>　対oracle <b>{cp[top]:.1f}%</b>"
+                         f"（全機体が揃った{cd}日で比較）", cd))
     EMO = {"青果": "🥬", "地震": "🌏", "気象": "🌡", "出力制御": "🔌",
            "全球災害": "🔥", "書籍": "📚"}
     for name, (text, n) in summary.items():

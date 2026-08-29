@@ -399,7 +399,12 @@ transition:border-color .2s}
     <h2>公証の仕組み</h2>
   </div>
   <ol class="notary">
-    <li>picksは市場価格の公表<b>前</b>にコミットされる——後出しは不可能</li>
+    <li>picksは市場価格の公表<b>前</b>にコミットされる——後出しは不可能。
+      <b>ただし例外が1件ある</b>: 2026-08-14受渡分だけは、リポジトリ公開初版のコミット
+      （08-13 23:24 JST）に含まれており、その日の価格公表（08-13 10:00 JST）より
+      <b>13時間あと</b>だった。<a href="https://github.com/hsumiyoshi/lab/commits/main/exp01_jepx/picks">
+      コミット履歴</a>で誰でも確認できるので、先に書いておく。
+      残る13件は全て公表前（余裕2.5〜22時間）</li>
     <li>gitのコミット履歴が、改竄不能なタイムスタンプ＝公証になる</li>
     <li>負けた記録も削除しない。全履歴が誰でも検証できる</li>
   </ol>
@@ -439,9 +444,17 @@ transition:border-color .2s}
 
   <div class="en" lang="en">
     <h3>In English</h3>
-    <p>I run 10 prediction leagues against real-world data. Every prediction is
-      committed to git <b>before</b> the outcome exists, so the goalposts cannot move
-      afterwards — and the losses stay in the ledger.</p>
+    <p>I run 10 prediction leagues against real-world data. Predictions are committed
+      to git <b>before</b> the outcome exists, so the goalposts cannot move afterwards —
+      and the losses stay in the ledger.</p>
+    <p><b>One documented exception</b>: the picks for the 2026-08-14 delivery day landed
+      in the repository's first public commit, 13 hours <i>after</i> that day's prices
+      were published. It is flagged here rather than quietly dropped. The other 13 pick
+      files were all committed 2.5–22 hours ahead of publication — verifiable in
+      <a href="https://github.com/hsumiyoshi/lab/commits/main/exp01_jepx/picks">the commit log</a>.
+      Backfilled days (marked <span class="mono">bt_</span> in the ledger) are computed
+      after the fact from data available at the time, are labelled as such, and are
+      excluded from every rate.</p>
     <p>Each league has three things: a <b>dumb baseline</b> it must beat, an
       <b>oracle</b> (the best possible result in hindsight) to measure against, and a
       <b>scoring date fixed in advance</b>. The scoreboard at the top of this page shows
