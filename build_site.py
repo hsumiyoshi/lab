@@ -228,8 +228,15 @@ def league_panels(veg, qk, ai, new=None):
     """
     SUMMARY = {}
     GHB = "https://github.com/hsumiyoshi/lab/blob/main"
-    def card(title, body):
-        return f"<section><div class='head'><h2>{title}</h2></div>{body}</section>"
+    def card(title, body, kick=None):
+        """見出しは電力パネルと同じ形（キッカー＋見出し）に揃える。
+
+        電力だけ「何の勝負？／成績は？／今日は？」のキッカー形式で、他9リーグは
+        絵文字見出しだった——**同じ意味の節が2つの見た目を持っていた**
+        （2026-08-29の敵対的レビュー指摘）。
+        """
+        k = f"<p class='kick'>{kick}</p>" if kick else ""
+        return f"<section><div class='head'>{k}<h2>{title}</h2></div>{body}</section>"
     def empty(msg):
         return f"<div class='empty'><span class='pulse'></span>{msg}</div>"
     def _f(r, c):
@@ -273,7 +280,8 @@ def league_panels(veg, qk, ai, new=None):
         elif d > 0:
             head = f"首位 <b>{tn}</b>　ベンチ（{bn}）との差 <b>+{d:,.3g}{unit}</b>{rate}"
         else:
-            head = f"<b>ベンチ（{bn}）に負けている</b>　差 {d:,.3g}{unit}{rate}"
+            head = (f"<b>{tn}</b> が<b>ベンチ（{bn}）に負けている</b>"
+                    f"　差 {d:,.3g}{unit}{rate}")
         warn = f"　<span class='abs'>※標本 {n}{'週' if n else ''}——判断には足りない</span>" if n < 4 else ""
         if key:
             SUMMARY[key] = (re.sub(r"<[^>]+>", "", head), n)
@@ -284,7 +292,7 @@ def league_panels(veg, qk, ai, new=None):
         trs = "".join("<tr>" + "".join(f"<td>{r.get(c, chr(8212))}</td>" for c in cols) + "</tr>"
                       for r in rows[-6:])
         return f"<table><tr>{th}</tr>{trs}</table>"
-    def _agg_verdict(agg, counts, bench, lower, unit, fmt, key=None):
+    def _agg_verdict(agg, counts, bench, lower, unit, fmt, key=None, strong=None):
         """集計済みの {機体: 値} から勝敗の1行を作る。表の上に置く。"""
         if bench not in agg or len(agg) < 2:
             return ""
@@ -300,13 +308,23 @@ def league_panels(veg, qk, ai, new=None):
         elif d > 0:
             head = f"首位 <b>{top}</b>　ベンチ（{bench}）との差 <b>+{fmt(d)}{unit}</b>"
         else:
-            head = f"<b>ベンチ（{bench}）に負けている</b>　差 {fmt(d)}{unit}"
+            head = f"<b>{top}</b> が<b>ベンチ（{bench}）に負けている</b>　差 {fmt(d)}{unit}"
+        # 脳死ベンチに勝つのは当然として、**強敵ベンチとの比較も出す**。
+        # 気象はjmaを「常設ベンチ（強敵）」と説明しながら勝敗はpersistence基準で、
+        # blend(0.74℃)がjma(1.16℃)にも勝っているのに**自分を過小評価していた**
+        # （2026-08-29の敵対的レビュー指摘）
+        extra = ""
+        if strong and strong in agg and top != strong:
+            ds = agg[strong] - agg[top] if lower else agg[top] - agg[strong]
+            verb = "も上回っている" if ds > 0 else "には及ばない"
+            extra = f"　<b>{strong}</b>（強敵ベンチ {fmt(agg[strong])}{unit}）{verb}"
         warn = (f"　<span class='abs'>※標本 {n}回——判断には足りない</span>" if n < 4 else "")
+        head += extra
         if key:
             SUMMARY[key] = (re.sub(r"<[^>]+>", "", head), n)
         return f"<p class='verdict'>{head}{warn}</p>"
 
-    def mae_table(led, unit, bench=None, key=None):
+    def mae_table(led, unit, bench=None, key=None, strong=None):
         """誤差型の台帳（{日付: {err: {機体: 値}}}）から平均誤差の表を作る。"""
         rows = [v for v in led.values() if isinstance(v, dict) and v.get("err")]
         if not rows:
@@ -318,7 +336,8 @@ def league_panels(veg, qk, ai, new=None):
         agg = {n: sum(r["err"][n] for r in rows if n in r["err"])
                   / max(1, len([r for r in rows if n in r["err"]])) for n in names}
         cnt = {n: len([r for r in rows if n in r["err"]]) for n in names}
-        head = _agg_verdict(agg, cnt, bench, True, unit, lambda x: f"{x:.2f}", key) if bench else ""
+        head = _agg_verdict(agg, cnt, bench, True, unit, lambda x: f"{x:.2f}", key,
+                            strong=strong) if bench else ""
         return head + f"<table><tr><th>機体</th><th>平均誤差({unit})</th><th>出場</th></tr>{body}</table>"
 
     def hit_table(led, bench=None, key=None):
@@ -352,15 +371,19 @@ def league_panels(veg, qk, ai, new=None):
         if not uri:
             return ""
         c = f"<p class='tnote'>{cap}</p>" if cap else ""
-        return f"<div class='fig'><img src='{uri}' alt='{alt}'></div>{c}"
+        # **拡大手段を用意する。** スマホ幅では軸の文字が4〜5px相当になり読めない
+        # （2026-08-29の敵対的レビュー指摘）。単体ファイルへのリンクを付ける
+        raw = f"https://raw.githubusercontent.com/hsumiyoshi/lab/main/{path}"
+        return (f"<div class='fig'><a href='{raw}' title='原寸で開く'>"
+                f"<img src='{uri}' alt='{alt}'></a></div>{c}")
     def panel(pid, rule_html, mcards, score_body, today_body, link):
         # 説明文をマークダウンのつもりで書いていたため `**強調**` が生で出ていた
         # （2026-08-28に新設4リーグで4箇所発見）。HTMLに直して出す
         rule_html = re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", rule_html)
         return (f"<article id='{pid}' class='panel'>"
-                + card("📖 ルールと出場機体", f"<div class='meta'>{rule_html}</div>{mcards}")
-                + card("🏆 成績表", score_body)
-                + card("📍 当日 / 次のイベント", today_body)
+                + card("ルールと出場機体", f"<div class='meta'>{rule_html}</div>{mcards}", kick="何の勝負？")
+                + card("成績表", score_body, kick="成績は？")
+                + card("当日 / 次のイベント", today_body, kick="今日は？")
                 + f"<div class='links'><a href='{link}'>台帳（生データ）</a></div></article>")
     html = "".join([
         panel("lg-veg",
@@ -394,7 +417,8 @@ def league_panels(veg, qk, ai, new=None):
                   ("oracle", "#898781", "実績そのもの（誤差ゼロの参照値）"),
               ]),
               (verdict(qk, ["err_omori"], "err_flat", lower=True,
-                       label={"err_omori": "大森則", "err_flat": "横ばい"}, key="地震")
+                       label={"err_omori": "大森則", "err_flat": "横ばい"}, key="地震",
+                       unit=" 対数誤差")
                + table(qk, ["week", "actual", "omori", "flat", "err_omori", "err_flat"],
                        ["週", "実績", "大森則", "横ばい", "誤差(大森)", "誤差(横ばい)"]) if qk
                else empty(schedule_note(qk, 0, 14, "2026-08-24T14:00", "CI失敗またはデータ未確定")))
@@ -445,7 +469,7 @@ def league_panels(veg, qk, ai, new=None):
                   ("blend", "#1baf7a", "気象庁とOpen-Meteoの平均"),
                   ("debias", "#eb6834", "直近30日の自分の系統誤差を差し引く"),
               ]),
-              (mae_table(new.get("weather", {}), "℃", bench="persistence", key="気象") if new and new.get("weather")
+              (mae_table(new.get("weather", {}), "℃", bench="persistence", key="気象", strong="jma") if new and new.get("weather")
                else empty("初採点待ち（提出は毎日18:00 JST）")),
               empty("次回: 毎日18:00に提出、翌々日に採点"),
               f"{GHB}/exp03_weather/reports/weather_forward.md"),
@@ -570,7 +594,7 @@ def timeline(veg, qk):
     WD = "月火水木金土日"
     q, v = nxt(0, 14, 0), nxt(2, 14, 0)   # quake_forward: 月14:00 / veg_forward: 水14:00
     items = [
-        ("毎日 13:30", "⚡ 電力リーグ採点（picksは毎朝7:00に自動提出）"),
+        ("毎日 13:30", "⚡ 電力リーグ採点（picksは毎朝7:00 JST提出予定。GitHubのスケジュール遅延で前後するが、価格公表の10:00前を過ぎたらその日は提出せず翌日分に回す）"),
         (f"{q:%-m/%d} ({WD[q.weekday()]}) 14:00", f"🌏 地震リーグの採点{prev(qk)}"),
         (f"{v:%-m/%d} ({WD[v.weekday()]}) 14:00", f"🥬 青果リーグの採点{prev(veg)}"),
         ("毎週水曜", "🤖 AIリーグ: 3人格の賭けを公開・前週分を採点"),

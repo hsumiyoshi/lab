@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="color-scheme" content="light dark">
 <title>lab — 予測の公開実験場</title>
+<meta name="description" content="10の予測リーグを現実データに対して回し、予測は結果が出る前にgitへコミットする公開実験。脳死ベンチに勝てているか、負けもそのまま残す。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="lab — 予測の公開実験場">
+<meta property="og:description" content="予測を結果が出る前にgitへ固定し、現実に採点させる。10リーグ・毎日自動採点・負けも残す。">
+<meta property="og:url" content="https://hsumiyoshi.github.io/lab/">
+<meta name="twitter:card" content="summary">
 <!--
   置換契約（build_site.py 用・3ステップ）:
     step1: SAMPLEコメントブロック（開始タグ SAMPLE / 終了タグ /SAMPLE のHTMLコメント対）を
@@ -544,7 +550,7 @@ transition:border-color .2s}
     <text class="r-tick" x="342" y="196" text-anchor="end">24時</text>
   </svg>
 
-  <p class="rulecap">毎日、翌日48コマ（30分刻み）の価格を予測。安い4コマで充電（買）、高い4コマで放電（売）。差額が損益になり、答え合わせは翌日13:30。</p>
+  <p class="rulecap">毎日、翌日48コマ（30分刻み）の価格を予測。安い4コマで充電（買）、高い4コマで放電（売）。差額が損益になる。答え合わせは受渡日の前日午前に価格が公表され次第で、採点の実行は毎日13:30 JST 予定（スケジュールの遅れで前後する）。</p>
 
   <div class="mgrid">
     <div class="mc">
@@ -626,7 +632,9 @@ transition:border-color .2s}
 </div></div>
 <!-- 8. フッター -->
 <footer>
-  このページは毎日 13:30 JST に GitHub Actions が台帳から自動生成する。人の手は入らない。
+  このページは台帳が更新されるたびに GitHub Actions が自動生成する（電力の採点は毎日 13:30 JST 予定。
+  ただし GitHub のスケジュールは実行を保証しないので、実際は数時間ずれることがある——
+  上の「最終更新」が実際の生成時刻）。人の手は入らない。
 </footer>
 
 </div>
