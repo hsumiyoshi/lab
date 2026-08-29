@@ -343,6 +343,38 @@ def league_panels(veg, qk, ai, new=None):
             SUMMARY[key] = (re.sub(r"<[^>]+>", "", head), n)
         return f"<p class='verdict'>{head}{warn}</p>"
 
+    def daily_table(led, unit, limit=8):
+        """日別の予測と実測を出す。**これが無いと読者は集計値を検算できない。**
+
+        気象・全球災害は日次で標本があるのに集計MAEしか出しておらず、
+        青果・地震が週別の生の値を出しているのと非対称だった
+        （2026-08-29の運営者視点レビュー: 「まだ数字が無いのではなく、ある数字を
+        出していない」）。台帳には picks も actual も入っている。
+        """
+        rows = [(k, v) for k, v in sorted(led.items())
+                if isinstance(v, dict) and v.get("err") and v.get("picks")]
+        if not rows:
+            return ""
+        names = sorted({n for _, v in rows for n in v["picks"]})
+        th = "".join(f"<th>{n}</th>" for n in names)
+        trs = ""
+        for k, v in rows[-limit:]:
+            best = min(v["err"], key=v["err"].get) if v["err"] else None
+            cells = ""
+            for n in names:
+                pv = v["picks"].get(n)
+                ev = v["err"].get(n)
+                mark = "<b>" if n == best else ""
+                end = "</b>" if n == best else ""
+                cells += (f"<td>{mark}{pv}{end}"
+                          + (f"<span class='abs'> 誤差{ev}</span>" if ev is not None else "")
+                          + "</td>") if pv is not None else "<td>—</td>"
+            trs += f"<tr><td>{k[5:]}</td><td><b>{v.get('actual')}</b></td>{cells}</tr>"
+        return ("<div class='tblwrap'><table>"
+                f"<tr><th>日</th><th>実測({unit})</th>{th}</tr>{trs}</table></div>"
+                "<p class='tnote'>直近" + str(limit) + "日。太字はその日の最小誤差。"
+                "<b>この表から上の平均誤差を電卓で再現できる</b></p>")
+
     def mae_table(led, unit, bench=None, key=None, strong=None):
         """誤差型の台帳（{日付: {err: {機体: 値}}}）から平均誤差の表を作る。"""
         rows = [v for v in led.values() if isinstance(v, dict) and v.get("err")]
@@ -459,9 +491,13 @@ def league_panels(veg, qk, ai, new=None):
               "2026-07-28 熊本地震（M7.1）を受けて、市場への影響を予言してコミット済み""（コミットは2026-08-13＝地震の16日後。**その間の市場情報を見たうえでの予言**であり、「直後」ではない。判定対象の2026Q3のデータは未公表なので先読みにはならない）。"
               "外れてもそのまま残す" + rule_svg("re"),
               machines([
-                  ("予言1", "#2a78d6", "2026Q3の取引件数は前年比で減る（中心-10%）"),
-                  ("予言2", "#1baf7a", "価格は±5%以内——恐怖による割引は現れない"),
-                  ("予言3", "#eb6834", "洪水ハザード内外の相対価格差は地震後も不変"),
+                  ("予言1", "#2a78d6", "2026Q3の取引件数は前年比で<b>減る</b>。"
+                   "中心-10%・レンジ-25〜-2%（2025Q3=1,198件が基準）。判定 2027-01-31"),
+                  ("予言2", "#1baf7a", "熊本市・宅地の単価中央値は前年同期比<b>±5%以内</b>"
+                   "——恐怖による割引は現れない。判定 Q3=2027-01-31 / Q4=2027-04-30"),
+                  ("予言3", "#eb6834", "洪水ハザード内外の相対単価差は地震後も<b>変化しない</b>。"
+                   "地区分類は2026-08-13版をgit固定。地震前(2024Q3〜2026Q2)と地震後(2026Q3〜)の"
+                   "単価中央値比を比較。判定 2027-04-30"),
               ]),
               empty("対象データ（2026Q3）の公表待ち — 予言は先に置いてある")
               + fig("exp04_realestate/reports/re_chart.png", "判定対象データ: 熊本×東京の四半期単価",
@@ -476,7 +512,8 @@ def league_panels(veg, qk, ai, new=None):
               "東京市場への本格出荷週を予測する" + rule_svg("sat"),
               machines([
                   ("平年並み", "#eda100", "毎年W25と予測する脳死ベンチマーク"),
-                  ("threshold", "#2a78d6", "NDVI 0.65到達日が6/上旬より遅ければW26、早ければW25"),
+                  ("threshold", "#2a78d6", "NDVI 0.65到達日が <b>doy≤150 なら W25 / doy>150 なら W26</b>"
+                   "（n=3で回帰は過学習なので最も単純な閾値ルールで凍結）"),
               ]),
               empty("2027年春の生育観測から — 予測のコミット期限は2027-06-01")
               + fig("exp07_satellite/reports/ndvi_chart.png", "NDVIと入荷量の3年比較",
@@ -484,7 +521,10 @@ def league_panels(veg, qk, ai, new=None):
                     "下段は東京市場への群馬産キャベツ入荷量（トン/週）。3年を重ねてある"
                     "（青2024・橙2025・緑2026）。<b>2026年の入荷は前2年より明らかに低い</b>——"
                     "NDVIの立ち上がりが入荷に何週先行するかを測るのがこのリーグの勝負"),
-              empty("判定 2027年7月頃（東京市場の入荷実績で）"),
+              empty("<b>判定基準（2026-08-13に凍結済み）</b>: 東京市場の群馬産キャベツ週次入荷が"
+                    "<b>500tを初めて超えた週</b>を正解とし、成績は<b>週ズレの絶対値</b>。"
+                    "予測のコミット期限は2027-06-01で、それ以降の書き換えは無効。"
+                    "判定は2027年7月上旬"),
               f"{GHB}/exp07_satellite/predictions.md"),
         panel("lg-weather",
               "気象庁の17:00発表を常設ベンチにして、翌日の東京の最高気温を当てにいく。"
@@ -496,7 +536,8 @@ def league_panels(veg, qk, ai, new=None):
                   ("blend", "#1baf7a", "気象庁とOpen-Meteoの平均"),
                   ("debias", "#eb6834", "直近30日の自分の系統誤差を差し引く"),
               ]),
-              (mae_table(new.get("weather", {}), "℃", bench="persistence", key="気象", strong="jma") if new and new.get("weather")
+              (mae_table(new.get("weather", {}), "℃", bench="persistence", key="気象", strong="jma")
+               + daily_table(new.get("weather", {}), "℃") if new and new.get("weather")
                else empty("初採点待ち（提出は毎日18:00 JST）")),
               empty("次回: 毎日18:00に提出、翌々日に採点"),
               f"{GHB}/exp03_weather/reports/weather_forward.md"),
@@ -521,7 +562,8 @@ def league_panels(veg, qk, ai, new=None):
                   ("ma7", "#2a78d6", "直近7日平均"),
                   ("FIRMS", "#eb6834", "参考: 衛星が観測した熱異常のピクセル数（人の集計との差を見る）"),
               ]),
-              (mae_table(new.get("disaster_led", {}), "件", bench="persistence", key="全球災害") if new and new.get("disaster_led")
+              (mae_table(new.get("disaster_led", {}), "件", bench="persistence", key="全球災害")
+               + daily_table(new.get("disaster_led", {}), "件") if new and new.get("disaster_led")
                else empty(f"収集中（イベント{len(new.get('disaster_ev', {})) if new else 0}件）")),
               empty("毎日07:00 JSTに取込・提出・採点"),
               f"{GHB}/exp10_disaster/reports/disaster_forward.md"),
@@ -560,6 +602,44 @@ NOT_YET = {
     "🛰 衛星": "NDVIを収集中。出荷週の予測は2027年6月にコミット、7月に判定",
     "🤖 AI": "推論3人格が週次で賭ける。毎週水曜に採点",
 }
+
+
+# **公証の強さはリーグごとに違う。** 公証セクションは「picksは公表前にコミットされる」と
+# 全リーグに掛かる書き方をしていたが、実際は3方式ある（2026-08-29の運営者視点レビュー）。
+# 電力のclock/weekshapeでは「再計算は事前コミットではない」と正直に開示したのに、
+# **同じ構造の青果・地震では黙っていた**——他人に突かれたら「電力では認めたのに」になる。
+NOTARY = {
+    "提出型": {
+        "leagues": ["⚡ 電力", "🌡 気象", "🔌 出力制御", "🔥 全球災害", "📚 書籍"],
+        "how": "予測(picks)を毎回JSONでコミットしてから結果を待つ",
+        "strength": "最も強い。コミット時刻と結果公表時刻の順序を誰でも履歴で確認できる",
+    },
+    "全再計算": {
+        "leagues": ["🥬 青果", "🌏 地震"],
+        "how": "picksを持たず、採点時にコードから毎回作り直す",
+        "strength": "<b>弱い。</b>使うのは対象日より前のデータだけなので先読みは無いが、"
+                    "<b>予測コードを書き換えれば過去の成績も動く</b>。"
+                    "検証できるのは「その時点のコードがgitにあったこと」まで",
+    },
+    "凍結文書": {
+        "leagues": ["🏠 不動産", "🛰 衛星", "🤖 AI"],
+        "how": "判定のずっと前に予言を文書としてコミットし、そのまま置く",
+        "strength": "強い。ただし判定基準を後から書くと意味が無いので、"
+                    "<b>しきい値も同時に凍結してあるか</b>が要点",
+    },
+}
+
+
+def notary_table():
+    """公証の強さをリーグごとに出す。**一律に強いと書かない。**"""
+    rows = ""
+    for kind, d in NOTARY.items():
+        rows += (f"<tr><td><b>{kind}</b></td>"
+                 f"<td class='vd'>{'・'.join(d['leagues'])}</td>"
+                 f"<td class='vd'>{d['how']}<br><span class='abs'>{d['strength']}</span></td></tr>")
+    return ("<div class='tblwrap'><table class='board'>"
+            "<tr><th>方式</th><th>リーグ</th><th>どう公証されるか</th></tr>"
+            f"{rows}</table></div>")
 
 
 def scoreboard(p, summary):
@@ -670,6 +750,7 @@ def build():
                 .replace("{{BENCH_PCT}}", f"{p['cbench']:.1f}%" if p and p.get("cbench") else "—")
                 .replace("{{BENCH_REST}}", f"{(100 - p['cbench']) / 10:.0f}割"
                          if p and p.get("cbench") else "—")
+                .replace("{{NOTARY_TABLE}}", notary_table())
                 .replace("{{TIMELINE}}", timeline(veg, qk)))
     for src_name, path in (("forward_pnl.png", "exp01_jepx/reports/forward_pnl.png"),
                            ("latest_anatomy.png", None)):

@@ -25,6 +25,7 @@
            {{SCOREBOARD}} 全リーグの現在地（table.board。td3列: リーグ/採点/結果）
            {{BENCH_PCT}}  ベンチ(clock)の共通日到達率（例 69.1%）。**直書きしない**
            {{BENCH_REST}} その残り（例 3割）
+           {{NOTARY_TABLE}} 公証の強さの方式別表（提出型/全再計算/凍結文書）
     画像: forward_pnl.png / latest_anatomy.png（相対パス固定）
 -->
 <style>
@@ -453,6 +454,10 @@ transition:border-color .2s}
   <p class="caveat"><b>移行中の状態を書いておく。</b>
     <span class="mono">clock</span>（脳死ベンチ）と <span class="mono">weekshape</span>（ベンチではなく順位に入る機体。ただし天気を見ないので相対的に単純）の2つは、2026-08-27まで picks を提出せず採点時にコードから再計算していた。受渡日より前のデータしか使っていないので先読みは無いが、<b>「公表前にコミット済み」だけが当てはまらなかった</b>——ロジックを書き換えれば過去の成績も動く。同日から他の機体と同じく毎朝の提出に切り替えたので、<b>これ以降の日は事前コミットになる</b>。それ以前の日は成績表で「再計算」と表示し、実力のレートからは外してある。
     <a href="https://github.com/hsumiyoshi/lab/blob/main/exp01_jepx/picks">提出済みpicks</a></p>
+  <p class="abouttxt" style="margin-top:16px"><b>ただし公証の強さはリーグごとに違います。</b>
+    上の3点が全リーグに同じ強さで掛かるわけではないので、方式ごとに分けて書きます。</p>
+  {{NOTARY_TABLE}}
+
   <div class="links">
     <a href="https://github.com/hsumiyoshi/lab">GitHub（コードと台帳）</a>
     <a href="https://github.com/hsumiyoshi/lab/blob/main/CHANGELOG.md">工事ログ</a>
