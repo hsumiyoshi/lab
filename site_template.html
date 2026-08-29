@@ -22,14 +22,18 @@
 <style>
 :root{
   color-scheme:light dark;
-  --bg:#f6f5f1; --card:#fcfcfb; --ink:#1a1915; --ink2:#52514e; --muted:#898781;
+  --bg:#f6f5f1; --card:#fcfcfb; --ink:#1a1915; --ink2:#52514e; --muted:#6d6b64;
   --line:#e1e0d9; --accent:#2a78d6;
+  /* --muted は「※標本1週——判断には足りない」「参考」「BT補完」など、
+     **誤読を防ぐ但し書き**に使う色。2026-08-29の敵対的レビューで
+     3.29:1（WCAG AA未満）と実測され、警告が本文より読めない状態だった。
+     4.5:1を超える #6d6b64 に変更（bg 4.89 / card 5.20） */
   /* 機体色（固定・チャートと同一。テーマで変えない） */
   --m-weekshape:#2a78d6; --m-tenki:#eb6834; --m-hybrid:#1baf7a; --m-clock:#eda100; --m-oracle:#898781;
 }
 @media (prefers-color-scheme:dark){
   :root{
-    --bg:#131311; --card:#1d1c19; --ink:#f0efe9; --ink2:#b5b3ac; --muted:#7a786f;
+    --bg:#131311; --card:#1d1c19; --ink:#f0efe9; --ink2:#b5b3ac; --muted:#8c8a80;  /* 3.85→4.92:1（card上） */
     --line:#33322d; --accent:#6ea8e8;
   }
 }
@@ -137,9 +141,11 @@ tr:last-child td{border-bottom:none}
   border:1px solid var(--line);color:var(--muted);font-size:.62rem;
   font-weight:500;vertical-align:1px;letter-spacing:.02em}
 .abs{color:var(--muted);font-size:.72rem}
-.pos{color:#1baf7a}
-.neg{color:#d64545}
-@media (prefers-color-scheme:dark){.neg{color:#e2726c}}
+/* 損益の色も実測でAA未満だった（.pos 2.58:1 / .neg 4.01:1）。
+   暗い背景では元の明るい色のほうが読めるので、モード別に持つ */
+.pos{color:#0e7a52}
+.neg{color:#b32828}
+@media (prefers-color-scheme:dark){.pos{color:#1baf7a}.neg{color:#e2726c}}
 .tnote{color:var(--muted);font-size:.72rem;margin-top:8px}
 /* 表の上に置く勝敗の1行。数字の羅列だけでは誰が勝っているか読めないため */
 .board td.st{color:var(--muted);font-size:.76rem;white-space:nowrap}
@@ -598,7 +604,8 @@ transition:border-color .2s}
   </div>
   <p class="tnote">並びは<b>対oracle</b>順＝答えを見た理論上限に対する到達率。<b>価格公表前にコミットされた日だけ</b>で計算する。<b>clock</b>は予測を一切しない脳死ベンチ、<b>oracle</b>は答えを見た上限で、どちらも順位には入らない。<b>事前でない日</b>＝公表前にコミットされていない日で、内訳は<b>BT補完</b>（参戦前の穴埋め）と<b>再計算</b>（提出が無く採点時にコードから作った日）。この列が100%の機体は実力のレートが未計測なので「参考」の値を薄く出す</p>
   <div class="fig"><img src="forward_pnl.png" alt="oracle到達率の推移。clockのベンチマーク線と、その下の帯を灰色で示す" loading="lazy"></div>
-  <p class="tnote">縦軸は<b>上限の何%を取れたか</b>。灰色の帯は<b>予測を一切しなくても届く領域</b>——clockは毎日同じ時間に売買するだけだが、電力価格の日内周期のせいで上限の8割強に達する。つまり勝負はこの帯の上、<b>残り2割弱の奪い合い</b>で起きている。90%台という数字を実力と読まないための線。立ち上がりは分母が小さく比率が暴れるため、各機体4日目から描く。<b>clockとweekshapeにまだ線が無いのは、提出型への切り替えが2026-08-27だから</b>——それ以前は再計算＝事前コミットではないので描かない。基準線だけは全日ベースで引いている（clockは引数を取らない固定ルールなので再計算しても値が動かない）</p>
+  <p class="tnote">縦軸は<b>上限の何%を取れたか</b>。灰色の帯は<b>予測を一切しなくても届く領域</b>——clockは毎日同じ時間に売買するだけだが、電力価格の日内周期のせいで上限の8割強に達する。つまり勝負はこの帯の上、<b>残り2割弱の奪い合い</b>で起きている。90%台という数字を実力と読まないための線。<b>全機体が揃った共通日だけで描く</b>ので、線の上下がそのまま順位になる（上の表と同じ基準）。
+       マーカーの形でも区別できるようにしてある（色だけだと近い色が分けられない）。<b>clockとweekshapeにまだ線が無いのは、提出型への切り替えが2026-08-27だから</b>——それ以前は再計算＝事前コミットではないので描かない。基準線だけは全日ベースで引いている（clockは引数を取らない固定ルールなので再計算しても値が動かない）</p>
 </section>
 
 <!-- 5. 今日は？ -->

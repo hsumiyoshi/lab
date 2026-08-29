@@ -245,6 +245,10 @@ COLORS = {"weekshape": "#2a78d6", "tenki": "#eb6834",
           "tenki_v4": "#6b7f2e"}
 MIN_RATE_DAYS = 4  # レートを実力として出すのに要る事前コミット日数
 
+# 機体ごとのマーカー。色に加えて形でも区別できるようにする（色覚差への配慮）
+MARKERS = {"clock": "s", "weekshape": "D", "tenki": "o", "hybrid": "^",
+           "tenki_v2": "v", "tenki_v3": "P", "tenki_v4": "X"}
+
 # **価格公表より後にコミットされたpicksの受渡日。** 事前コミットとして数えない。
 # 2026-08-14分はリポジトリ公開初版のコミット（08-13 23:24 JST）に入っており、
 # その日の価格公表（08-13 10:00 JST）の13時間あと。2026-08-29の敵対的レビューで発覚。
@@ -273,22 +277,32 @@ def plot_ledger(ledger: pd.DataFrame, dest: Path) -> None:
     MIN_D = 4  # 累積比が暴れる立ち上がりは描かない（分母が小さく数日で±15pt振れる）
     names = [n for n in COLORS if n in ledger.columns]
 
-    def rate(name, precommitted_only=True):
-        """到達率(%)の累積系列。既定は事前コミット済みの日だけ（表と同じ基準）。"""
+    def _pre_mask(name):
         mask = ledger[name].notna()
-        if precommitted_only:
-            # BT補完（参戦前の穴埋め）も再計算（提出が無い日）も、価格公表前に
-            # コミットされていないので除く。成績表の対oracleと同じ分母になる
-            for pre in ("bt_", "rc_"):
-                col = f"{pre}{name}"
-                if col in ledger.columns:
-                    mask &= ledger[col].fillna(0) != 1
+        for pre in ("bt_", "rc_"):
+            col = f"{pre}{name}"
+            if col in ledger.columns:
+                mask &= ledger[col].fillna(0) != 1
+        return mask
+
+    # **共通日に揃える。** 機体ごとの出場日で描くと、図の最上位と成績表の首位が
+    # 食い違う（2026-08-29時点で図はtenki_v3、表はtenki）。同じページで同じ概念に
+    # 2つの数字があると、読者はどちらを信じてよいか分からない
+    _cands = [n for n in COLORS if n in ledger.columns and int(_pre_mask(n).sum()) >= MIN_D]
+    _common = pd.Series(True, index=ledger.index)
+    for n in _cands:
+        _common &= _pre_mask(n)
+
+    def rate(name, precommitted_only=True):
+        """到達率(%)の累積系列。既定は**全機体が揃った共通日**（表の順位と同じ基準）。"""
+        mask = _common.copy() if precommitted_only else ledger[name].notna()
+        mask &= ledger[name].notna()
         idx = ledger.index[mask]
         if len(idx) < MIN_D:
             return None
         num = ledger.loc[idx, name].cumsum()
         den = ledger.loc[idx, "oracle"].cumsum()
-        r = (num / den.where(den > 0) * 100).iloc[MIN_D - 1:]
+        r = (num / den.where(den > 0) * 100)
         return r.dropna()
 
     series = {n: s for n in names if (s := rate(n)) is not None and len(s)}
@@ -303,7 +317,10 @@ def plot_ledger(ledger: pd.DataFrame, dest: Path) -> None:
     # 消すと「90%台は実力か」を判断する手がかりがページから無くなる。
     # clockは strat_clock() が引数を取らない完全固定ルールなので、再計算しても
     # 結果は動かない（weekshapeと違ってパラメータが無い）。ただし明記はする
-    bench_recomputed = "clock" not in series
+    # **系列に居るかで判定してはいけない。** 共通日に揃えた結果clockが系列に
+    # 入り、「(recomputed)」の申告が黙って消えた（2026-08-29）。
+    # 判定は「clockに事前コミット日が足りているか」で行う
+    bench_recomputed = int(_pre_mask("clock").sum()) < MIN_D if "clock" in ledger.columns else True
     bseries = series.get("clock")
     if bseries is None:
         bseries = rate("clock", precommitted_only=False)
@@ -334,12 +351,17 @@ def plot_ledger(ledger: pd.DataFrame, dest: Path) -> None:
         prev = yy
     for yy, y, n, s in placed:
         is_bench = n == "clock"
-        ax.plot(s.index, s.values, color=COLORS[n], marker="o", ms=2.6,
+        # **色だけで区別しない。** 7系列のうち tenki(#eb6834)・clock(#eda100)・
+        # tenki_v3(#c44e52) は橙〜赤の近接色で、色覚差のある読者には分けられない
+        # （2026-08-29の敵対的レビュー指摘）。形で冗長に符号化する
+        ax.plot(s.index, s.values, color=COLORS[n], marker=MARKERS.get(n, "o"),
+                ms=4.2 if not is_bench else 4.8, mew=0,
                 lw=2.4 if is_bench else 1.9, zorder=3 if is_bench else 2)
         if is_bench:
             continue  # clockの終端ラベルは下のベンチマーク注記が兼ねる（線と重なるため）
         # 引き出し線はデータの線と混同されないよう細い灰色にする
-        ax.annotate(f"{n} {y:.1f}%", xy=(s.index[-1], y), xytext=(last_x_off, yy),
+        ax.annotate(f"{MARKERS.get(n, 'o').replace('s','■').replace('D','◆').replace('o','●').replace('^','▲').replace('v','▼').replace('P','✚').replace('X','✕')} {n} {y:.1f}%",
+                    xy=(s.index[-1], y), xytext=(last_x_off, yy),
                     textcoords="data", color=COLORS[n], fontsize=8.5, va="center",
                     zorder=4, annotation_clip=False,
                     arrowprops=dict(arrowstyle="-", lw=0.6, color=MUTED,
@@ -367,6 +389,12 @@ def plot_ledger(ledger: pd.DataFrame, dest: Path) -> None:
     for sp in ("left", "bottom"):
         ax.spines[sp].set_color(BASE)
     ax.tick_params(colors=INK2, labelsize=8.5)
+    # 右端でラベルが重なっていた（2026-08-29のレビュー指摘）。実データのある
+    # 日付だけを目盛りにする
+    ticks = sorted({d for s in series.values() for d in s.index})
+    step = max(1, -(-len(ticks) // 5))   # 5本以下に抑える（左端が詰まっていた）
+    ax.set_xticks(ticks[::step])
+    fig.autofmt_xdate(rotation=0, ha="center")
     ax.set_xlim(right=last_x + (last_x - first_x) * 0.30)
     fig.tight_layout()
     fig.savefig(dest, dpi=130, facecolor=SURFACE)
