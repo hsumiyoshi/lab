@@ -28,7 +28,10 @@ jobs:
         run: |
           git config user.name "forward-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add exp01_jepx/reports exp01_jepx/data/weather_actual.csv exp01_jepx/data/weather_forecast.csv docs
+          # spotも積む。**追跡対象なのにaddしていなかった**ため、リポジトリの価格が
+          # 台帳より古いままになり「誰でも再現できる」がリポジトリ単体では成り立って
+          # いなかった（2026-08-29の敵対的レビュー指摘）。追記型なので差分は小さい
+          git add exp01_jepx/reports exp01_jepx/data/weather_actual.csv exp01_jepx/data/weather_forecast.csv exp01_jepx/data/spot_*.csv docs
           git diff --cached --quiet && echo "no changes" || git commit -m "forward: $(date -u +%Y-%m-%d) daily report（気象CSVの差分含む）"
           bash scripts/push_with_retry.sh
       - name: Record failure (落ちたことを台帳に残す)

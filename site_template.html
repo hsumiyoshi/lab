@@ -461,10 +461,12 @@ transition:border-color .2s}
       Backfilled days (marked <span class="mono">bt_</span> in the ledger) are computed
       after the fact from data available at the time, are labelled as such, and are
       excluded from every rate.</p>
-    <p>Each league has three things: a <b>dumb baseline</b> it must beat, an
-      <b>oracle</b> (the best possible result in hindsight) to measure against, and a
-      <b>scoring date fixed in advance</b>. The scoreboard at the top of this page shows
-      where each league stands, including the ones currently losing to their baseline.</p>
+    <p>Every league has two things: a <b>dumb baseline</b> it must beat, and a
+      <b>scoring date fixed in advance</b>. Where a best-possible-in-hindsight result can be
+      defined — electricity and vegetables — there is also an <b>oracle</b> to measure against;
+      the other leagues are scored on error or hit rate against their baseline instead.
+      The scoreboard at the top of this page shows where each league stands, including the
+      ones currently losing to their baseline.</p>
     <p>Why git? A commit timestamp is a notary that costs nothing. Day-ahead electricity
       prices are published at 10:00 JST; the picks are committed at 07:00 JST. Anyone can
       check the history and verify the order of events. This page is regenerated from the

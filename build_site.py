@@ -59,11 +59,18 @@ def read_power():
     corc = sum(float(r["oracle"]) for r in crows)
     cpct = {n: (sum(float(r[n]) for r in crows) / corc * 100 if corc else None)
             for n in ready}
+    # ベンチ(clock)は事前コミット日が足りず cpct に入らないが、**共通日での基準線が
+    # 無いと「脳死に勝てているか」が読めない**。再計算値で出し、その旨を添える
+    # （clockは引数を取らない固定ルールなので再計算しても値は動かない）
+    cbench = (sum(float(r["clock"]) for r in crows) / corc * 100
+              if crows and corc and all(r.get("clock") for r in crows) else None)
+    cbench_rc = "clock" not in cpct
     rcdays = {n: sum(1 for r in rows if r[n] and is_rc(r, n)) for n in names}
     orc_all = {n: sum(float(r["oracle"]) for r in rows if r[n]) for n in names}
     return {"days": len(rows), "totals": totals, "btdays": btdays, "played": played,
             "rcdays": rcdays, "orc_all": orc_all,
             "cpct": cpct, "cdays": len(crows),
+            "cbench": cbench, "cbench_rc": cbench_rc,
             "fwd_tot": fwd_tot, "orc_fwd": orc_fwd, "last": rows[-1]}
 
 
@@ -117,7 +124,8 @@ def power_table(p):
                else "<span class='tag'>参照</span>" if n == "oracle" else "")
         rows.append(
             f"<tr{cls}><td><span class='dot' style='background:{DOT.get(n, '#888')}'></span>{n}{tag}</td>"
-            f"<td>{pcell}</td><td>{v:,.0f}円</td><td>{btcell}</td><td>{delta}</td></tr>")
+            f"<td>{pcell}</td><td>{v:,.0f}円<span class='abs'> /{p['played'].get(n, 0)}日</span></td>"
+            f"<td>{btcell}</td><td>{delta}</td></tr>")
     return "".join(rows)
 
 
@@ -367,8 +375,8 @@ def league_panels(veg, qk, ai, new=None):
               ]),
               (verdict(veg, ["weekshape8", "stop_rule", "first_day"], "equal",
                        oracle="oracle", unit="円", label={"equal": "均等出荷"}, key="青果")
-               + table(veg, ["week", "item", "oracle", "equal", "weekshape8", "stop_rule"],
-                       ["週", "品目", "oracle", "均等", "weekshape8", "stop_rule"]) if veg
+               + table(veg, ["week", "item", "oracle", "equal", "weekshape8", "stop_rule", "first_day"],
+                       ["週", "品目", "oracle", "均等", "weekshape8", "stop_rule", "first_day"]) if veg
                else empty(schedule_note(veg, 2, 14, "2026-08-26T14:00", "CI失敗またはデータ未確定")))
               + fig("exp02_vegetable/reports/veg_chart.png", "直近90日の日次単価",
                     "東京市場の直近90日の日次単価（円/kg）。"
@@ -397,7 +405,7 @@ def league_panels(veg, qk, ai, new=None):
               empty(schedule_note(qk, 0, 14, "2026-08-24T14:00", "CI失敗またはデータ未確定")),
               f"{GHB}/exp05_quake/reports/quake_forward.md"),
         panel("lg-re",
-              "2026-07-28 熊本地震（M7.1）の直後に、市場への影響を予言してコミット済み。"
+              "2026-07-28 熊本地震（M7.1）を受けて、市場への影響を予言してコミット済み""（コミットは2026-08-13＝地震の16日後。**その間の市場情報を見たうえでの予言**であり、「直後」ではない。判定対象の2026Q3のデータは未公表なので先読みにはならない）。"
               "外れてもそのまま残す" + rule_svg("re"),
               machines([
                   ("予言1", "#2a78d6", "2026Q3の取引件数は前年比で減る（中心-10%）"),
@@ -408,7 +416,7 @@ def league_panels(veg, qk, ai, new=None):
               + fig("exp04_realestate/reports/re_chart.png", "判定対象データ: 熊本×東京の四半期単価",
                     "四半期ごとの中央値単価（万円/m²）。上段が東京、下段が熊本。"
                     "Land w/ building＝土地付き建物 / Pre-owned condo＝中古マンション。"
-                    "<b>予言の判定対象はこの熊本側の2026Q3以降</b>——地震の直後に"
+                    "<b>予言の判定対象はこの熊本側の2026Q3以降</b>——2026-08-13に"
                     "「取引件数は減る・価格は±5%以内」とコミットしてある"),
               empty("判定 2027年1月〜（不動産取引データの公表後）"),
               f"{GHB}/exp04_realestate/predictions.md"),
@@ -497,7 +505,7 @@ def league_panels(veg, qk, ai, new=None):
 
 # 採点がまだ始まっていないリーグ。スコアボードで「動いているが未採点」と出す
 NOT_YET = {
-    "🏠 不動産": "2026-07-28の地震直後に予言をコミット済み。判定は2027年1月",
+    "🏠 不動産": "2026-07-28の地震を受けた予言を2026-08-13にコミット済み（地震の16日後）。判定は2027年1月",
     "🛰 衛星": "NDVIを収集中。出荷週の予測は2027年6月にコミット、7月に判定",
     "🤖 AI": "推論3人格が週次で賭ける。毎週水曜に採点",
 }
@@ -519,7 +527,11 @@ def scoreboard(p, summary):
             cd = p.get("cdays", 0)
             rows.append(("⚡ 電力", f"{p['days']}日目",
                          f"首位 <b>{top}</b>　対oracle <b>{cp[top]:.1f}%</b>"
-                         f"（全機体が揃った{cd}日で比較）", cd))
+                         + (f"　ベンチ（clock {p['cbench']:.1f}%"
+                            + ("・再計算" if p.get("cbench_rc") else "")
+                            + f"）との差 <b>+{cp[top] - p['cbench']:.1f}pt</b>"
+                            if p.get("cbench") is not None else "")
+                         + f"（全機体が揃った{cd}日で比較）", cd))
     EMO = {"青果": "🥬", "地震": "🌏", "気象": "🌡", "出力制御": "🔌",
            "全球災害": "🔥", "書籍": "📚"}
     for name, (text, n) in summary.items():
