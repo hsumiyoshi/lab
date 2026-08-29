@@ -51,6 +51,8 @@ h2{font-size:1.04rem;line-height:1.4}
 /* ---------- ヘッダー ---------- */
 header{margin-bottom:14px}
 .tagline{color:var(--ink2);font-size:.92rem;margin-top:4px}
+.lead{color:var(--ink2);font-size:.86rem;line-height:1.8;margin-top:12px;max-width:62ch}
+.lead.sub2{font-size:.78rem;color:var(--muted);margin-top:8px}
 
 /* ---------- 仕組みフロー図 ---------- */
 .flow{margin:18px 0 6px}
@@ -295,13 +297,22 @@ transition:border-color .2s}
   <h1><a href="#pg-top" class="home" title="現在地へ戻る">lab <span style="font-weight:400;color:var(--muted)">/ 予測の公開実験場</span></a></h1>
   <p class="tagline">予測を先に固定し、現実に採点させる公開実験</p>
 
+  
+  <p class="lead">現実のデータに対して<b>10のリーグ</b>を回しています。予測は<b>結果が出る前に
+    公開リポジトリへコミット</b>するので、後から動かせません——gitのコミット時刻はタダで手に入る
+    公証だからです。各リーグには<b>予測を一切しない脳死ベンチ</b>と<b>事前に固定した採点日</b>があり、
+    <b>負けた記録もそのまま残します</b>。この台帳は毎日CIが自動生成していて、人の手は入りません。</p>
+  <p class="lead sub2">用語: <b>フォワード</b>＝バックテストではなく本番運用の日数。
+    <b>oracle</b>＝答えを見て動いた場合の理論上限。<b>BT補完</b>＝参戦前や事故で欠けた日を、
+    当時入手できたデータだけで後から再現したもの（事前コミットではないので率から外す）。
+    <a href="#about">誰がやっているか / In English</a></p>
   </header>
 
 
 <div class="live">
   <span class="pulse" aria-hidden="true"></span>
   <span>フォワード <b>16</b> 日目</span>
-  <span>最終更新 <b>2026-08-29 10:09</b> JST</span>
+  <span>最終更新 <b>2026-08-29 11:40</b> JST</span>
   <span>全採点は自動</span>
 </div>
 
