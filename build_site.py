@@ -716,7 +716,7 @@ def timeline(veg, qk):
 # 「計測している」と書くことを構造で防ぐ**（この2つは必ず同時に出る）。
 # Cookieを使わない方式なので同意バナーは不要。プロキシ（橙の雲）も不要で、
 # **onにしてはいけない**——GitHub Pagesの証明書更新が壊れる。
-CF_BEACON_TOKEN = ""
+CF_BEACON_TOKEN = "bd090b6c0c074a228bfa085db310d89b"
 
 
 def analytics_tag() -> str:
