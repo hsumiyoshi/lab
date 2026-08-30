@@ -83,5 +83,16 @@
    "blend": 2.8,
    "persistence": 3.6
   }
+ },
+ "2026-08-29": {
+  "actual": 26.8,
+  "picks": {
+   "openmeteo": 26.6,
+   "persistence": 25.3
+  },
+  "err": {
+   "openmeteo": 0.2,
+   "persistence": 1.5
+  }
  }
 }
