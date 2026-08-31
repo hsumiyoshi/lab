@@ -82,8 +82,14 @@ if __name__ == "__main__":
         have = set()
         if dest.exists():
             old = pd.read_csv(dest, parse_dates=["date"])
+            # **当月と前月は再取得する**（2026-09-01）。当月だけだと、月をまたいだ
+            # 瞬間に「その月は取得済み」と見なされ、月末数日が永久に欠ける。
+            # 実際に2026-08-10で4ファイルとも止まっていた（ベジ探は2〜3日遅れ、
+            # CIは水曜なので、当月扱いのうちに月末まで埋まりきらない）。
+            # 前月まで見れば、月が閉じた後に一度だけ取り直す機会がある。
+            prev = (today.year, today.month - 1) if today.month > 1 else (today.year - 1, 12)
             have = {(d.year, d.month) for d in old["date"]
-                    if (d.year, d.month) < (today.year, today.month)}  # 当月は再取得
+                    if (d.year, d.month) < prev}
         else:
             old = pd.DataFrame()
         frames = [old[old["date"].dt.strftime("%Y-%m").isin(

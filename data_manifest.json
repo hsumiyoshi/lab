@@ -79,9 +79,9 @@
    "refetch": "python3 exp02_vegetable/fetch.py",
    "note": "きゅうり等の日次単価",
    "state": {
-    "bytes": 95604,
-    "sha256": "e6906e057ae174386d36e16c70c77c4704a7d997b0495fefac08e98906307dc7",
-    "lines": 2298,
+    "bytes": 97103,
+    "sha256": "cac784ece06d9c14da15574233572e393ff4b80059e6fc2aaf9710b8b579738c",
+    "lines": 2334,
     "checked": "2026-09-01"
    }
   },
@@ -93,9 +93,9 @@
    "refetch": "同上",
    "note": "トマト等",
    "state": {
-    "bytes": 98558,
-    "sha256": "92a9ee5648a9ee3a31b7009f72180ce470fff86c24874b52925b189a5f0a9222",
-    "lines": 2564,
+    "bytes": 99532,
+    "sha256": "061831b9cd547a382deb49557634ba3f24918628a25bafea1ae9415199dcace3",
+    "lines": 2589,
     "checked": "2026-09-01"
    }
   },
@@ -107,9 +107,9 @@
    "refetch": "同上",
    "note": "キャベツ等",
    "state": {
-    "bytes": 147920,
-    "sha256": "29ced682f740aeaac7ca2409be0fa74a91e2eee3b7ee4b2cea46db5f354b094b",
-    "lines": 3591,
+    "bytes": 150362,
+    "sha256": "29a13869f8b08a9148ea4911aeff085210d6ff83fffcd11f73f42a40b528ca55",
+    "lines": 3650,
     "checked": "2026-09-01"
    }
   },
@@ -121,9 +121,9 @@
    "refetch": "同上",
    "note": "レタス等",
    "state": {
-    "bytes": 143363,
-    "sha256": "3c27bdf62ebaa556ddec98075584691afc6e1aa7493b2300a4dd6d215fd2f305",
-    "lines": 3739,
+    "bytes": 146153,
+    "sha256": "e7b2210023c0650e03804cb59e4663299b0a3cd3fc6e53fb8a339d817830c517",
+    "lines": 3811,
     "checked": "2026-09-01"
    }
   },
