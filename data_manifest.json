@@ -79,9 +79,9 @@
    "refetch": "python3 exp02_vegetable/fetch.py",
    "note": "きゅうり等の日次単価",
    "state": {
-    "bytes": 97103,
-    "sha256": "cac784ece06d9c14da15574233572e393ff4b80059e6fc2aaf9710b8b579738c",
-    "lines": 2334,
+    "bytes": 97227,
+    "sha256": "54ef1776aae04c8f56c267841a1d901124bb63f7f0d79356dfc398fa9c79c048",
+    "lines": 2337,
     "checked": "2026-09-02"
    }
   },
@@ -93,9 +93,9 @@
    "refetch": "同上",
    "note": "トマト等",
    "state": {
-    "bytes": 99532,
-    "sha256": "061831b9cd547a382deb49557634ba3f24918628a25bafea1ae9415199dcace3",
-    "lines": 2589,
+    "bytes": 99648,
+    "sha256": "2a6cd7631b3cb483d9275fadbf277457da6142f0eead0128e17d005565bc08d9",
+    "lines": 2592,
     "checked": "2026-09-02"
    }
   },
@@ -107,9 +107,9 @@
    "refetch": "同上",
    "note": "キャベツ等",
    "state": {
-    "bytes": 150362,
-    "sha256": "29a13869f8b08a9148ea4911aeff085210d6ff83fffcd11f73f42a40b528ca55",
-    "lines": 3650,
+    "bytes": 150610,
+    "sha256": "655b1e67fa913d7d9d8edeffb35ec249624da79e137d3b5ba25e1d8750fafbf8",
+    "lines": 3656,
     "checked": "2026-09-02"
    }
   },
@@ -121,9 +121,9 @@
    "refetch": "同上",
    "note": "レタス等",
    "state": {
-    "bytes": 146153,
-    "sha256": "e7b2210023c0650e03804cb59e4663299b0a3cd3fc6e53fb8a339d817830c517",
-    "lines": 3811,
+    "bytes": 146385,
+    "sha256": "ef9c518765824e8101d1cc3c3faed506b24eeb9b9107669f01b5f5ff78462d33",
+    "lines": 3817,
     "checked": "2026-09-02"
    }
   },
@@ -270,9 +270,9 @@
    "refetch": "**不可**（巻き取り式で古いものが落ちる）",
    "note": "全球災害イベントの履歴",
    "state": {
-    "bytes": 1620449,
-    "sha256": "8a1f634c1bf55b95892f64253f515c43bca3ab5030299b928a8383a14025629b",
-    "lines": 38097,
+    "bytes": 1711824,
+    "sha256": "4bebad9ce842395d9c565e9bf6d3b6a30752defdf85d264d3f87f4c2547e87ef",
+    "lines": 40244,
     "checked": "2026-09-02"
    }
   },
@@ -298,9 +298,9 @@
    "refetch": "直近数日のみ再取得可",
    "note": "衛星の熱異常検知の日次集計",
    "state": {
-    "bytes": 141,
-    "sha256": "89ec641fabb7b46a75e2c25c63e8f9c871a23773bcbfedbaf99f16073e8c8aca",
-    "lines": 10,
+    "bytes": 181,
+    "sha256": "6d796f0edde38d1d89e1063576e57e85dc67a8fb2351e0e2c28420321d108b6c",
+    "lines": 12,
     "checked": "2026-09-02"
    }
   },
