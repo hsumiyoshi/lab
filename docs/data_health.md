@@ -1,6 +1,6 @@
 # データ健全性（保全の番人）
 
-生成: 2026-09-07 01:01 JST / 登録 26件 / 合計 24.5MB
+生成: 2026-09-08 03:09 JST / 登録 26件 / 合計 24.5MB
 
 **方針**: 格付け(A/B/C)は価値の判定であり、保全の可否ではない。**全件を守る**——再取得可能でも、取り直せる保証は外部（API廃止・仕様変更・サイト改変）に依存するため。
 
@@ -9,12 +9,12 @@
 | データ | 格 | 形式 | サイズ | 状態 | 出所 |
 |---|---|---|---|---|---|
 | `exp01_jepx/reports/forward_ledger.csv` | A | append | 4KB | OK | 自前の採点 |
-| `exp05_quake/archive/quakes.csv` | A | append | 53KB | 変化なし | P2P地震情報API |
+| `exp05_quake/archive/quakes.csv` | A | append | 55KB | OK | P2P地震情報API |
 | `exp03_weather/data/ledger.json` | A | append | 3KB | OK | 自前の採点 |
 | `exp08_curtail/data/outlook_history.json` | A | append | 0KB | OK | 九電でんき予報 |
 | `exp08_curtail/data/ledger.json` | A | append | 1KB | 変化なし | 自前の採点 |
-| `exp10_disaster/data/events.json` | A | append | 2.1MB | OK | GDACS RSS |
-| `exp10_disaster/data/ledger.json` | A | append | 1KB | OK | 自前の採点 |
+| `exp10_disaster/data/events.json` | A | append | 2.1MB | 変化なし | GDACS RSS |
+| `exp10_disaster/data/ledger.json` | A | append | 1KB | 変化なし | 自前の採点 |
 | `exp10_disaster/data/firms_daily.json` | A | append | 0KB | 変化なし | NASA FIRMS（要キー） |
 | `exp11_books/data/rankings.json` | A | append | 6KB | 変化なし | トーハン週間ベストセラー |
 | `exp11_books/data/ledger.json` | A | append | 0KB | 変化なし | 自前の採点 |
