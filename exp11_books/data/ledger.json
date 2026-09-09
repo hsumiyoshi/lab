@@ -26,5 +26,19 @@
    "persistence": 7
   },
   "scored_against": "2026-09-01"
+ },
+ "2026-09-01": {
+  "actual": 4,
+  "err": {
+   "all_stay": 6,
+   "mean": 2,
+   "persistence": 1
+  },
+  "picks": {
+   "all_stay": 10,
+   "mean": 6,
+   "persistence": 5
+  },
+  "scored_against": "2026-09-08"
  }
 }
