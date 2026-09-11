@@ -18,9 +18,11 @@
    その日の予定を数えたうえで成功に数えられず、**毎週かならず1回ぶん損をしていた**（青果50%の正体）
 2. **起動の遅れを待つ。** GitHub Actionsの定時起動は数時間ずれる（2026-09-09の青果は4時間29分遅れ）。
    予定時刻から `GRACE` 時間は「まだ来ていない」として数えない
-3. **回数の少ないリーグは窓を延ばす。** 30日固定だと週次は分母4で、**1回の失敗が25pt**になる。
-   直った失敗が窓から出るまで⛔が続き、関門が実態を映さない。予定が `MIN_EXPECTED` 件に届くまで
-   窓を最大 `MAX_WINDOW` 日まで遡る（リーグ開設前までは遡らない）
+3. **窓は30日のまま据え置き、代わりに `連続成功` を並べる。** 週次リーグは分母4なので
+   **1回の失敗が25pt**動く。ここで「予定が8件入るまで窓を遡る」ことも試したが、**直した失敗を
+   何ヶ月も引きずるほうが害が大きい**——週次で95%を満たすには20回ぶんの予定が要り、
+   120日遡っても17回にしか届かないので、1回落ちた週次リーグは冬まで関門を通れなくなる。
+   窓は30日に戻し、「いま健全か」は連続成功の列で読む
 """
 
 import json
@@ -34,9 +36,7 @@ UTC = timezone.utc
 JST = timezone(timedelta(hours=9))
 HERE = Path(__file__).resolve().parent
 REPO = "hsumiyoshi/lab"
-WINDOW = 30        # 既定の窓（日）。日次リーグはこれで足りる
-MAX_WINDOW = 120   # 回数の少ないリーグで遡ってよい上限（日）
-MIN_EXPECTED = 8   # これだけの予定が入るまで窓を延ばす
+WINDOW = 30        # 窓（日）。週次リーグは分母が4件しかないので、連続成功の列と併せて読む
 GRACE = 6          # 予定時刻からこの時間は起動待ちとみなす（実測の最大遅延4.5時間に余裕を足す）
 GATE = 0.95
 
@@ -87,16 +87,6 @@ def cron_slots(wf_path: Path, start: datetime, end: datetime) -> list[datetime]:
     return sorted(slots)
 
 
-def window_start(wf_path: Path, born: datetime, now: datetime) -> datetime:
-    """予定が MIN_EXPECTED 件入るまで窓を遡る。リーグ開設前までは遡らない。"""
-    deadline = now - timedelta(hours=GRACE)
-    for days in range(WINDOW, MAX_WINDOW + 1, 7):
-        start = max(now - timedelta(days=days), born)
-        if len(cron_slots(wf_path, start, deadline)) >= MIN_EXPECTED or start == born:
-            return start
-    return max(now - timedelta(days=MAX_WINDOW), born)
-
-
 def judge(slots: list[datetime], runs: list[dict]) -> tuple[int, int, int, int]:
     """予定1件に実行1件を割り当て、成功・失敗・未実行に分ける。
 
@@ -134,7 +124,9 @@ def main():
         try:
             born = datetime.fromisoformat(
                 api(f"/repos/{REPO}/actions/workflows/{wf}")["created_at"].replace("Z", "+00:00"))
-            start = window_start(path, born, now)
+            # リーグ開設前まで遡らない（0/30を0%と出すと、動いていないのか
+            # 始まっていないのかが混ざる）
+            start = max(now - timedelta(days=WINDOW), born)
             runs = api(f"/repos/{REPO}/actions/workflows/{wf}/runs"
                        f"?event=schedule&created=>{start:%Y-%m-%d}&per_page=100")["workflow_runs"]
         except Exception as e:
@@ -155,7 +147,7 @@ def main():
     measured = [r for r in rows if r["rate"] is not None]
     rows.sort(key=lambda r: (r["rate"] is not None, r["rate"] if r["rate"] is not None else 1))
     gate_ok = bool(measured) and all(r["rate"] >= GATE for r in measured)
-    lines = ["# 無停止率（予定実行のみ）", "",
+    lines = ["# 無停止率（直近30日・予定実行のみ）", "",
              f"生成: {datetime.now(JST):%Y-%m-%d %H:%M} JST / 関門: 全リーグ {GATE:.0%} 以上で翌月1本追加してよい", "",
              f"**判定: {'✅ 追加してよい' if gate_ok else '⛔ 追加より修理が先'}**", "",
              "| リーグ | 成功 | 失敗 | 未実行 | 予定 | 窓 | 無停止率 | 連続成功 |",
@@ -170,8 +162,7 @@ def main():
     lines += ["",
               "注: 手動実行(workflow_dispatch)は数えない——**放っておいても動くか**が知りたいので。",
               f"予定時刻から{GRACE}時間は起動待ちとして数えない（定時起動は実測で最大4.5時間遅れる）。",
-              f"回数の少ないリーグは、予定が{MIN_EXPECTED}件入るまで窓を最大{MAX_WINDOW}日まで遡る"
-              "——週次を30日で測ると分母4になり、1回の失敗が25pt動いてしまう。",
+              "**週次リーグは分母が4件しかない。** 1回の失敗が25pt動くので、無停止率だけで読まない。",
               "**失敗と未実行を分けている。** 落ちたのか、そもそも起動しなかったのかで直す場所が違う。",
               "**連続成功は「いま健全か」を見る列。** 無停止率は過去の失敗を窓から出るまで引きずるので、"
               "直ったかどうかはこちらで読む。"]
