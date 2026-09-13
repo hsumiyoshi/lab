@@ -298,5 +298,22 @@
    "blend": 0.3,
    "persistence": 1.7
   }
+ },
+ "2026-09-12": {
+  "actual": 24.8,
+  "picks": {
+   "jma": 24.0,
+   "debias": 23.4,
+   "openmeteo": 24.7,
+   "blend": 24.4,
+   "persistence": 20.6
+  },
+  "err": {
+   "jma": 0.8,
+   "debias": 1.4,
+   "openmeteo": 0.1,
+   "blend": 0.4,
+   "persistence": 4.2
+  }
  }
 }
