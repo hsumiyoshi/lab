@@ -84,13 +84,20 @@ def dev_signed_text(rad_forecast, day: pd.Timestamp, dev, thr) -> str:
     """
     if rad_forecast is None or dev is None or thr is None:
         return ""
-    norm = sim.WEATHER_A.loc[sim.WEATHER_A.index < day, "rad"].tail(28).mean() \
+    now = sim.WEATHER_A.loc[sim.WEATHER_A.index < day, "rad"].tail(28).mean() \
         if sim.WEATHER_A is not None else None
-    if norm is None or pd.isna(norm):
+    if now is None or pd.isna(now):
         return f"乖離 {dev:.0f}（閾値 {thr:.0f}）"
-    signed = rad_forecast - norm
-    arrow = "普段より晴れる" if signed > 0 else "普段より曇る"
-    return (f"乖離 {signed:+.0f} W/m2（{arrow}方向。直近28日平均 {norm:.0f}、"
+    # 平年値は**判定した時点のもの**を復元する。実測は約5日遅れで届くので、
+    # 再描画時に28日窓を引き直すと判定に使った平年値と別物になり、同じ行の中で
+    # 「乖離 -195」と「判定は絶対値 214」が並ぶ（2026-09-18受渡で実際に起きた。
+    # 195なら平常・214なら強で、ラベルまで食い違う）。_meta は dev しか持たないため、
+    # 向きだけ現在の窓から取り、大きさは判定時の dev をそのまま使って平年値を戻す。
+    cloudy = rad_forecast < now
+    norm = rad_forecast + dev if cloudy else rad_forecast - dev
+    signed = -dev if cloudy else dev
+    arrow = "普段より曇る" if cloudy else "普段より晴れる"
+    return (f"乖離 {signed:+.0f} W/m2（{arrow}方向。判定時の直近28日平均 {norm:.0f}、"
             f"判定は絶対値 {dev:.0f} vs 閾値 {thr:.0f}）")
 
 
