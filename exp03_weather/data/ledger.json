@@ -564,5 +564,16 @@
    "openmeteo": 3.9,
    "persistence": 0.6
   }
+ },
+ "2026-10-01": {
+  "actual": 29.8,
+  "picks": {
+   "openmeteo": 22.2,
+   "persistence": 17.3
+  },
+  "err": {
+   "openmeteo": 7.6,
+   "persistence": 12.5
+  }
  }
 }
