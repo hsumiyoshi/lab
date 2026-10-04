@@ -4,3 +4,5 @@
 pandas
 matplotlib
 pandera
+ezdxf  # exp12 図面のCAD化
+opencv-python-headless  # exp12
