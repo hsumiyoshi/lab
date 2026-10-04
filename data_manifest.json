@@ -360,6 +360,14 @@
     "lines": 632,
     "checked": "2026-10-04"
    }
+  },
+  {
+   "path": "marketplaces/ledger/ledger.tsv",
+   "grade": "B",
+   "mode": "append",
+   "source": "ココナラ・Shopify App Store・Gumroad・BOOTHの公開ページ",
+   "refetch": "python3 marketplaces/collect.py（その日の値しか取れない。過去の時点は再取得できない）",
+   "note": "売り場の注文の種類の台帳（週1回）。2時点の差分で直近の動きを見る"
   }
  ]
 }

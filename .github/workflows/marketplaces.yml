@@ -1,0 +1,42 @@
+name: marketplaces weekly collect
+
+on:
+  schedule:
+    - cron: "0 22 * * 0"   # 月曜07:00 JST（週1回。売り場の数字を台帳に積む）
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  marketplaces:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Collect（公開ページのみ・robots遵守・3秒間隔）
+        working-directory: marketplaces
+        run: python3 collect.py
+      - name: Report（台帳から report.md を作り直す）
+        working-directory: marketplaces
+        run: python3 report.py
+      - name: Commit
+        run: |
+          git config user.name "marketplaces-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add marketplaces/ledger marketplaces/report.md
+          git diff --cached --quiet && echo "no changes" || git commit -m "marketplaces: $(date -u +%Y-%m-%d) 売り場の数字を取得"
+          bash scripts/push_with_retry.sh
+      - name: Record failure (落ちたことを台帳に残す)
+        if: failure()
+        run: |
+          git config user.name "incident-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git pull --rebase --autostash origin main || true
+          mkdir -p docs
+          echo "| $(date -u +%Y-%m-%dT%H:%MZ) | ${{ github.workflow }} | [run](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) | 未対応 |" >> docs/incidents.md
+          git add docs/incidents.md
+          git commit -m "incident: ${{ github.workflow }} が失敗" || true
+          git push || true
