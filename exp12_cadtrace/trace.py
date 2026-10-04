@@ -22,9 +22,19 @@ import ezdxf
 import numpy as np
 
 
-def extract_walls(gray: np.ndarray, min_thickness: int = 4) -> np.ndarray:
+def stroke_width(binary: np.ndarray) -> float:
+    """黒い線の代表的な太さ（距離変換の峰の2倍の中央値）。壁の太さの見積もりに使う"""
+    dist = cv2.distanceTransform(binary, cv2.DIST_L2, 3)
+    peaks = dist[(dist >= 1) & (dist >= cv2.dilate(dist, np.ones((3, 3))) - 1e-6)]
+    return float(np.median(peaks) * 2) if peaks.size else 4.0
+
+
+def extract_walls(gray: np.ndarray, ratio: float = 0.6) -> np.ndarray:
+    """太い線（壁）だけを残す。開口を消し残した薄い帯（壁の6割未満の太さ）も落とす"""
     _, binary = cv2.threshold(gray, 160, 255, cv2.THRESH_BINARY_INV)
-    k = np.ones((min_thickness, min_thickness), np.uint8)
+    t = stroke_width(binary)
+    k_size = max(4, int(round(t * ratio)))
+    k = np.ones((k_size, k_size), np.uint8)
     walls = cv2.morphologyEx(binary, cv2.MORPH_OPEN, k)  # 細い線と文字が落ちる
     return walls
 
