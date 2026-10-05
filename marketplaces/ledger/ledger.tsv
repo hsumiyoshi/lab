@@ -1042,3 +1042,1054 @@ date	source	key	name	metric	value	url
 2026-10-04	coconala	/categories/809/691	その他（3Dアバター・衣装作成）	price_min	2000	https://coconala.com/categories/809/691
 2026-10-04	coconala	/categories/809/691	その他（3Dアバター・衣装作成）	price_max	300000	https://coconala.com/categories/809/691
 2026-10-04	coconala	/categories/809/691	その他（3Dアバター・衣装作成）	full_capacity	0	https://coconala.com/categories/809/691
+2026-10-05	coconala	/categories/1002/774	AI チャットボット開発	listed	88	https://coconala.com/categories/1002/774
+2026-10-05	coconala	/categories/1002/774	AI チャットボット開発	reviews_sum	1180	https://coconala.com/categories/1002/774
+2026-10-05	coconala	/categories/1002/774	AI チャットボット開発	reviews_max	63	https://coconala.com/categories/1002/774
+2026-10-05	coconala	/categories/1002/774	AI チャットボット開発	price_median	23000.0	https://coconala.com/categories/1002/774
+2026-10-05	coconala	/categories/1002/774	AI チャットボット開発	price_min	3000	https://coconala.com/categories/1002/774
+2026-10-05	coconala	/categories/1002/774	AI チャットボット開発	price_max	100000	https://coconala.com/categories/1002/774
+2026-10-05	coconala	/categories/1002/774	AI チャットボット開発	full_capacity	0	https://coconala.com/categories/1002/774
+2026-10-05	coconala	/categories/1002/775	AI業務効率化・自動化	listed	80	https://coconala.com/categories/1002/775
+2026-10-05	coconala	/categories/1002/775	AI業務効率化・自動化	reviews_sum	556	https://coconala.com/categories/1002/775
+2026-10-05	coconala	/categories/1002/775	AI業務効率化・自動化	reviews_max	66	https://coconala.com/categories/1002/775
+2026-10-05	coconala	/categories/1002/775	AI業務効率化・自動化	price_median	10000.0	https://coconala.com/categories/1002/775
+2026-10-05	coconala	/categories/1002/775	AI業務効率化・自動化	price_min	1000	https://coconala.com/categories/1002/775
+2026-10-05	coconala	/categories/1002/775	AI業務効率化・自動化	price_max	180000	https://coconala.com/categories/1002/775
+2026-10-05	coconala	/categories/1002/775	AI業務効率化・自動化	full_capacity	0	https://coconala.com/categories/1002/775
+2026-10-05	coconala	/categories/120/765	間取り・注文住宅の相談	listed	159	https://coconala.com/categories/120/765
+2026-10-05	coconala	/categories/120/765	間取り・注文住宅の相談	reviews_sum	11389	https://coconala.com/categories/120/765
+2026-10-05	coconala	/categories/120/765	間取り・注文住宅の相談	reviews_max	775	https://coconala.com/categories/120/765
+2026-10-05	coconala	/categories/120/765	間取り・注文住宅の相談	price_median	15000	https://coconala.com/categories/120/765
+2026-10-05	coconala	/categories/120/765	間取り・注文住宅の相談	price_min	3000	https://coconala.com/categories/120/765
+2026-10-05	coconala	/categories/120/765	間取り・注文住宅の相談	price_max	65000	https://coconala.com/categories/120/765
+2026-10-05	coconala	/categories/120/765	間取り・注文住宅の相談	full_capacity	38	https://coconala.com/categories/120/765
+2026-10-05	coconala	/categories/192/676	人物イラスト作成	track_record	200000.0	https://coconala.com/categories/192/676
+2026-10-05	coconala	/categories/192/676	人物イラスト作成	listed	124	https://coconala.com/categories/192/676
+2026-10-05	coconala	/categories/192/676	人物イラスト作成	reviews_sum	35881	https://coconala.com/categories/192/676
+2026-10-05	coconala	/categories/192/676	人物イラスト作成	reviews_max	2998	https://coconala.com/categories/192/676
+2026-10-05	coconala	/categories/192/676	人物イラスト作成	price_median	10000.0	https://coconala.com/categories/192/676
+2026-10-05	coconala	/categories/192/676	人物イラスト作成	price_min	2000	https://coconala.com/categories/192/676
+2026-10-05	coconala	/categories/192/676	人物イラスト作成	price_max	55000	https://coconala.com/categories/192/676
+2026-10-05	coconala	/categories/192/676	人物イラスト作成	full_capacity	7	https://coconala.com/categories/192/676
+2026-10-05	coconala	/categories/192/677	ペットの似顔絵作成	track_record	28000.0	https://coconala.com/categories/192/677
+2026-10-05	coconala	/categories/192/677	ペットの似顔絵作成	listed	148	https://coconala.com/categories/192/677
+2026-10-05	coconala	/categories/192/677	ペットの似顔絵作成	reviews_sum	14004	https://coconala.com/categories/192/677
+2026-10-05	coconala	/categories/192/677	ペットの似顔絵作成	reviews_max	734	https://coconala.com/categories/192/677
+2026-10-05	coconala	/categories/192/677	ペットの似顔絵作成	price_median	5000.0	https://coconala.com/categories/192/677
+2026-10-05	coconala	/categories/192/677	ペットの似顔絵作成	price_min	2000	https://coconala.com/categories/192/677
+2026-10-05	coconala	/categories/192/677	ペットの似顔絵作成	price_max	80000	https://coconala.com/categories/192/677
+2026-10-05	coconala	/categories/192/677	ペットの似顔絵作成	full_capacity	2	https://coconala.com/categories/192/677
+2026-10-05	coconala	/categories/192/678	背景・風景イラスト作成	track_record	6000.0	https://coconala.com/categories/192/678
+2026-10-05	coconala	/categories/192/678	背景・風景イラスト作成	listed	142	https://coconala.com/categories/192/678
+2026-10-05	coconala	/categories/192/678	背景・風景イラスト作成	reviews_sum	5170	https://coconala.com/categories/192/678
+2026-10-05	coconala	/categories/192/678	背景・風景イラスト作成	reviews_max	368	https://coconala.com/categories/192/678
+2026-10-05	coconala	/categories/192/678	背景・風景イラスト作成	price_median	15000.0	https://coconala.com/categories/192/678
+2026-10-05	coconala	/categories/192/678	背景・風景イラスト作成	price_min	2000	https://coconala.com/categories/192/678
+2026-10-05	coconala	/categories/192/678	背景・風景イラスト作成	price_max	65000	https://coconala.com/categories/192/678
+2026-10-05	coconala	/categories/192/678	背景・風景イラスト作成	full_capacity	5	https://coconala.com/categories/192/678
+2026-10-05	coconala	/categories/192/680	食べ物イラスト作成	track_record	2000.0	https://coconala.com/categories/192/680
+2026-10-05	coconala	/categories/192/680	食べ物イラスト作成	listed	134	https://coconala.com/categories/192/680
+2026-10-05	coconala	/categories/192/680	食べ物イラスト作成	reviews_sum	2062	https://coconala.com/categories/192/680
+2026-10-05	coconala	/categories/192/680	食べ物イラスト作成	reviews_max	112	https://coconala.com/categories/192/680
+2026-10-05	coconala	/categories/192/680	食べ物イラスト作成	price_median	3000.0	https://coconala.com/categories/192/680
+2026-10-05	coconala	/categories/192/680	食べ物イラスト作成	price_min	2000	https://coconala.com/categories/192/680
+2026-10-05	coconala	/categories/192/680	食べ物イラスト作成	price_max	12000	https://coconala.com/categories/192/680
+2026-10-05	coconala	/categories/192/680	食べ物イラスト作成	full_capacity	0	https://coconala.com/categories/192/680
+2026-10-05	coconala	/categories/192/682	パターン・レタリングイラスト作成	listed	95	https://coconala.com/categories/192/682
+2026-10-05	coconala	/categories/192/682	パターン・レタリングイラスト作成	reviews_sum	2209	https://coconala.com/categories/192/682
+2026-10-05	coconala	/categories/192/682	パターン・レタリングイラスト作成	reviews_max	321	https://coconala.com/categories/192/682
+2026-10-05	coconala	/categories/192/682	パターン・レタリングイラスト作成	price_median	4000	https://coconala.com/categories/192/682
+2026-10-05	coconala	/categories/192/682	パターン・レタリングイラスト作成	price_min	2000	https://coconala.com/categories/192/682
+2026-10-05	coconala	/categories/192/682	パターン・レタリングイラスト作成	price_max	15000	https://coconala.com/categories/192/682
+2026-10-05	coconala	/categories/192/682	パターン・レタリングイラスト作成	full_capacity	0	https://coconala.com/categories/192/682
+2026-10-05	coconala	/categories/211/711	YouTube動画編集	track_record	30000.0	https://coconala.com/categories/211/711
+2026-10-05	coconala	/categories/211/711	YouTube動画編集	listed	128	https://coconala.com/categories/211/711
+2026-10-05	coconala	/categories/211/711	YouTube動画編集	reviews_sum	27481	https://coconala.com/categories/211/711
+2026-10-05	coconala	/categories/211/711	YouTube動画編集	reviews_max	1069	https://coconala.com/categories/211/711
+2026-10-05	coconala	/categories/211/711	YouTube動画編集	price_median	6250.0	https://coconala.com/categories/211/711
+2026-10-05	coconala	/categories/211/711	YouTube動画編集	price_min	3000	https://coconala.com/categories/211/711
+2026-10-05	coconala	/categories/211/711	YouTube動画編集	price_max	100000	https://coconala.com/categories/211/711
+2026-10-05	coconala	/categories/211/711	YouTube動画編集	full_capacity	16	https://coconala.com/categories/211/711
+2026-10-05	coconala	/categories/211/712	動画編集全般	track_record	80000.0	https://coconala.com/categories/211/712
+2026-10-05	coconala	/categories/211/712	動画編集全般	listed	128	https://coconala.com/categories/211/712
+2026-10-05	coconala	/categories/211/712	動画編集全般	reviews_sum	21833	https://coconala.com/categories/211/712
+2026-10-05	coconala	/categories/211/712	動画編集全般	reviews_max	1061	https://coconala.com/categories/211/712
+2026-10-05	coconala	/categories/211/712	動画編集全般	price_median	6000.0	https://coconala.com/categories/211/712
+2026-10-05	coconala	/categories/211/712	動画編集全般	price_min	3000	https://coconala.com/categories/211/712
+2026-10-05	coconala	/categories/211/712	動画編集全般	price_max	80000	https://coconala.com/categories/211/712
+2026-10-05	coconala	/categories/211/712	動画編集全般	full_capacity	18	https://coconala.com/categories/211/712
+2026-10-05	coconala	/categories/211/713	字幕・キャプション作成	track_record	5000.0	https://coconala.com/categories/211/713
+2026-10-05	coconala	/categories/211/713	字幕・キャプション作成	listed	127	https://coconala.com/categories/211/713
+2026-10-05	coconala	/categories/211/713	字幕・キャプション作成	reviews_sum	7405	https://coconala.com/categories/211/713
+2026-10-05	coconala	/categories/211/713	字幕・キャプション作成	reviews_max	453	https://coconala.com/categories/211/713
+2026-10-05	coconala	/categories/211/713	字幕・キャプション作成	price_median	3000	https://coconala.com/categories/211/713
+2026-10-05	coconala	/categories/211/713	字幕・キャプション作成	price_min	3000	https://coconala.com/categories/211/713
+2026-10-05	coconala	/categories/211/713	字幕・キャプション作成	price_max	12000	https://coconala.com/categories/211/713
+2026-10-05	coconala	/categories/211/713	字幕・キャプション作成	full_capacity	2	https://coconala.com/categories/211/713
+2026-10-05	coconala	/categories/211/715	切り抜き動画作成	track_record	4000.0	https://coconala.com/categories/211/715
+2026-10-05	coconala	/categories/211/715	切り抜き動画作成	listed	130	https://coconala.com/categories/211/715
+2026-10-05	coconala	/categories/211/715	切り抜き動画作成	reviews_sum	6298	https://coconala.com/categories/211/715
+2026-10-05	coconala	/categories/211/715	切り抜き動画作成	reviews_max	478	https://coconala.com/categories/211/715
+2026-10-05	coconala	/categories/211/715	切り抜き動画作成	price_median	3250.0	https://coconala.com/categories/211/715
+2026-10-05	coconala	/categories/211/715	切り抜き動画作成	price_min	3000	https://coconala.com/categories/211/715
+2026-10-05	coconala	/categories/211/715	切り抜き動画作成	price_max	32000	https://coconala.com/categories/211/715
+2026-10-05	coconala	/categories/211/715	切り抜き動画作成	full_capacity	6	https://coconala.com/categories/211/715
+2026-10-05	coconala	/categories/213/339	カラオケ音源作成	track_record	9000.0	https://coconala.com/categories/213/339
+2026-10-05	coconala	/categories/213/339	カラオケ音源作成	listed	134	https://coconala.com/categories/213/339
+2026-10-05	coconala	/categories/213/339	カラオケ音源作成	reviews_sum	14918	https://coconala.com/categories/213/339
+2026-10-05	coconala	/categories/213/339	カラオケ音源作成	reviews_max	509	https://coconala.com/categories/213/339
+2026-10-05	coconala	/categories/213/339	カラオケ音源作成	price_median	14500.0	https://coconala.com/categories/213/339
+2026-10-05	coconala	/categories/213/339	カラオケ音源作成	price_min	6000	https://coconala.com/categories/213/339
+2026-10-05	coconala	/categories/213/339	カラオケ音源作成	price_max	45000	https://coconala.com/categories/213/339
+2026-10-05	coconala	/categories/213/339	カラオケ音源作成	full_capacity	9	https://coconala.com/categories/213/339
+2026-10-05	coconala	/categories/214/53	BGM制作	track_record	10000.0	https://coconala.com/categories/214/53
+2026-10-05	coconala	/categories/214/53	BGM制作	listed	149	https://coconala.com/categories/214/53
+2026-10-05	coconala	/categories/214/53	BGM制作	reviews_sum	10379	https://coconala.com/categories/214/53
+2026-10-05	coconala	/categories/214/53	BGM制作	reviews_max	315	https://coconala.com/categories/214/53
+2026-10-05	coconala	/categories/214/53	BGM制作	price_median	6000	https://coconala.com/categories/214/53
+2026-10-05	coconala	/categories/214/53	BGM制作	price_min	3000	https://coconala.com/categories/214/53
+2026-10-05	coconala	/categories/214/53	BGM制作	price_max	50000	https://coconala.com/categories/214/53
+2026-10-05	coconala	/categories/214/53	BGM制作	full_capacity	6	https://coconala.com/categories/214/53
+2026-10-05	coconala	/categories/215/389	その他（ナレーション・ボイス制作）	listed	101	https://coconala.com/categories/215/389
+2026-10-05	coconala	/categories/215/389	その他（ナレーション・ボイス制作）	reviews_sum	488	https://coconala.com/categories/215/389
+2026-10-05	coconala	/categories/215/389	その他（ナレーション・ボイス制作）	reviews_max	26	https://coconala.com/categories/215/389
+2026-10-05	coconala	/categories/215/389	その他（ナレーション・ボイス制作）	price_median	1000	https://coconala.com/categories/215/389
+2026-10-05	coconala	/categories/215/389	その他（ナレーション・ボイス制作）	price_min	100	https://coconala.com/categories/215/389
+2026-10-05	coconala	/categories/215/389	その他（ナレーション・ボイス制作）	price_max	15000	https://coconala.com/categories/215/389
+2026-10-05	coconala	/categories/215/389	その他（ナレーション・ボイス制作）	full_capacity	0	https://coconala.com/categories/215/389
+2026-10-05	coconala	/categories/215/55	ナレーション・朗読	track_record	75000.0	https://coconala.com/categories/215/55
+2026-10-05	coconala	/categories/215/55	ナレーション・朗読	listed	150	https://coconala.com/categories/215/55
+2026-10-05	coconala	/categories/215/55	ナレーション・朗読	reviews_sum	55647	https://coconala.com/categories/215/55
+2026-10-05	coconala	/categories/215/55	ナレーション・朗読	reviews_max	2463	https://coconala.com/categories/215/55
+2026-10-05	coconala	/categories/215/55	ナレーション・朗読	price_median	3000.0	https://coconala.com/categories/215/55
+2026-10-05	coconala	/categories/215/55	ナレーション・朗読	price_min	1000	https://coconala.com/categories/215/55
+2026-10-05	coconala	/categories/215/55	ナレーション・朗読	price_max	36000	https://coconala.com/categories/215/55
+2026-10-05	coconala	/categories/215/55	ナレーション・朗読	full_capacity	0	https://coconala.com/categories/215/55
+2026-10-05	coconala	/categories/217/730	写真編集・レタッチ制作指導	listed	10	https://coconala.com/categories/217/730
+2026-10-05	coconala	/categories/217/730	写真編集・レタッチ制作指導	reviews_sum	91	https://coconala.com/categories/217/730
+2026-10-05	coconala	/categories/217/730	写真編集・レタッチ制作指導	reviews_max	18	https://coconala.com/categories/217/730
+2026-10-05	coconala	/categories/217/730	写真編集・レタッチ制作指導	price_median	3250.0	https://coconala.com/categories/217/730
+2026-10-05	coconala	/categories/217/730	写真編集・レタッチ制作指導	price_min	2000	https://coconala.com/categories/217/730
+2026-10-05	coconala	/categories/217/730	写真編集・レタッチ制作指導	price_max	5000	https://coconala.com/categories/217/730
+2026-10-05	coconala	/categories/217/730	写真編集・レタッチ制作指導	full_capacity	0	https://coconala.com/categories/217/730
+2026-10-05	coconala	/categories/219/59	プロフィールムービー作成	track_record	30000.0	https://coconala.com/categories/219/59
+2026-10-05	coconala	/categories/219/59	プロフィールムービー作成	listed	161	https://coconala.com/categories/219/59
+2026-10-05	coconala	/categories/219/59	プロフィールムービー作成	reviews_sum	28385	https://coconala.com/categories/219/59
+2026-10-05	coconala	/categories/219/59	プロフィールムービー作成	reviews_max	937	https://coconala.com/categories/219/59
+2026-10-05	coconala	/categories/219/59	プロフィールムービー作成	price_median	19000	https://coconala.com/categories/219/59
+2026-10-05	coconala	/categories/219/59	プロフィールムービー作成	price_min	7000	https://coconala.com/categories/219/59
+2026-10-05	coconala	/categories/219/59	プロフィールムービー作成	price_max	60000	https://coconala.com/categories/219/59
+2026-10-05	coconala	/categories/219/59	プロフィールムービー作成	full_capacity	11	https://coconala.com/categories/219/59
+2026-10-05	coconala	/categories/230/65	Excelマクロ・VBA作成	track_record	19000.0	https://coconala.com/categories/230/65
+2026-10-05	coconala	/categories/230/65	Excelマクロ・VBA作成	listed	128	https://coconala.com/categories/230/65
+2026-10-05	coconala	/categories/230/65	Excelマクロ・VBA作成	reviews_sum	18763	https://coconala.com/categories/230/65
+2026-10-05	coconala	/categories/230/65	Excelマクロ・VBA作成	reviews_max	993	https://coconala.com/categories/230/65
+2026-10-05	coconala	/categories/230/65	Excelマクロ・VBA作成	price_median	5000.0	https://coconala.com/categories/230/65
+2026-10-05	coconala	/categories/230/65	Excelマクロ・VBA作成	price_min	3000	https://coconala.com/categories/230/65
+2026-10-05	coconala	/categories/230/65	Excelマクロ・VBA作成	price_max	100000	https://coconala.com/categories/230/65
+2026-10-05	coconala	/categories/230/65	Excelマクロ・VBA作成	full_capacity	2	https://coconala.com/categories/230/65
+2026-10-05	coconala	/categories/230/737	GAS作成・制作	track_record	3000.0	https://coconala.com/categories/230/737
+2026-10-05	coconala	/categories/230/737	GAS作成・制作	listed	120	https://coconala.com/categories/230/737
+2026-10-05	coconala	/categories/230/737	GAS作成・制作	reviews_sum	7204	https://coconala.com/categories/230/737
+2026-10-05	coconala	/categories/230/737	GAS作成・制作	reviews_max	935	https://coconala.com/categories/230/737
+2026-10-05	coconala	/categories/230/737	GAS作成・制作	price_median	5000.0	https://coconala.com/categories/230/737
+2026-10-05	coconala	/categories/230/737	GAS作成・制作	price_min	3000	https://coconala.com/categories/230/737
+2026-10-05	coconala	/categories/230/737	GAS作成・制作	price_max	100000	https://coconala.com/categories/230/737
+2026-10-05	coconala	/categories/230/737	GAS作成・制作	full_capacity	0	https://coconala.com/categories/230/737
+2026-10-05	coconala	/categories/290/98	英語翻訳	track_record	62000.0	https://coconala.com/categories/290/98
+2026-10-05	coconala	/categories/290/98	英語翻訳	listed	142	https://coconala.com/categories/290/98
+2026-10-05	coconala	/categories/290/98	英語翻訳	reviews_sum	47110	https://coconala.com/categories/290/98
+2026-10-05	coconala	/categories/290/98	英語翻訳	reviews_max	2419	https://coconala.com/categories/290/98
+2026-10-05	coconala	/categories/290/98	英語翻訳	price_median	1500.0	https://coconala.com/categories/290/98
+2026-10-05	coconala	/categories/290/98	英語翻訳	price_min	1000	https://coconala.com/categories/290/98
+2026-10-05	coconala	/categories/290/98	英語翻訳	price_max	50000	https://coconala.com/categories/290/98
+2026-10-05	coconala	/categories/290/98	英語翻訳	full_capacity	0	https://coconala.com/categories/290/98
+2026-10-05	coconala	/categories/290/99	中国語翻訳	track_record	12000.0	https://coconala.com/categories/290/99
+2026-10-05	coconala	/categories/290/99	中国語翻訳	listed	126	https://coconala.com/categories/290/99
+2026-10-05	coconala	/categories/290/99	中国語翻訳	reviews_sum	16716	https://coconala.com/categories/290/99
+2026-10-05	coconala	/categories/290/99	中国語翻訳	reviews_max	1049	https://coconala.com/categories/290/99
+2026-10-05	coconala	/categories/290/99	中国語翻訳	price_median	1500.0	https://coconala.com/categories/290/99
+2026-10-05	coconala	/categories/290/99	中国語翻訳	price_min	1000	https://coconala.com/categories/290/99
+2026-10-05	coconala	/categories/290/99	中国語翻訳	price_max	100000	https://coconala.com/categories/290/99
+2026-10-05	coconala	/categories/290/99	中国語翻訳	full_capacity	5	https://coconala.com/categories/290/99
+2026-10-05	coconala	/categories/350/120	写真レタッチ・人物写真加工	track_record	11000.0	https://coconala.com/categories/350/120
+2026-10-05	coconala	/categories/350/120	写真レタッチ・人物写真加工	listed	134	https://coconala.com/categories/350/120
+2026-10-05	coconala	/categories/350/120	写真レタッチ・人物写真加工	reviews_sum	17234	https://coconala.com/categories/350/120
+2026-10-05	coconala	/categories/350/120	写真レタッチ・人物写真加工	reviews_max	1941	https://coconala.com/categories/350/120
+2026-10-05	coconala	/categories/350/120	写真レタッチ・人物写真加工	price_median	1000.0	https://coconala.com/categories/350/120
+2026-10-05	coconala	/categories/350/120	写真レタッチ・人物写真加工	price_min	1000	https://coconala.com/categories/350/120
+2026-10-05	coconala	/categories/350/120	写真レタッチ・人物写真加工	price_max	15000	https://coconala.com/categories/350/120
+2026-10-05	coconala	/categories/350/120	写真レタッチ・人物写真加工	full_capacity	0	https://coconala.com/categories/350/120
+2026-10-05	coconala	/categories/350/121	写真合成・背景切り抜き	track_record	17000.0	https://coconala.com/categories/350/121
+2026-10-05	coconala	/categories/350/121	写真合成・背景切り抜き	listed	147	https://coconala.com/categories/350/121
+2026-10-05	coconala	/categories/350/121	写真合成・背景切り抜き	reviews_sum	17985	https://coconala.com/categories/350/121
+2026-10-05	coconala	/categories/350/121	写真合成・背景切り抜き	reviews_max	2234	https://coconala.com/categories/350/121
+2026-10-05	coconala	/categories/350/121	写真合成・背景切り抜き	price_median	1000	https://coconala.com/categories/350/121
+2026-10-05	coconala	/categories/350/121	写真合成・背景切り抜き	price_min	1000	https://coconala.com/categories/350/121
+2026-10-05	coconala	/categories/350/121	写真合成・背景切り抜き	price_max	6500	https://coconala.com/categories/350/121
+2026-10-05	coconala	/categories/350/121	写真合成・背景切り抜き	full_capacity	7	https://coconala.com/categories/350/121
+2026-10-05	coconala	/categories/351/697	ロゴ作成全般	track_record	160000.0	https://coconala.com/categories/351/697
+2026-10-05	coconala	/categories/351/697	ロゴ作成全般	listed	157	https://coconala.com/categories/351/697
+2026-10-05	coconala	/categories/351/697	ロゴ作成全般	reviews_sum	47665	https://coconala.com/categories/351/697
+2026-10-05	coconala	/categories/351/697	ロゴ作成全般	reviews_max	4254	https://coconala.com/categories/351/697
+2026-10-05	coconala	/categories/351/697	ロゴ作成全般	price_median	25000	https://coconala.com/categories/351/697
+2026-10-05	coconala	/categories/351/697	ロゴ作成全般	price_min	5000	https://coconala.com/categories/351/697
+2026-10-05	coconala	/categories/351/697	ロゴ作成全般	price_max	140000	https://coconala.com/categories/351/697
+2026-10-05	coconala	/categories/351/697	ロゴ作成全般	full_capacity	8	https://coconala.com/categories/351/697
+2026-10-05	coconala	/categories/354/125	飲食店メニュー表作成	track_record	11000.0	https://coconala.com/categories/354/125
+2026-10-05	coconala	/categories/354/125	飲食店メニュー表作成	listed	156	https://coconala.com/categories/354/125
+2026-10-05	coconala	/categories/354/125	飲食店メニュー表作成	reviews_sum	10439	https://coconala.com/categories/354/125
+2026-10-05	coconala	/categories/354/125	飲食店メニュー表作成	reviews_max	744	https://coconala.com/categories/354/125
+2026-10-05	coconala	/categories/354/125	飲食店メニュー表作成	price_median	6000.0	https://coconala.com/categories/354/125
+2026-10-05	coconala	/categories/354/125	飲食店メニュー表作成	price_min	2000	https://coconala.com/categories/354/125
+2026-10-05	coconala	/categories/354/125	飲食店メニュー表作成	price_max	30000	https://coconala.com/categories/354/125
+2026-10-05	coconala	/categories/354/125	飲食店メニュー表作成	full_capacity	2	https://coconala.com/categories/354/125
+2026-10-05	coconala	/categories/355/354	YouTube・動画サムネイル作成	track_record	40000.0	https://coconala.com/categories/355/354
+2026-10-05	coconala	/categories/355/354	YouTube・動画サムネイル作成	listed	151	https://coconala.com/categories/355/354
+2026-10-05	coconala	/categories/355/354	YouTube・動画サムネイル作成	reviews_sum	63350	https://coconala.com/categories/355/354
+2026-10-05	coconala	/categories/355/354	YouTube・動画サムネイル作成	reviews_max	3563	https://coconala.com/categories/355/354
+2026-10-05	coconala	/categories/355/354	YouTube・動画サムネイル作成	price_median	2500	https://coconala.com/categories/355/354
+2026-10-05	coconala	/categories/355/354	YouTube・動画サムネイル作成	price_min	1000	https://coconala.com/categories/355/354
+2026-10-05	coconala	/categories/355/354	YouTube・動画サムネイル作成	price_max	75000	https://coconala.com/categories/355/354
+2026-10-05	coconala	/categories/355/354	YouTube・動画サムネイル作成	full_capacity	16	https://coconala.com/categories/355/354
+2026-10-05	coconala	/categories/355/355	ココナラ出品サムネイル作成	track_record	6000.0	https://coconala.com/categories/355/355
+2026-10-05	coconala	/categories/355/355	ココナラ出品サムネイル作成	listed	160	https://coconala.com/categories/355/355
+2026-10-05	coconala	/categories/355/355	ココナラ出品サムネイル作成	reviews_sum	10086	https://coconala.com/categories/355/355
+2026-10-05	coconala	/categories/355/355	ココナラ出品サムネイル作成	reviews_max	381	https://coconala.com/categories/355/355
+2026-10-05	coconala	/categories/355/355	ココナラ出品サムネイル作成	price_median	3000.0	https://coconala.com/categories/355/355
+2026-10-05	coconala	/categories/355/355	ココナラ出品サムネイル作成	price_min	100	https://coconala.com/categories/355/355
+2026-10-05	coconala	/categories/355/355	ココナラ出品サムネイル作成	price_max	10000	https://coconala.com/categories/355/355
+2026-10-05	coconala	/categories/355/355	ココナラ出品サムネイル作成	full_capacity	4	https://coconala.com/categories/355/355
+2026-10-05	coconala	/categories/355/356	その他サムネイル作成	track_record	4000.0	https://coconala.com/categories/355/356
+2026-10-05	coconala	/categories/355/356	その他サムネイル作成	listed	150	https://coconala.com/categories/355/356
+2026-10-05	coconala	/categories/355/356	その他サムネイル作成	reviews_sum	3507	https://coconala.com/categories/355/356
+2026-10-05	coconala	/categories/355/356	その他サムネイル作成	reviews_max	155	https://coconala.com/categories/355/356
+2026-10-05	coconala	/categories/355/356	その他サムネイル作成	price_median	3000.0	https://coconala.com/categories/355/356
+2026-10-05	coconala	/categories/355/356	その他サムネイル作成	price_min	1000	https://coconala.com/categories/355/356
+2026-10-05	coconala	/categories/355/356	その他サムネイル作成	price_max	20000	https://coconala.com/categories/355/356
+2026-10-05	coconala	/categories/355/356	その他サムネイル作成	full_capacity	1	https://coconala.com/categories/355/356
+2026-10-05	coconala	/categories/357/130	ビジネス名刺・ショップカード作成	track_record	67000.0	https://coconala.com/categories/357/130
+2026-10-05	coconala	/categories/357/130	ビジネス名刺・ショップカード作成	listed	157	https://coconala.com/categories/357/130
+2026-10-05	coconala	/categories/357/130	ビジネス名刺・ショップカード作成	reviews_sum	33660	https://coconala.com/categories/357/130
+2026-10-05	coconala	/categories/357/130	ビジネス名刺・ショップカード作成	reviews_max	1169	https://coconala.com/categories/357/130
+2026-10-05	coconala	/categories/357/130	ビジネス名刺・ショップカード作成	price_median	7000	https://coconala.com/categories/357/130
+2026-10-05	coconala	/categories/357/130	ビジネス名刺・ショップカード作成	price_min	3000	https://coconala.com/categories/357/130
+2026-10-05	coconala	/categories/357/130	ビジネス名刺・ショップカード作成	price_max	80000	https://coconala.com/categories/357/130
+2026-10-05	coconala	/categories/357/130	ビジネス名刺・ショップカード作成	full_capacity	1	https://coconala.com/categories/357/130
+2026-10-05	coconala	/categories/357/131	ポストカード作成・年賀状作成	track_record	3000.0	https://coconala.com/categories/357/131
+2026-10-05	coconala	/categories/357/131	ポストカード作成・年賀状作成	listed	146	https://coconala.com/categories/357/131
+2026-10-05	coconala	/categories/357/131	ポストカード作成・年賀状作成	reviews_sum	11639	https://coconala.com/categories/357/131
+2026-10-05	coconala	/categories/357/131	ポストカード作成・年賀状作成	reviews_max	759	https://coconala.com/categories/357/131
+2026-10-05	coconala	/categories/357/131	ポストカード作成・年賀状作成	price_median	5000.0	https://coconala.com/categories/357/131
+2026-10-05	coconala	/categories/357/131	ポストカード作成・年賀状作成	price_min	3000	https://coconala.com/categories/357/131
+2026-10-05	coconala	/categories/357/131	ポストカード作成・年賀状作成	price_max	35000	https://coconala.com/categories/357/131
+2026-10-05	coconala	/categories/357/131	ポストカード作成・年賀状作成	full_capacity	0	https://coconala.com/categories/357/131
+2026-10-05	coconala	/categories/360/625	建築設計・CAD制作の技術指導	listed	39	https://coconala.com/categories/360/625
+2026-10-05	coconala	/categories/360/625	建築設計・CAD制作の技術指導	reviews_sum	205	https://coconala.com/categories/360/625
+2026-10-05	coconala	/categories/360/625	建築設計・CAD制作の技術指導	reviews_max	15	https://coconala.com/categories/360/625
+2026-10-05	coconala	/categories/360/625	建築設計・CAD制作の技術指導	price_median	4000	https://coconala.com/categories/360/625
+2026-10-05	coconala	/categories/360/625	建築設計・CAD制作の技術指導	price_min	2000	https://coconala.com/categories/360/625
+2026-10-05	coconala	/categories/360/625	建築設計・CAD制作の技術指導	price_max	8000	https://coconala.com/categories/360/625
+2026-10-05	coconala	/categories/360/625	建築設計・CAD制作の技術指導	full_capacity	0	https://coconala.com/categories/360/625
+2026-10-05	coconala	/categories/360/626	インテリアデザイン制作指導	listed	1	https://coconala.com/categories/360/626
+2026-10-05	coconala	/categories/360/626	インテリアデザイン制作指導	reviews_sum	9	https://coconala.com/categories/360/626
+2026-10-05	coconala	/categories/360/626	インテリアデザイン制作指導	reviews_max	9	https://coconala.com/categories/360/626
+2026-10-05	coconala	/categories/360/626	インテリアデザイン制作指導	price_median	1000	https://coconala.com/categories/360/626
+2026-10-05	coconala	/categories/360/626	インテリアデザイン制作指導	price_min	1000	https://coconala.com/categories/360/626
+2026-10-05	coconala	/categories/360/626	インテリアデザイン制作指導	price_max	1000	https://coconala.com/categories/360/626
+2026-10-05	coconala	/categories/360/626	インテリアデザイン制作指導	full_capacity	0	https://coconala.com/categories/360/626
+2026-10-05	coconala	/categories/360/766	3Dモデリング・CG制作指導	listed	103	https://coconala.com/categories/360/766
+2026-10-05	coconala	/categories/360/766	3Dモデリング・CG制作指導	reviews_sum	1582	https://coconala.com/categories/360/766
+2026-10-05	coconala	/categories/360/766	3Dモデリング・CG制作指導	reviews_max	66	https://coconala.com/categories/360/766
+2026-10-05	coconala	/categories/360/766	3Dモデリング・CG制作指導	price_median	5000	https://coconala.com/categories/360/766
+2026-10-05	coconala	/categories/360/766	3Dモデリング・CG制作指導	price_min	1000	https://coconala.com/categories/360/766
+2026-10-05	coconala	/categories/360/766	3Dモデリング・CG制作指導	price_max	12000	https://coconala.com/categories/360/766
+2026-10-05	coconala	/categories/360/766	3Dモデリング・CG制作指導	full_capacity	0	https://coconala.com/categories/360/766
+2026-10-05	coconala	/categories/362/702	チラシ作成・フライヤーデザイン全般	track_record	90000.0	https://coconala.com/categories/362/702
+2026-10-05	coconala	/categories/362/702	チラシ作成・フライヤーデザイン全般	listed	145	https://coconala.com/categories/362/702
+2026-10-05	coconala	/categories/362/702	チラシ作成・フライヤーデザイン全般	reviews_sum	49887	https://coconala.com/categories/362/702
+2026-10-05	coconala	/categories/362/702	チラシ作成・フライヤーデザイン全般	reviews_max	2134	https://coconala.com/categories/362/702
+2026-10-05	coconala	/categories/362/702	チラシ作成・フライヤーデザイン全般	price_median	14000	https://coconala.com/categories/362/702
+2026-10-05	coconala	/categories/362/702	チラシ作成・フライヤーデザイン全般	price_min	4000	https://coconala.com/categories/362/702
+2026-10-05	coconala	/categories/362/702	チラシ作成・フライヤーデザイン全般	price_max	30000	https://coconala.com/categories/362/702
+2026-10-05	coconala	/categories/362/702	チラシ作成・フライヤーデザイン全般	full_capacity	8	https://coconala.com/categories/362/702
+2026-10-05	coconala	/categories/363/136	会社案内・パンフレット作成	track_record	11000.0	https://coconala.com/categories/363/136
+2026-10-05	coconala	/categories/363/136	会社案内・パンフレット作成	listed	147	https://coconala.com/categories/363/136
+2026-10-05	coconala	/categories/363/136	会社案内・パンフレット作成	reviews_sum	9212	https://coconala.com/categories/363/136
+2026-10-05	coconala	/categories/363/136	会社案内・パンフレット作成	reviews_max	576	https://coconala.com/categories/363/136
+2026-10-05	coconala	/categories/363/136	会社案内・パンフレット作成	price_median	30000	https://coconala.com/categories/363/136
+2026-10-05	coconala	/categories/363/136	会社案内・パンフレット作成	price_min	10000	https://coconala.com/categories/363/136
+2026-10-05	coconala	/categories/363/136	会社案内・パンフレット作成	price_max	85000	https://coconala.com/categories/363/136
+2026-10-05	coconala	/categories/363/136	会社案内・パンフレット作成	full_capacity	2	https://coconala.com/categories/363/136
+2026-10-05	coconala	/categories/363/137	商品カタログ・冊子作成	listed	106	https://coconala.com/categories/363/137
+2026-10-05	coconala	/categories/363/137	商品カタログ・冊子作成	reviews_sum	1457	https://coconala.com/categories/363/137
+2026-10-05	coconala	/categories/363/137	商品カタログ・冊子作成	reviews_max	137	https://coconala.com/categories/363/137
+2026-10-05	coconala	/categories/363/137	商品カタログ・冊子作成	price_median	40000.0	https://coconala.com/categories/363/137
+2026-10-05	coconala	/categories/363/137	商品カタログ・冊子作成	price_min	10000	https://coconala.com/categories/363/137
+2026-10-05	coconala	/categories/363/137	商品カタログ・冊子作成	price_max	400000	https://coconala.com/categories/363/137
+2026-10-05	coconala	/categories/363/137	商品カタログ・冊子作成	full_capacity	0	https://coconala.com/categories/363/137
+2026-10-05	coconala	/categories/364/138	化粧品・食品パッケージ作成	track_record	7000.0	https://coconala.com/categories/364/138
+2026-10-05	coconala	/categories/364/138	化粧品・食品パッケージ作成	listed	141	https://coconala.com/categories/364/138
+2026-10-05	coconala	/categories/364/138	化粧品・食品パッケージ作成	reviews_sum	7040	https://coconala.com/categories/364/138
+2026-10-05	coconala	/categories/364/138	化粧品・食品パッケージ作成	reviews_max	227	https://coconala.com/categories/364/138
+2026-10-05	coconala	/categories/364/138	化粧品・食品パッケージ作成	price_median	30000	https://coconala.com/categories/364/138
+2026-10-05	coconala	/categories/364/138	化粧品・食品パッケージ作成	price_min	5000	https://coconala.com/categories/364/138
+2026-10-05	coconala	/categories/364/138	化粧品・食品パッケージ作成	price_max	110000	https://coconala.com/categories/364/138
+2026-10-05	coconala	/categories/364/138	化粧品・食品パッケージ作成	full_capacity	10	https://coconala.com/categories/364/138
+2026-10-05	coconala	/categories/364/139	商品ラベル作成・シール作成	track_record	4000.0	https://coconala.com/categories/364/139
+2026-10-05	coconala	/categories/364/139	商品ラベル作成・シール作成	listed	153	https://coconala.com/categories/364/139
+2026-10-05	coconala	/categories/364/139	商品ラベル作成・シール作成	reviews_sum	4642	https://coconala.com/categories/364/139
+2026-10-05	coconala	/categories/364/139	商品ラベル作成・シール作成	reviews_max	133	https://coconala.com/categories/364/139
+2026-10-05	coconala	/categories/364/139	商品ラベル作成・シール作成	price_median	15000	https://coconala.com/categories/364/139
+2026-10-05	coconala	/categories/364/139	商品ラベル作成・シール作成	price_min	5000	https://coconala.com/categories/364/139
+2026-10-05	coconala	/categories/364/139	商品ラベル作成・シール作成	price_max	110000	https://coconala.com/categories/364/139
+2026-10-05	coconala	/categories/364/139	商品ラベル作成・シール作成	full_capacity	1	https://coconala.com/categories/364/139
+2026-10-05	coconala	/categories/365/141	看板制作・デザイン	track_record	13000.0	https://coconala.com/categories/365/141
+2026-10-05	coconala	/categories/365/141	看板制作・デザイン	listed	147	https://coconala.com/categories/365/141
+2026-10-05	coconala	/categories/365/141	看板制作・デザイン	reviews_sum	16787	https://coconala.com/categories/365/141
+2026-10-05	coconala	/categories/365/141	看板制作・デザイン	reviews_max	2003	https://coconala.com/categories/365/141
+2026-10-05	coconala	/categories/365/141	看板制作・デザイン	price_median	12000	https://coconala.com/categories/365/141
+2026-10-05	coconala	/categories/365/141	看板制作・デザイン	price_min	5000	https://coconala.com/categories/365/141
+2026-10-05	coconala	/categories/365/141	看板制作・デザイン	price_max	50000	https://coconala.com/categories/365/141
+2026-10-05	coconala	/categories/365/141	看板制作・デザイン	full_capacity	3	https://coconala.com/categories/365/141
+2026-10-05	coconala	/categories/366/143	ロゴトレース・ベクターデータ作成	track_record	44000.0	https://coconala.com/categories/366/143
+2026-10-05	coconala	/categories/366/143	ロゴトレース・ベクターデータ作成	listed	145	https://coconala.com/categories/366/143
+2026-10-05	coconala	/categories/366/143	ロゴトレース・ベクターデータ作成	reviews_sum	59957	https://coconala.com/categories/366/143
+2026-10-05	coconala	/categories/366/143	ロゴトレース・ベクターデータ作成	reviews_max	5880	https://coconala.com/categories/366/143
+2026-10-05	coconala	/categories/366/143	ロゴトレース・ベクターデータ作成	price_median	1000	https://coconala.com/categories/366/143
+2026-10-05	coconala	/categories/366/143	ロゴトレース・ベクターデータ作成	price_min	1000	https://coconala.com/categories/366/143
+2026-10-05	coconala	/categories/366/143	ロゴトレース・ベクターデータ作成	price_max	9000	https://coconala.com/categories/366/143
+2026-10-05	coconala	/categories/366/143	ロゴトレース・ベクターデータ作成	full_capacity	0	https://coconala.com/categories/366/143
+2026-10-05	coconala	/categories/371/148	文章校正・添削代行	track_record	12000.0	https://coconala.com/categories/371/148
+2026-10-05	coconala	/categories/371/148	文章校正・添削代行	listed	145	https://coconala.com/categories/371/148
+2026-10-05	coconala	/categories/371/148	文章校正・添削代行	reviews_sum	10386	https://coconala.com/categories/371/148
+2026-10-05	coconala	/categories/371/148	文章校正・添削代行	reviews_max	722	https://coconala.com/categories/371/148
+2026-10-05	coconala	/categories/371/148	文章校正・添削代行	price_median	3000	https://coconala.com/categories/371/148
+2026-10-05	coconala	/categories/371/148	文章校正・添削代行	price_min	2000	https://coconala.com/categories/371/148
+2026-10-05	coconala	/categories/371/148	文章校正・添削代行	price_max	100000	https://coconala.com/categories/371/148
+2026-10-05	coconala	/categories/371/148	文章校正・添削代行	full_capacity	15	https://coconala.com/categories/371/148
+2026-10-05	coconala	/categories/372/150	ブログ記事・メディア記事作成	track_record	47000.0	https://coconala.com/categories/372/150
+2026-10-05	coconala	/categories/372/150	ブログ記事・メディア記事作成	listed	158	https://coconala.com/categories/372/150
+2026-10-05	coconala	/categories/372/150	ブログ記事・メディア記事作成	reviews_sum	11304	https://coconala.com/categories/372/150
+2026-10-05	coconala	/categories/372/150	ブログ記事・メディア記事作成	reviews_max	623	https://coconala.com/categories/372/150
+2026-10-05	coconala	/categories/372/150	ブログ記事・メディア記事作成	price_median	5000.0	https://coconala.com/categories/372/150
+2026-10-05	coconala	/categories/372/150	ブログ記事・メディア記事作成	price_min	100	https://coconala.com/categories/372/150
+2026-10-05	coconala	/categories/372/150	ブログ記事・メディア記事作成	price_max	85000	https://coconala.com/categories/372/150
+2026-10-05	coconala	/categories/372/150	ブログ記事・メディア記事作成	full_capacity	1	https://coconala.com/categories/372/150
+2026-10-05	coconala	/categories/429/161	事務データ入力代行	track_record	13000.0	https://coconala.com/categories/429/161
+2026-10-05	coconala	/categories/429/161	事務データ入力代行	listed	141	https://coconala.com/categories/429/161
+2026-10-05	coconala	/categories/429/161	事務データ入力代行	reviews_sum	11557	https://coconala.com/categories/429/161
+2026-10-05	coconala	/categories/429/161	事務データ入力代行	reviews_max	781	https://coconala.com/categories/429/161
+2026-10-05	coconala	/categories/429/161	事務データ入力代行	price_median	1500	https://coconala.com/categories/429/161
+2026-10-05	coconala	/categories/429/161	事務データ入力代行	price_min	1500	https://coconala.com/categories/429/161
+2026-10-05	coconala	/categories/429/161	事務データ入力代行	price_max	9500	https://coconala.com/categories/429/161
+2026-10-05	coconala	/categories/429/161	事務データ入力代行	full_capacity	0	https://coconala.com/categories/429/161
+2026-10-05	coconala	/categories/429/162	テープ起こし・文字起こし代行	track_record	28000.0	https://coconala.com/categories/429/162
+2026-10-05	coconala	/categories/429/162	テープ起こし・文字起こし代行	listed	136	https://coconala.com/categories/429/162
+2026-10-05	coconala	/categories/429/162	テープ起こし・文字起こし代行	reviews_sum	31623	https://coconala.com/categories/429/162
+2026-10-05	coconala	/categories/429/162	テープ起こし・文字起こし代行	reviews_max	3183	https://coconala.com/categories/429/162
+2026-10-05	coconala	/categories/429/162	テープ起こし・文字起こし代行	price_median	1500.0	https://coconala.com/categories/429/162
+2026-10-05	coconala	/categories/429/162	テープ起こし・文字起こし代行	price_min	1500	https://coconala.com/categories/429/162
+2026-10-05	coconala	/categories/429/162	テープ起こし・文字起こし代行	price_max	30000	https://coconala.com/categories/429/162
+2026-10-05	coconala	/categories/429/162	テープ起こし・文字起こし代行	full_capacity	5	https://coconala.com/categories/429/162
+2026-10-05	coconala	/categories/439/169	建築パース・外観パース作成	track_record	6000.0	https://coconala.com/categories/439/169
+2026-10-05	coconala	/categories/439/169	建築パース・外観パース作成	listed	142	https://coconala.com/categories/439/169
+2026-10-05	coconala	/categories/439/169	建築パース・外観パース作成	reviews_sum	7823	https://coconala.com/categories/439/169
+2026-10-05	coconala	/categories/439/169	建築パース・外観パース作成	reviews_max	377	https://coconala.com/categories/439/169
+2026-10-05	coconala	/categories/439/169	建築パース・外観パース作成	price_median	15000.0	https://coconala.com/categories/439/169
+2026-10-05	coconala	/categories/439/169	建築パース・外観パース作成	price_min	3000	https://coconala.com/categories/439/169
+2026-10-05	coconala	/categories/439/169	建築パース・外観パース作成	price_max	100000	https://coconala.com/categories/439/169
+2026-10-05	coconala	/categories/439/169	建築パース・外観パース作成	full_capacity	1	https://coconala.com/categories/439/169
+2026-10-05	coconala	/categories/439/170	インテリアデザイン・パース作成	track_record	10000.0	https://coconala.com/categories/439/170
+2026-10-05	coconala	/categories/439/170	インテリアデザイン・パース作成	listed	139	https://coconala.com/categories/439/170
+2026-10-05	coconala	/categories/439/170	インテリアデザイン・パース作成	reviews_sum	10672	https://coconala.com/categories/439/170
+2026-10-05	coconala	/categories/439/170	インテリアデザイン・パース作成	reviews_max	807	https://coconala.com/categories/439/170
+2026-10-05	coconala	/categories/439/170	インテリアデザイン・パース作成	price_median	10000	https://coconala.com/categories/439/170
+2026-10-05	coconala	/categories/439/170	インテリアデザイン・パース作成	price_min	3000	https://coconala.com/categories/439/170
+2026-10-05	coconala	/categories/439/170	インテリアデザイン・パース作成	price_max	150000	https://coconala.com/categories/439/170
+2026-10-05	coconala	/categories/439/170	インテリアデザイン・パース作成	full_capacity	7	https://coconala.com/categories/439/170
+2026-10-05	coconala	/categories/439/171	間取り図作成・間取り診断	track_record	18000.0	https://coconala.com/categories/439/171
+2026-10-05	coconala	/categories/439/171	間取り図作成・間取り診断	listed	159	https://coconala.com/categories/439/171
+2026-10-05	coconala	/categories/439/171	間取り図作成・間取り診断	reviews_sum	19129	https://coconala.com/categories/439/171
+2026-10-05	coconala	/categories/439/171	間取り図作成・間取り診断	reviews_max	1032	https://coconala.com/categories/439/171
+2026-10-05	coconala	/categories/439/171	間取り図作成・間取り診断	price_median	9500	https://coconala.com/categories/439/171
+2026-10-05	coconala	/categories/439/171	間取り図作成・間取り診断	price_min	3000	https://coconala.com/categories/439/171
+2026-10-05	coconala	/categories/439/171	間取り図作成・間取り診断	price_max	750000	https://coconala.com/categories/439/171
+2026-10-05	coconala	/categories/439/171	間取り図作成・間取り診断	full_capacity	28	https://coconala.com/categories/439/171
+2026-10-05	coconala	/categories/439/172	地図作成・案内図作成	track_record	28000.0	https://coconala.com/categories/439/172
+2026-10-05	coconala	/categories/439/172	地図作成・案内図作成	listed	153	https://coconala.com/categories/439/172
+2026-10-05	coconala	/categories/439/172	地図作成・案内図作成	reviews_sum	39749	https://coconala.com/categories/439/172
+2026-10-05	coconala	/categories/439/172	地図作成・案内図作成	reviews_max	3644	https://coconala.com/categories/439/172
+2026-10-05	coconala	/categories/439/172	地図作成・案内図作成	price_median	3000	https://coconala.com/categories/439/172
+2026-10-05	coconala	/categories/439/172	地図作成・案内図作成	price_min	3000	https://coconala.com/categories/439/172
+2026-10-05	coconala	/categories/439/172	地図作成・案内図作成	price_max	50000	https://coconala.com/categories/439/172
+2026-10-05	coconala	/categories/439/172	地図作成・案内図作成	full_capacity	0	https://coconala.com/categories/439/172
+2026-10-05	coconala	/categories/439/327	CAD図面作成・トレース	track_record	16000.0	https://coconala.com/categories/439/327
+2026-10-05	coconala	/categories/439/327	CAD図面作成・トレース	listed	135	https://coconala.com/categories/439/327
+2026-10-05	coconala	/categories/439/327	CAD図面作成・トレース	reviews_sum	12109	https://coconala.com/categories/439/327
+2026-10-05	coconala	/categories/439/327	CAD図面作成・トレース	reviews_max	650	https://coconala.com/categories/439/327
+2026-10-05	coconala	/categories/439/327	CAD図面作成・トレース	price_median	8000	https://coconala.com/categories/439/327
+2026-10-05	coconala	/categories/439/327	CAD図面作成・トレース	price_min	3000	https://coconala.com/categories/439/327
+2026-10-05	coconala	/categories/439/327	CAD図面作成・トレース	price_max	100000	https://coconala.com/categories/439/327
+2026-10-05	coconala	/categories/439/327	CAD図面作成・トレース	full_capacity	13	https://coconala.com/categories/439/327
+2026-10-05	coconala	/categories/603/331	歌ってみたMIX制作	track_record	63000.0	https://coconala.com/categories/603/331
+2026-10-05	coconala	/categories/603/331	歌ってみたMIX制作	listed	141	https://coconala.com/categories/603/331
+2026-10-05	coconala	/categories/603/331	歌ってみたMIX制作	reviews_sum	77190	https://coconala.com/categories/603/331
+2026-10-05	coconala	/categories/603/331	歌ってみたMIX制作	reviews_max	2465	https://coconala.com/categories/603/331
+2026-10-05	coconala	/categories/603/331	歌ってみたMIX制作	price_median	6000	https://coconala.com/categories/603/331
+2026-10-05	coconala	/categories/603/331	歌ってみたMIX制作	price_min	3000	https://coconala.com/categories/603/331
+2026-10-05	coconala	/categories/603/331	歌ってみたMIX制作	price_max	43000	https://coconala.com/categories/603/331
+2026-10-05	coconala	/categories/603/331	歌ってみたMIX制作	full_capacity	7	https://coconala.com/categories/603/331
+2026-10-05	coconala	/categories/603/332	歌ってみた用カラオケ作成	track_record	9000.0	https://coconala.com/categories/603/332
+2026-10-05	coconala	/categories/603/332	歌ってみた用カラオケ作成	listed	145	https://coconala.com/categories/603/332
+2026-10-05	coconala	/categories/603/332	歌ってみた用カラオケ作成	reviews_sum	14938	https://coconala.com/categories/603/332
+2026-10-05	coconala	/categories/603/332	歌ってみた用カラオケ作成	reviews_max	471	https://coconala.com/categories/603/332
+2026-10-05	coconala	/categories/603/332	歌ってみた用カラオケ作成	price_median	15000	https://coconala.com/categories/603/332
+2026-10-05	coconala	/categories/603/332	歌ってみた用カラオケ作成	price_min	3000	https://coconala.com/categories/603/332
+2026-10-05	coconala	/categories/603/332	歌ってみた用カラオケ作成	price_max	32000	https://coconala.com/categories/603/332
+2026-10-05	coconala	/categories/603/332	歌ってみた用カラオケ作成	full_capacity	11	https://coconala.com/categories/603/332
+2026-10-05	coconala	/categories/608/206	Kindle本表紙・本表紙デザイン作成	track_record	20000.0	https://coconala.com/categories/608/206
+2026-10-05	coconala	/categories/608/206	Kindle本表紙・本表紙デザイン作成	listed	142	https://coconala.com/categories/608/206
+2026-10-05	coconala	/categories/608/206	Kindle本表紙・本表紙デザイン作成	reviews_sum	23607	https://coconala.com/categories/608/206
+2026-10-05	coconala	/categories/608/206	Kindle本表紙・本表紙デザイン作成	reviews_max	1210	https://coconala.com/categories/608/206
+2026-10-05	coconala	/categories/608/206	Kindle本表紙・本表紙デザイン作成	price_median	7500.0	https://coconala.com/categories/608/206
+2026-10-05	coconala	/categories/608/206	Kindle本表紙・本表紙デザイン作成	price_min	3000	https://coconala.com/categories/608/206
+2026-10-05	coconala	/categories/608/206	Kindle本表紙・本表紙デザイン作成	price_max	39000	https://coconala.com/categories/608/206
+2026-10-05	coconala	/categories/608/206	Kindle本表紙・本表紙デザイン作成	full_capacity	16	https://coconala.com/categories/608/206
+2026-10-05	coconala	/categories/639/229	ウェルカムボード作成	track_record	7000.0	https://coconala.com/categories/639/229
+2026-10-05	coconala	/categories/639/229	ウェルカムボード作成	listed	174	https://coconala.com/categories/639/229
+2026-10-05	coconala	/categories/639/229	ウェルカムボード作成	reviews_sum	14516	https://coconala.com/categories/639/229
+2026-10-05	coconala	/categories/639/229	ウェルカムボード作成	reviews_max	1068	https://coconala.com/categories/639/229
+2026-10-05	coconala	/categories/639/229	ウェルカムボード作成	price_median	3000.0	https://coconala.com/categories/639/229
+2026-10-05	coconala	/categories/639/229	ウェルカムボード作成	price_min	2000	https://coconala.com/categories/639/229
+2026-10-05	coconala	/categories/639/229	ウェルカムボード作成	price_max	30000	https://coconala.com/categories/639/229
+2026-10-05	coconala	/categories/639/229	ウェルカムボード作成	full_capacity	1	https://coconala.com/categories/639/229
+2026-10-05	coconala	/categories/639/230	招待状・席次表作成	track_record	12000.0	https://coconala.com/categories/639/230
+2026-10-05	coconala	/categories/639/230	招待状・席次表作成	listed	161	https://coconala.com/categories/639/230
+2026-10-05	coconala	/categories/639/230	招待状・席次表作成	reviews_sum	21254	https://coconala.com/categories/639/230
+2026-10-05	coconala	/categories/639/230	招待状・席次表作成	reviews_max	2035	https://coconala.com/categories/639/230
+2026-10-05	coconala	/categories/639/230	招待状・席次表作成	price_median	3500	https://coconala.com/categories/639/230
+2026-10-05	coconala	/categories/639/230	招待状・席次表作成	price_min	2000	https://coconala.com/categories/639/230
+2026-10-05	coconala	/categories/639/230	招待状・席次表作成	price_max	18000	https://coconala.com/categories/639/230
+2026-10-05	coconala	/categories/639/230	招待状・席次表作成	full_capacity	1	https://coconala.com/categories/639/230
+2026-10-05	coconala	/categories/662/291	楽曲・BGM素材の販売	listed	29	https://coconala.com/categories/662/291
+2026-10-05	coconala	/categories/662/291	楽曲・BGM素材の販売	reviews_sum	80	https://coconala.com/categories/662/291
+2026-10-05	coconala	/categories/662/291	楽曲・BGM素材の販売	reviews_max	7	https://coconala.com/categories/662/291
+2026-10-05	coconala	/categories/662/291	楽曲・BGM素材の販売	price_median	500	https://coconala.com/categories/662/291
+2026-10-05	coconala	/categories/662/291	楽曲・BGM素材の販売	price_min	500	https://coconala.com/categories/662/291
+2026-10-05	coconala	/categories/662/291	楽曲・BGM素材の販売	price_max	12000	https://coconala.com/categories/662/291
+2026-10-05	coconala	/categories/662/291	楽曲・BGM素材の販売	full_capacity	0	https://coconala.com/categories/662/291
+2026-10-05	coconala	/categories/671/329	3Dモデリング・3D作成	track_record	4000.0	https://coconala.com/categories/671/329
+2026-10-05	coconala	/categories/671/329	3Dモデリング・3D作成	listed	130	https://coconala.com/categories/671/329
+2026-10-05	coconala	/categories/671/329	3Dモデリング・3D作成	reviews_sum	7170	https://coconala.com/categories/671/329
+2026-10-05	coconala	/categories/671/329	3Dモデリング・3D作成	reviews_max	422	https://coconala.com/categories/671/329
+2026-10-05	coconala	/categories/671/329	3Dモデリング・3D作成	price_median	6000.0	https://coconala.com/categories/671/329
+2026-10-05	coconala	/categories/671/329	3Dモデリング・3D作成	price_min	5000	https://coconala.com/categories/671/329
+2026-10-05	coconala	/categories/671/329	3Dモデリング・3D作成	price_max	180000	https://coconala.com/categories/671/329
+2026-10-05	coconala	/categories/671/329	3Dモデリング・3D作成	full_capacity	4	https://coconala.com/categories/671/329
+2026-10-05	coconala	/categories/671/330	3Dプリンター用データ作成	track_record	3000.0	https://coconala.com/categories/671/330
+2026-10-05	coconala	/categories/671/330	3Dプリンター用データ作成	listed	122	https://coconala.com/categories/671/330
+2026-10-05	coconala	/categories/671/330	3Dプリンター用データ作成	reviews_sum	6824	https://coconala.com/categories/671/330
+2026-10-05	coconala	/categories/671/330	3Dプリンター用データ作成	reviews_max	641	https://coconala.com/categories/671/330
+2026-10-05	coconala	/categories/671/330	3Dプリンター用データ作成	price_median	5000.0	https://coconala.com/categories/671/330
+2026-10-05	coconala	/categories/671/330	3Dプリンター用データ作成	price_min	5000	https://coconala.com/categories/671/330
+2026-10-05	coconala	/categories/671/330	3Dプリンター用データ作成	price_max	80000	https://coconala.com/categories/671/330
+2026-10-05	coconala	/categories/671/330	3Dプリンター用データ作成	full_capacity	0	https://coconala.com/categories/671/330
+2026-10-05	coconala	/categories/673/301	プレスリリース作成	track_record	2000.0	https://coconala.com/categories/673/301
+2026-10-05	coconala	/categories/673/301	プレスリリース作成	listed	109	https://coconala.com/categories/673/301
+2026-10-05	coconala	/categories/673/301	プレスリリース作成	reviews_sum	5843	https://coconala.com/categories/673/301
+2026-10-05	coconala	/categories/673/301	プレスリリース作成	reviews_max	309	https://coconala.com/categories/673/301
+2026-10-05	coconala	/categories/673/301	プレスリリース作成	price_median	15000	https://coconala.com/categories/673/301
+2026-10-05	coconala	/categories/673/301	プレスリリース作成	price_min	3000	https://coconala.com/categories/673/301
+2026-10-05	coconala	/categories/673/301	プレスリリース作成	price_max	50000	https://coconala.com/categories/673/301
+2026-10-05	coconala	/categories/673/301	プレスリリース作成	full_capacity	5	https://coconala.com/categories/673/301
+2026-10-05	coconala	/categories/681/194	商品画像作成・レタッチ	track_record	20000.0	https://coconala.com/categories/681/194
+2026-10-05	coconala	/categories/681/194	商品画像作成・レタッチ	listed	147	https://coconala.com/categories/681/194
+2026-10-05	coconala	/categories/681/194	商品画像作成・レタッチ	reviews_sum	20722	https://coconala.com/categories/681/194
+2026-10-05	coconala	/categories/681/194	商品画像作成・レタッチ	reviews_max	1397	https://coconala.com/categories/681/194
+2026-10-05	coconala	/categories/681/194	商品画像作成・レタッチ	price_median	8000	https://coconala.com/categories/681/194
+2026-10-05	coconala	/categories/681/194	商品画像作成・レタッチ	price_min	3000	https://coconala.com/categories/681/194
+2026-10-05	coconala	/categories/681/194	商品画像作成・レタッチ	price_max	85000	https://coconala.com/categories/681/194
+2026-10-05	coconala	/categories/681/194	商品画像作成・レタッチ	full_capacity	3	https://coconala.com/categories/681/194
+2026-10-05	coconala	/categories/694/359	アイコン・ボタン制作	listed	81	https://coconala.com/categories/694/359
+2026-10-05	coconala	/categories/694/359	アイコン・ボタン制作	reviews_sum	1978	https://coconala.com/categories/694/359
+2026-10-05	coconala	/categories/694/359	アイコン・ボタン制作	reviews_max	191	https://coconala.com/categories/694/359
+2026-10-05	coconala	/categories/694/359	アイコン・ボタン制作	price_median	3000	https://coconala.com/categories/694/359
+2026-10-05	coconala	/categories/694/359	アイコン・ボタン制作	price_min	1500	https://coconala.com/categories/694/359
+2026-10-05	coconala	/categories/694/359	アイコン・ボタン制作	price_max	20000	https://coconala.com/categories/694/359
+2026-10-05	coconala	/categories/694/359	アイコン・ボタン制作	full_capacity	0	https://coconala.com/categories/694/359
+2026-10-05	coconala	/categories/694/361	QRコード作成	listed	79	https://coconala.com/categories/694/361
+2026-10-05	coconala	/categories/694/361	QRコード作成	reviews_sum	897	https://coconala.com/categories/694/361
+2026-10-05	coconala	/categories/694/361	QRコード作成	reviews_max	39	https://coconala.com/categories/694/361
+2026-10-05	coconala	/categories/694/361	QRコード作成	price_median	1500	https://coconala.com/categories/694/361
+2026-10-05	coconala	/categories/694/361	QRコード作成	price_min	1500	https://coconala.com/categories/694/361
+2026-10-05	coconala	/categories/694/361	QRコード作成	price_max	5000	https://coconala.com/categories/694/361
+2026-10-05	coconala	/categories/694/361	QRコード作成	full_capacity	0	https://coconala.com/categories/694/361
+2026-10-05	coconala	/categories/804/650	Excel VBA・マクロ制作指導	listed	12	https://coconala.com/categories/804/650
+2026-10-05	coconala	/categories/804/650	Excel VBA・マクロ制作指導	reviews_sum	168	https://coconala.com/categories/804/650
+2026-10-05	coconala	/categories/804/650	Excel VBA・マクロ制作指導	reviews_max	46	https://coconala.com/categories/804/650
+2026-10-05	coconala	/categories/804/650	Excel VBA・マクロ制作指導	price_median	4750.0	https://coconala.com/categories/804/650
+2026-10-05	coconala	/categories/804/650	Excel VBA・マクロ制作指導	price_min	1500	https://coconala.com/categories/804/650
+2026-10-05	coconala	/categories/804/650	Excel VBA・マクロ制作指導	price_max	8000	https://coconala.com/categories/804/650
+2026-10-05	coconala	/categories/804/650	Excel VBA・マクロ制作指導	full_capacity	0	https://coconala.com/categories/804/650
+2026-10-05	coconala	/categories/809/690	VRアバター作成	listed	118	https://coconala.com/categories/809/690
+2026-10-05	coconala	/categories/809/690	VRアバター作成	reviews_sum	1804	https://coconala.com/categories/809/690
+2026-10-05	coconala	/categories/809/690	VRアバター作成	reviews_max	168	https://coconala.com/categories/809/690
+2026-10-05	coconala	/categories/809/690	VRアバター作成	price_median	25000.0	https://coconala.com/categories/809/690
+2026-10-05	coconala	/categories/809/690	VRアバター作成	price_min	2000	https://coconala.com/categories/809/690
+2026-10-05	coconala	/categories/809/690	VRアバター作成	price_max	220000	https://coconala.com/categories/809/690
+2026-10-05	coconala	/categories/809/690	VRアバター作成	full_capacity	8	https://coconala.com/categories/809/690
+2026-10-05	coconala	/categories/809/691	その他（3Dアバター・衣装作成）	listed	110	https://coconala.com/categories/809/691
+2026-10-05	coconala	/categories/809/691	その他（3Dアバター・衣装作成）	reviews_sum	1722	https://coconala.com/categories/809/691
+2026-10-05	coconala	/categories/809/691	その他（3Dアバター・衣装作成）	reviews_max	104	https://coconala.com/categories/809/691
+2026-10-05	coconala	/categories/809/691	その他（3Dアバター・衣装作成）	price_median	4750.0	https://coconala.com/categories/809/691
+2026-10-05	coconala	/categories/809/691	その他（3Dアバター・衣装作成）	price_min	2000	https://coconala.com/categories/809/691
+2026-10-05	coconala	/categories/809/691	その他（3Dアバター・衣装作成）	price_max	300000	https://coconala.com/categories/809/691
+2026-10-05	coconala	/categories/809/691	その他（3Dアバター・衣装作成）	full_capacity	0	https://coconala.com/categories/809/691
+2026-10-05	shopify	orders-and-shipping/17TRACK Order Tracking	17TRACK Order Tracking	reviews	4430	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/17TRACK Order Tracking	17TRACK Order Tracking	rating	4.9	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Synctrack PayPal Tracking Sync	Synctrack PayPal Tracking Sync	reviews	445	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Synctrack PayPal Tracking Sync	Synctrack PayPal Tracking Sync	rating	5.0	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Lexware Office (lexoffice)	Lexware Office (lexoffice)	reviews	281	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Lexware Office (lexoffice)	Lexware Office (lexoffice)	rating	4.6	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Simple Invoice ‑ Order Printer	Simple Invoice ‑ Order Printer	reviews	441	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Simple Invoice ‑ Order Printer	Simple Invoice ‑ Order Printer	rating	4.9	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/CWILL Order Tracking	CWILL Order Tracking	reviews	3172	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/CWILL Order Tracking	CWILL Order Tracking	rating	5.0	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Digital Downloads ‑ Filemonk	Digital Downloads ‑ Filemonk	reviews	500	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Digital Downloads ‑ Filemonk	Digital Downloads ‑ Filemonk	rating	4.9	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Essent Estimated Delivery Date	Essent Estimated Delivery Date	reviews	1020	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Essent Estimated Delivery Date	Essent Estimated Delivery Date	rating	5.0	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Revoq ‑ EU Withdrawal Button	Revoq ‑ EU Withdrawal Button	reviews	564	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Revoq ‑ EU Withdrawal Button	Revoq ‑ EU Withdrawal Button	rating	4.8	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Track123 Order Tracking	Track123 Order Tracking	reviews	1740	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Track123 Order Tracking	Track123 Order Tracking	rating	4.9	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/AfterShip Order Tracking	AfterShip Order Tracking	reviews	1499	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/AfterShip Order Tracking	AfterShip Order Tracking	rating	4.6	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Order Printer Pro: PDF Invoice	Order Printer Pro: PDF Invoice	reviews	2949	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Order Printer Pro: PDF Invoice	Order Printer Pro: PDF Invoice	rating	4.9	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/CedCommerce Amazon Channel	CedCommerce Amazon Channel	reviews	1163	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/CedCommerce Amazon Channel	CedCommerce Amazon Channel	rating	4.6	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Easyship ‑ All in One Shipping	Easyship ‑ All in One Shipping	reviews	408	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Easyship ‑ All in One Shipping	Easyship ‑ All in One Shipping	rating	4.2	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/UPS Shipping (Official)	UPS Shipping (Official)	reviews	118	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/UPS Shipping (Official)	UPS Shipping (Official)	rating	4.8	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Shippo ‑ Simplified Shipping	Shippo ‑ Simplified Shipping	reviews	318	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Shippo ‑ Simplified Shipping	Shippo ‑ Simplified Shipping	rating	4.2	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/ShipStation Orders & Inventory	ShipStation Orders & Inventory	reviews	707	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/ShipStation Orders & Inventory	ShipStation Orders & Inventory	rating	4.2	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Post & DHL Shipping (official)	Post & DHL Shipping (official)	reviews	287	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Post & DHL Shipping (official)	Post & DHL Shipping (official)	rating	4.7	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Shiprocket: eCommerce Shipping	Shiprocket: eCommerce Shipping	reviews	658	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Shiprocket: eCommerce Shipping	Shiprocket: eCommerce Shipping	rating	4.0	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/FedEx ‑ Create shipping labels	FedEx ‑ Create shipping labels	reviews	9	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/FedEx ‑ Create shipping labels	FedEx ‑ Create shipping labels	rating	2.6	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Shopify Fulfillment Network	Shopify Fulfillment Network	reviews	4	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Shopify Fulfillment Network	Shopify Fulfillment Network	rating	3.5	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Sufio: Invoice You Can Trust	Sufio: Invoice You Can Trust	reviews	466	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Sufio: Invoice You Can Trust	Sufio: Invoice You Can Trust	rating	4.9	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Shopify Order Printer	Shopify Order Printer	reviews	378	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Shopify Order Printer	Shopify Order Printer	rating	3.5	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Billbee	Billbee	reviews	56	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Billbee	Billbee	rating	4.5	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/WhatsApp	WhatsApp	reviews	890	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/WhatsApp	WhatsApp	rating	4.4	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Loop Returns & Exchanges	Loop Returns & Exchanges	reviews	443	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Loop Returns & Exchanges	Loop Returns & Exchanges	rating	4.6	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Route ‑ Protection & Tracking	Route ‑ Protection & Tracking	reviews	377	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Route ‑ Protection & Tracking	Route ‑ Protection & Tracking	rating	4.0	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/EZLabel: Australia Post Ship	EZLabel: Australia Post Ship	reviews	857	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/EZLabel: Australia Post Ship	EZLabel: Australia Post Ship	rating	5.0	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Mechanic	Mechanic	reviews	148	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Mechanic	Mechanic	rating	5.0	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/TrackiPal PayPal Tracking Sync	TrackiPal PayPal Tracking Sync	reviews	107	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/TrackiPal PayPal Tracking Sync	TrackiPal PayPal Tracking Sync	rating	4.7	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Bundles.app ‑ Inventory Sync	Bundles.app ‑ Inventory Sync	reviews	323	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Bundles.app ‑ Inventory Sync	Bundles.app ‑ Inventory Sync	rating	4.9	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/MabangErp3	MabangErp3	reviews	1	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/MabangErp3	MabangErp3	rating	1.0	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Hextom: Bulk Product Edit	Hextom: Bulk Product Edit	reviews	1158	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Hextom: Bulk Product Edit	Hextom: Bulk Product Edit	rating	4.9	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Bling	Bling	reviews	5	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Bling	Bling	rating	2.4	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Syncio Inventory Sync	Syncio Inventory Sync	reviews	168	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Syncio Inventory Sync	Syncio Inventory Sync	rating	4.7	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/ShipHero Inventory & Shipping	ShipHero Inventory & Shipping	reviews	116	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/ShipHero Inventory & Shipping	ShipHero Inventory & Shipping	rating	4.3	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/CedCommerce eBay Integration	CedCommerce eBay Integration	reviews	921	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/CedCommerce eBay Integration	CedCommerce eBay Integration	rating	4.7	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Dianxiaomi（店小秘）	Dianxiaomi（店小秘）	reviews	20	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/Dianxiaomi（店小秘）	Dianxiaomi（店小秘）	rating	4.0	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/eBay Integration ‑ DPL	eBay Integration ‑ DPL	reviews	1258	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	orders-and-shipping/eBay Integration ‑ DPL	eBay Integration ‑ DPL	rating	4.9	https://apps.shopify.com/categories/orders-and-shipping
+2026-10-05	shopify	selling-products/Appointment Booking Cowlendar	Appointment Booking Cowlendar	reviews	2248	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Appointment Booking Cowlendar	Appointment Booking Cowlendar	rating	4.9	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/GLO Color Swatch Variant Image	GLO Color Swatch Variant Image	reviews	1879	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/GLO Color Swatch Variant Image	GLO Color Swatch Variant Image	rating	4.9	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Releasit COD Fee	Releasit COD Fee	reviews	603	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Releasit COD Fee	Releasit COD Fee	rating	4.9	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/King Product Options, Variants	King Product Options, Variants	reviews	489	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/King Product Options, Variants	King Product Options, Variants	rating	4.7	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Seal Subscriptions App	Seal Subscriptions App	reviews	3122	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Seal Subscriptions App	Seal Subscriptions App	rating	4.9	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Digital Downloads ‑ Filemonk	Digital Downloads ‑ Filemonk	reviews	500	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Digital Downloads ‑ Filemonk	Digital Downloads ‑ Filemonk	rating	4.9	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Upload‑Lift Image Upload	Upload‑Lift Image Upload	reviews	168	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Upload‑Lift Image Upload	Upload‑Lift Image Upload	rating	4.8	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Releasit COD Form & Upsells	Releasit COD Form & Upsells	reviews	2498	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Releasit COD Form & Upsells	Releasit COD Form & Upsells	rating	4.9	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/NA Bulk Price Editor	NA Bulk Price Editor	reviews	252	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/NA Bulk Price Editor	NA Bulk Price Editor	rating	4.9	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Discounty: Bulk Discount Sales	Discounty: Bulk Discount Sales	reviews	1266	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Discounty: Bulk Discount Sales	Discounty: Bulk Discount Sales	rating	4.9	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/ETP Sort Hide Payment Methods	ETP Sort Hide Payment Methods	reviews	545	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/ETP Sort Hide Payment Methods	ETP Sort Hide Payment Methods	rating	5.0	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Variant Option Product Options	Variant Option Product Options	reviews	635	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Variant Option Product Options	Variant Option Product Options	rating	4.7	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Simprosys Google Shopping Feed	Simprosys Google Shopping Feed	reviews	4907	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Simprosys Google Shopping Feed	Simprosys Google Shopping Feed	rating	4.9	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Google & YouTube	Google & YouTube	reviews	5515	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Google & YouTube	Google & YouTube	rating	4.5	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Canva Connect	Canva Connect	reviews	400	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Canva Connect	Canva Connect	rating	4.8	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Pinterest	Pinterest	reviews	1708	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Pinterest	Pinterest	rating	4.1	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Linktree	Linktree	reviews	18	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Linktree	Linktree	rating	3.6	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Matrixify: Data Export Import	Matrixify: Data Export Import	reviews	1719	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Matrixify: Data Export Import	Matrixify: Data Export Import	rating	4.9	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/TikTok	TikTok	reviews	15993	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/TikTok	TikTok	rating	4.8	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Facebook & Instagram	Facebook & Instagram	reviews	5714	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Facebook & Instagram	Facebook & Instagram	rating	3.8	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Flexify: Facebook Product Feed	Flexify: Facebook Product Feed	reviews	154	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Flexify: Facebook Product Feed	Flexify: Facebook Product Feed	rating	4.4	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Appstle℠ Subscriptions App	Appstle℠ Subscriptions App	reviews	8917	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Appstle℠ Subscriptions App	Appstle℠ Subscriptions App	rating	5.0	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Kaching Subscriptions App	Kaching Subscriptions App	reviews	1081	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Kaching Subscriptions App	Kaching Subscriptions App	rating	5.0	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Appstle℠ Memberships	Appstle℠ Memberships	reviews	918	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Appstle℠ Memberships	Appstle℠ Memberships	rating	5.0	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Supr Bundle & Subscription App	Supr Bundle & Subscription App	reviews	285	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Supr Bundle & Subscription App	Supr Bundle & Subscription App	rating	5.0	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Loop Subscriptions App	Loop Subscriptions App	reviews	779	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Loop Subscriptions App	Loop Subscriptions App	rating	5.0	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Easy Subscriptions App	Easy Subscriptions App	reviews	213	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Easy Subscriptions App	Easy Subscriptions App	rating	5.0	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Shopify Subscriptions	Shopify Subscriptions	reviews	842	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Shopify Subscriptions	Shopify Subscriptions	rating	3.7	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Subscription & Bundle App Beez	Subscription & Bundle App Beez	reviews	62	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Subscription & Bundle App Beez	Subscription & Bundle App Beez	rating	5.0	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Easify Custom Product Options	Easify Custom Product Options	reviews	3106	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Easify Custom Product Options	Easify Custom Product Options	rating	4.9	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/OPTIS Product Options, Variant	OPTIS Product Options, Variant	reviews	2360	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/OPTIS Product Options, Variant	OPTIS Product Options, Variant	rating	4.9	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Rubik Variant Images & Swatch	Rubik Variant Images & Swatch	reviews	488	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Rubik Variant Images & Swatch	Rubik Variant Images & Swatch	rating	5.0	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Globo Product Options, Variant	Globo Product Options, Variant	reviews	5117	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Globo Product Options, Variant	Globo Product Options, Variant	rating	4.9	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/G: Combined Listings & Variant	G: Combined Listings & Variant	reviews	439	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/G: Combined Listings & Variant	G: Combined Listings & Variant	rating	5.0	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Color Swatch King: Variants	Color Swatch King: Variants	reviews	3202	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Color Swatch King: Variants	Color Swatch King: Variants	rating	5.0	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Stamp Show Variants Collection	Stamp Show Variants Collection	reviews	177	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	selling-products/Stamp Show Variants Collection	Stamp Show Variants Collection	rating	5.0	https://apps.shopify.com/categories/selling-products
+2026-10-05	shopify	finding-products/Sami B2B Lock,Password Protect	Sami B2B Lock,Password Protect	reviews	979	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Sami B2B Lock,Password Protect	Sami B2B Lock,Password Protect	rating	4.9	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Sami B2B Wholesale Pricing	Sami B2B Wholesale Pricing	reviews	992	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Sami B2B Wholesale Pricing	Sami B2B Wholesale Pricing	rating	4.9	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Easy Wholesale Lock for B2B	Easy Wholesale Lock for B2B	reviews	237	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Easy Wholesale Lock for B2B	Easy Wholesale Lock for B2B	rating	4.5	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/ProductUpload.ai Copy Products	ProductUpload.ai Copy Products	reviews	45	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/ProductUpload.ai Copy Products	ProductUpload.ai Copy Products	rating	5.0	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Reputon Amazon Importer	Reputon Amazon Importer	reviews	711	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Reputon Amazon Importer	Reputon Amazon Importer	rating	4.9	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Madgic Order Limits Quantity	Madgic Order Limits Quantity	reviews	174	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Madgic Order Limits Quantity	Madgic Order Limits Quantity	rating	4.9	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Wholesale Pricing Discount B2B	Wholesale Pricing Discount B2B	reviews	736	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Wholesale Pricing Discount B2B	Wholesale Pricing Discount B2B	rating	4.9	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Faire: Buy Wholesale	Faire: Buy Wholesale	reviews	1299	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Faire: Buy Wholesale	Faire: Buy Wholesale	rating	4.9	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/FD AliExpress Dropshipping POD	FD AliExpress Dropshipping POD	reviews	67	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/FD AliExpress Dropshipping POD	FD AliExpress Dropshipping POD	rating	4.6	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Zopi: AI AliExpress Dropship	Zopi: AI AliExpress Dropship	reviews	294	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Zopi: AI AliExpress Dropship	Zopi: AI AliExpress Dropship	rating	4.4	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/BSS B2B Wholesale Pricing	BSS B2B Wholesale Pricing	reviews	1185	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/BSS B2B Wholesale Pricing	BSS B2B Wholesale Pricing	rating	4.9	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Syncee Premium AI Dropshipping	Syncee Premium AI Dropshipping	reviews	551	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Syncee Premium AI Dropshipping	Syncee Premium AI Dropshipping	rating	4.1	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/EPROLO‑Dropshipping & Branding	EPROLO‑Dropshipping & Branding	reviews	567	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/EPROLO‑Dropshipping & Branding	EPROLO‑Dropshipping & Branding	rating	4.8	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Tapstitch: Print on Demand	Tapstitch: Print on Demand	reviews	124	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Tapstitch: Print on Demand	Tapstitch: Print on Demand	rating	4.9	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Printful: Print on Demand	Printful: Print on Demand	reviews	3903	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Printful: Print on Demand	Printful: Print on Demand	rating	4.8	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Hertwill: EU Dropshipping	Hertwill: EU Dropshipping	reviews	74	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Hertwill: EU Dropshipping	Hertwill: EU Dropshipping	rating	4.7	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/DSers: Dropship+AliExpress+AI	DSers: Dropship+AliExpress+AI	reviews	6333	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/DSers: Dropship+AliExpress+AI	DSers: Dropship+AliExpress+AI	rating	5.0	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/BuckyDrop‑Branded Dropshipping	BuckyDrop‑Branded Dropshipping	reviews	85	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/BuckyDrop‑Branded Dropshipping	BuckyDrop‑Branded Dropshipping	rating	5.0	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/German Drop ‑ EU Dropshipping	German Drop ‑ EU Dropshipping	reviews	169	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/German Drop ‑ EU Dropshipping	German Drop ‑ EU Dropshipping	rating	5.0	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/DORO Product Personalizer	DORO Product Personalizer	reviews	46	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/DORO Product Personalizer	DORO Product Personalizer	rating	5.0	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Customix Product Personalizer	Customix Product Personalizer	reviews	43	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Customix Product Personalizer	Customix Product Personalizer	rating	4.9	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/PrintKK Unique Print on Demand	PrintKK Unique Print on Demand	reviews	20	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/PrintKK Unique Print on Demand	PrintKK Unique Print on Demand	rating	4.8	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/NinjaPOD: DTF Print on Demand	NinjaPOD: DTF Print on Demand	reviews	75	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/NinjaPOD: DTF Print on Demand	NinjaPOD: DTF Print on Demand	rating	4.5	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Printify: Print on Demand	Printify: Print on Demand	reviews	4338	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Printify: Print on Demand	Printify: Print on Demand	rating	4.7	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/CJdropshipping: Much Faster	CJdropshipping: Much Faster	reviews	2857	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/CJdropshipping: Much Faster	CJdropshipping: Much Faster	rating	4.9	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Shopify Collective	Shopify Collective	reviews	441	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Shopify Collective	Shopify Collective	rating	4.4	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Faire: Sell Wholesale	Faire: Sell Wholesale	reviews	459	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Faire: Sell Wholesale	Faire: Sell Wholesale	rating	4.6	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Melon Minimum Order Quantity	Melon Minimum Order Quantity	reviews	378	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Melon Minimum Order Quantity	Melon Minimum Order Quantity	rating	5.0	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Clay • B2B Wholesale Pricing	Clay • B2B Wholesale Pricing	reviews	283	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Clay • B2B Wholesale Pricing	Clay • B2B Wholesale Pricing	rating	5.0	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Avada Order Limits Quantity	Avada Order Limits Quantity	reviews	274	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/Avada Order Limits Quantity	Avada Order Limits Quantity	rating	5.0	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/QG Request a quote, Hide Price	QG Request a quote, Hide Price	reviews	79	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/QG Request a quote, Hide Price	QG Request a quote, Hide Price	rating	4.9	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/SparkLayer B2B & Wholesale	SparkLayer B2B & Wholesale	reviews	385	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	finding-products/SparkLayer B2B & Wholesale	SparkLayer B2B & Wholesale	rating	4.9	https://apps.shopify.com/categories/finding-products
+2026-10-05	shopify	store-management/Releasit COD Fee	Releasit COD Fee	reviews	603	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Releasit COD Fee	Releasit COD Fee	rating	4.9	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/WorkflowMail Emails	WorkflowMail Emails	reviews	48	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/WorkflowMail Emails	WorkflowMail Emails	rating	5.0	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Simple Invoice ‑ Order Printer	Simple Invoice ‑ Order Printer	reviews	441	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Simple Invoice ‑ Order Printer	Simple Invoice ‑ Order Printer	rating	4.9	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/TrustedSite ‑ Trust Badges	TrustedSite ‑ Trust Badges	reviews	266	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/TrustedSite ‑ Trust Badges	TrustedSite ‑ Trust Badges	rating	4.6	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Revoq ‑ EU Withdrawal Button	Revoq ‑ EU Withdrawal Button	reviews	564	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Revoq ‑ EU Withdrawal Button	Revoq ‑ EU Withdrawal Button	rating	4.8	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/CK: Abandoned cart on WhatsApp	CK: Abandoned cart on WhatsApp	reviews	298	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/CK: Abandoned cart on WhatsApp	CK: Abandoned cart on WhatsApp	rating	5.0	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Lucky Orange Heatmaps & Replay	Lucky Orange Heatmaps & Replay	reviews	889	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Lucky Orange Heatmaps & Replay	Lucky Orange Heatmaps & Replay	rating	4.7	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Matrixify: Data Export Import	Matrixify: Data Export Import	reviews	1719	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Matrixify: Data Export Import	Matrixify: Data Export Import	rating	4.9	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Powerful Contact Form Builder	Powerful Contact Form Builder	reviews	2534	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Powerful Contact Form Builder	Powerful Contact Form Builder	rating	4.9	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Hulk Contact Form Builder	Hulk Contact Form Builder	reviews	2028	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Hulk Contact Form Builder	Hulk Contact Form Builder	rating	4.8	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Blockify Fraud Filter, Blocker	Blockify Fraud Filter, Blocker	reviews	1755	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Blockify Fraud Filter, Blocker	Blockify Fraud Filter, Blocker	rating	4.9	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/EW: EU Withdrawal Button &Form	EW: EU Withdrawal Button &Form	reviews	2316	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/EW: EU Withdrawal Button &Form	EW: EU Withdrawal Button &Form	rating	4.9	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Shopify Inbox	Shopify Inbox	reviews	5794	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Shopify Inbox	Shopify Inbox	rating	4.5	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/IG Facebook & Instagram Shop	IG Facebook & Instagram Shop	reviews	386	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/IG Facebook & Instagram Shop	IG Facebook & Instagram Shop	rating	4.9	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Pushdaddy Many Chat ,Cloud API	Pushdaddy Many Chat ,Cloud API	reviews	945	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Pushdaddy Many Chat ,Cloud API	Pushdaddy Many Chat ,Cloud API	rating	4.3	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Zigpoll Customer Surveys	Zigpoll Customer Surveys	reviews	554	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Zigpoll Customer Surveys	Zigpoll Customer Surveys	rating	5.0	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Gorgias: AI, Helpdesk & Chat	Gorgias: AI, Helpdesk & Chat	reviews	705	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Gorgias: AI, Helpdesk & Chat	Gorgias: AI, Helpdesk & Chat	rating	4.3	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/SB: Helpdesk, Live Chat & FAQs	SB: Helpdesk, Live Chat & FAQs	reviews	315	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/SB: Helpdesk, Live Chat & FAQs	SB: Helpdesk, Live Chat & FAQs	rating	4.6	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/WhatFlow: Whatsapp Automation	WhatFlow: Whatsapp Automation	reviews	338	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/WhatFlow: Whatsapp Automation	WhatFlow: Whatsapp Automation	rating	3.9	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/SL: WhatsApp Chat + Marketing	SL: WhatsApp Chat + Marketing	reviews	353	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/SL: WhatsApp Chat + Marketing	SL: WhatsApp Chat + Marketing	rating	3.5	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Moose WhatsApp Chat Button	Moose WhatsApp Chat Button	reviews	182	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Moose WhatsApp Chat Button	Moose WhatsApp Chat Button	rating	5.0	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Parkour: Facebook Pixel & Feed	Parkour: Facebook Pixel & Feed	reviews	190	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Parkour: Facebook Pixel & Feed	Parkour: Facebook Pixel & Feed	rating	4.9	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/MIDA Replay, Heatmap & Insight	MIDA Replay, Heatmap & Insight	reviews	592	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/MIDA Replay, Heatmap & Insight	MIDA Replay, Heatmap & Insight	rating	4.9	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/IndexGPT: AI SEO for ChatGPT	IndexGPT: AI SEO for ChatGPT	reviews	143	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/IndexGPT: AI SEO for ChatGPT	IndexGPT: AI SEO for ChatGPT	rating	4.9	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Propel Replay, Survey, Heatmap	Propel Replay, Survey, Heatmap	reviews	699	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Propel Replay, Survey, Heatmap	Propel Replay, Survey, Heatmap	rating	4.9	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Microsoft Clarity: AI Insights	Microsoft Clarity: AI Insights	reviews	2303	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Microsoft Clarity: AI Insights	Microsoft Clarity: AI Insights	rating	4.6	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Grapevine Post Purchase Survey	Grapevine Post Purchase Survey	reviews	228	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Grapevine Post Purchase Survey	Grapevine Post Purchase Survey	rating	5.0	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Trackify Facebook Pixel,TikTok	Trackify Facebook Pixel,TikTok	reviews	396	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Trackify Facebook Pixel,TikTok	Trackify Facebook Pixel,TikTok	rating	4.8	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Sort'd Collection Sort & Merch	Sort'd Collection Sort & Merch	reviews	146	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Sort'd Collection Sort & Merch	Sort'd Collection Sort & Merch	rating	5.0	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Sami B2B Lock,Password Protect	Sami B2B Lock,Password Protect	reviews	979	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Sami B2B Lock,Password Protect	Sami B2B Lock,Password Protect	rating	4.9	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Synctrack PayPal Tracking Sync	Synctrack PayPal Tracking Sync	reviews	445	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Synctrack PayPal Tracking Sync	Synctrack PayPal Tracking Sync	rating	5.0	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Chargeflow Prevent Chargebacks	Chargeflow Prevent Chargebacks	reviews	420	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Chargeflow Prevent Chargebacks	Chargeflow Prevent Chargebacks	rating	4.5	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/TN Term and Condition Checkbox	TN Term and Condition Checkbox	reviews	562	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/TN Term and Condition Checkbox	TN Term and Condition Checkbox	rating	4.9	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Cozy AntiTheft	Cozy AntiTheft	reviews	243	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Cozy AntiTheft	Cozy AntiTheft	rating	4.8	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/IT‑Recht AGB‑Schnittstelle	IT‑Recht AGB‑Schnittstelle	reviews	20	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/IT‑Recht AGB‑Schnittstelle	IT‑Recht AGB‑Schnittstelle	rating	4.9	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Mercado Pago Antifraude Plus	Mercado Pago Antifraude Plus	reviews	55	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Mercado Pago Antifraude Plus	Mercado Pago Antifraude Plus	rating	4.4	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Helium Customer Fields	Helium Customer Fields	reviews	347	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Helium Customer Fields	Helium Customer Fields	rating	4.5	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Rewind Backups	Rewind Backups	reviews	628	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	store-management/Rewind Backups	Rewind Backups	rating	4.3	https://apps.shopify.com/categories/store-management
+2026-10-05	shopify	marketing-and-conversion/Kaching Bundles App & Upsells	Kaching Bundles App & Upsells	reviews	6157	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Kaching Bundles App & Upsells	Kaching Bundles App & Upsells	rating	5.0	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/EComposer Landing Page Builder	EComposer Landing Page Builder	reviews	3480	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/EComposer Landing Page Builder	EComposer Landing Page Builder	rating	4.9	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Loox ‑ Product Reviews App	Loox ‑ Product Reviews App	reviews	9761	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Loox ‑ Product Reviews App	Loox ‑ Product Reviews App	rating	4.9	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/UpPromote Affiliate Marketing	UpPromote Affiliate Marketing	reviews	3849	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/UpPromote Affiliate Marketing	UpPromote Affiliate Marketing	rating	4.9	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Seal Subscriptions App	Seal Subscriptions App	reviews	3122	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Seal Subscriptions App	Seal Subscriptions App	rating	4.9	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Preorder, Back In Stock ‑ STOQ	Preorder, Back In Stock ‑ STOQ	reviews	3771	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Preorder, Back In Stock ‑ STOQ	Preorder, Back In Stock ‑ STOQ	rating	5.0	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Pop Convert ‑ Pop Ups, Banners	Pop Convert ‑ Pop Ups, Banners	reviews	8724	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Pop Convert ‑ Pop Ups, Banners	Pop Convert ‑ Pop Ups, Banners	rating	4.9	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Judge.me Product Reviews App	Judge.me Product Reviews App	reviews	47972	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Judge.me Product Reviews App	Judge.me Product Reviews App	rating	5.0	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Releasit COD Form & Upsells	Releasit COD Form & Upsells	reviews	2498	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Releasit COD Form & Upsells	Releasit COD Form & Upsells	rating	4.9	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Judge.me Ali Reviews Importer	Judge.me Ali Reviews Importer	reviews	234	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Judge.me Ali Reviews Importer	Judge.me Ali Reviews Importer	rating	4.9	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Instafeed ‑ Instagram Feed	Instafeed ‑ Instagram Feed	reviews	2180	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Instafeed ‑ Instagram Feed	Instafeed ‑ Instagram Feed	rating	4.9	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/MetaShop: Instagram & Facebook	MetaShop: Instagram & Facebook	reviews	648	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/MetaShop: Instagram & Facebook	MetaShop: Instagram & Facebook	rating	5.0	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Klaviyo: Email Marketing & SMS	Klaviyo: Email Marketing & SMS	reviews	3352	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Klaviyo: Email Marketing & SMS	Klaviyo: Email Marketing & SMS	rating	4.7	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Shopify Forms	Shopify Forms	reviews	740	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Shopify Forms	Shopify Forms	rating	4.5	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Shopify Flow	Shopify Flow	reviews	14485	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Shopify Flow	Shopify Flow	rating	4.7	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Brevo PushOwl: Email,Push,SMS	Brevo PushOwl: Email,Push,SMS	reviews	2279	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Brevo PushOwl: Email,Push,SMS	Brevo PushOwl: Email,Push,SMS	rating	4.8	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Omnisend Email Marketing & SMS	Omnisend Email Marketing & SMS	reviews	3182	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Omnisend Email Marketing & SMS	Omnisend Email Marketing & SMS	rating	4.7	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/CW Email Popup Email Marketing	CW Email Popup Email Marketing	reviews	7719	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/CW Email Popup Email Marketing	CW Email Popup Email Marketing	rating	4.9	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Abandoned Cart Email Marketing	Abandoned Cart Email Marketing	reviews	172	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Abandoned Cart Email Marketing	Abandoned Cart Email Marketing	rating	4.9	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Wiz AI Email Marketing	Wiz AI Email Marketing	reviews	226	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Wiz AI Email Marketing	Wiz AI Email Marketing	rating	5.0	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/AppLovin	AppLovin	reviews	25	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/AppLovin	AppLovin	rating	3.6	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/GOAFFPRO ‑ Affiliate Marketing	GOAFFPRO ‑ Affiliate Marketing	reviews	951	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/GOAFFPRO ‑ Affiliate Marketing	GOAFFPRO ‑ Affiliate Marketing	rating	4.6	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Google & YouTube	Google & YouTube	reviews	5515	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Google & YouTube	Google & YouTube	rating	4.5	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/BixGrow Affiliate Marketing	BixGrow Affiliate Marketing	reviews	1326	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/BixGrow Affiliate Marketing	BixGrow Affiliate Marketing	rating	4.9	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Pinterest	Pinterest	reviews	1708	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Pinterest	Pinterest	rating	4.1	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Shopify Collabs	Shopify Collabs	reviews	432	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Shopify Collabs	Shopify Collabs	rating	4.2	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Parkour: Facebook Pixel & Feed	Parkour: Facebook Pixel & Feed	reviews	190	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Parkour: Facebook Pixel & Feed	Parkour: Facebook Pixel & Feed	rating	4.9	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Omega Facebook Pixel, Meta Ads	Omega Facebook Pixel, Meta Ads	reviews	990	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Omega Facebook Pixel, Meta Ads	Omega Facebook Pixel, Meta Ads	rating	4.8	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/TikTok	TikTok	reviews	15993	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/TikTok	TikTok	rating	4.8	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Shopify Collective	Shopify Collective	reviews	441	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Shopify Collective	Shopify Collective	rating	4.4	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Essential Countdown Timer Bar	Essential Countdown Timer Bar	reviews	1723	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Essential Countdown Timer Bar	Essential Countdown Timer Bar	rating	5.0	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/PageFly ✦ AI Page Builder	PageFly ✦ AI Page Builder	reviews	5906	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/PageFly ✦ AI Page Builder	PageFly ✦ AI Page Builder	rating	4.9	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Aftersell Post Purchase Upsell	Aftersell Post Purchase Upsell	reviews	1087	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Aftersell Post Purchase Upsell	Aftersell Post Purchase Upsell	rating	4.9	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Recharge Subscriptions App	Recharge Subscriptions App	reviews	3124	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Recharge Subscriptions App	Recharge Subscriptions App	rating	4.8	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Upcart—Cart Drawer Cart Upsell	Upcart—Cart Drawer Cart Upsell	reviews	954	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Upcart—Cart Drawer Cart Upsell	Upcart—Cart Drawer Cart Upsell	rating	4.7	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/GemPages Landing Page Builder	GemPages Landing Page Builder	reviews	4261	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/GemPages Landing Page Builder	GemPages Landing Page Builder	rating	4.9	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/EasySell COD Form & Upsells	EasySell COD Form & Upsells	reviews	977	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/EasySell COD Form & Upsells	EasySell COD Form & Upsells	rating	4.9	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/SMART Checkout Rules & Upsells	SMART Checkout Rules & Upsells	reviews	780	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/SMART Checkout Rules & Upsells	SMART Checkout Rules & Upsells	rating	5.0	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Junip Product Reviews App & AI	Junip Product Reviews App & AI	reviews	1157	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	marketing-and-conversion/Junip Product Reviews App & AI	Junip Product Reviews App & AI	rating	4.8	https://apps.shopify.com/categories/marketing-and-conversion
+2026-10-05	shopify	store-design/EComposer Landing Page Builder	EComposer Landing Page Builder	reviews	3480	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/EComposer Landing Page Builder	EComposer Landing Page Builder	rating	4.9	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/PagePilot: AI Page Builder	PagePilot: AI Page Builder	reviews	200	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/PagePilot: AI Page Builder	PagePilot: AI Page Builder	rating	4.8	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/T Lab ‑ AI Language Translate	T Lab ‑ AI Language Translate	reviews	1037	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/T Lab ‑ AI Language Translate	T Lab ‑ AI Language Translate	rating	4.9	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/TinySEO: SEO & Image Optimizer	TinySEO: SEO & Image Optimizer	reviews	2527	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/TinySEO: SEO & Image Optimizer	TinySEO: SEO & Image Optimizer	rating	5.0	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Pop Convert ‑ Pop Ups, Banners	Pop Convert ‑ Pop Ups, Banners	reviews	8724	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Pop Convert ‑ Pop Ups, Banners	Pop Convert ‑ Pop Ups, Banners	rating	4.9	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Canva Connect	Canva Connect	reviews	400	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Canva Connect	Canva Connect	rating	4.8	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Judge.me Product Reviews App	Judge.me Product Reviews App	reviews	47972	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Judge.me Product Reviews App	Judge.me Product Reviews App	rating	5.0	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/GSC Countdown Timer Bar	GSC Countdown Timer Bar	reviews	680	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/GSC Countdown Timer Bar	GSC Countdown Timer Bar	rating	4.9	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Avada AI SEO Image Optimizer	Avada AI SEO Image Optimizer	reviews	4683	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Avada AI SEO Image Optimizer	Avada AI SEO Image Optimizer	rating	4.9	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Instafeed ‑ Instagram Feed	Instafeed ‑ Instagram Feed	reviews	2180	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Instafeed ‑ Instagram Feed	Instafeed ‑ Instagram Feed	rating	4.9	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/BOOSTER AI SEO + AEO OPTIMIZER	BOOSTER AI SEO + AEO OPTIMIZER	reviews	5486	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/BOOSTER AI SEO + AEO OPTIMIZER	BOOSTER AI SEO + AEO OPTIMIZER	rating	4.8	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Powerful Contact Form Builder	Powerful Contact Form Builder	reviews	2534	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Powerful Contact Form Builder	Powerful Contact Form Builder	rating	4.9	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Atlas: AI Store Builder	Atlas: AI Store Builder	reviews	369	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Atlas: AI Store Builder	Atlas: AI Store Builder	rating	4.6	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Section Star ‑ Theme Sections	Section Star ‑ Theme Sections	reviews	187	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Section Star ‑ Theme Sections	Section Star ‑ Theme Sections	rating	4.9	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/XO Insert Code	XO Insert Code	reviews	112	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/XO Insert Code	XO Insert Code	rating	5.0	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/PageFly ✦ AI Page Builder	PageFly ✦ AI Page Builder	reviews	5906	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/PageFly ✦ AI Page Builder	PageFly ✦ AI Page Builder	rating	4.9	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Headless	Headless	reviews	5	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Headless	Headless	rating	5.0	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/ZipStore ‑ AI Store Builder	ZipStore ‑ AI Store Builder	reviews	20	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/ZipStore ‑ AI Store Builder	ZipStore ‑ AI Store Builder	rating	3.9	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Storebuild.ai  AI StoreBuilder	Storebuild.ai  AI StoreBuilder	reviews	4	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Storebuild.ai  AI StoreBuilder	Storebuild.ai  AI StoreBuilder	rating	4.4	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Shogun ‑ Landing Page Builder	Shogun ‑ Landing Page Builder	reviews	1968	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Shogun ‑ Landing Page Builder	Shogun ‑ Landing Page Builder	rating	4.8	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/DropStart	DropStart	reviews	2	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/DropStart	DropStart	rating	5.0	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Nova: Multi Currency Converter	Nova: Multi Currency Converter	reviews	769	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Nova: Multi Currency Converter	Nova: Multi Currency Converter	rating	4.9	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Transcy: AI Language Translate	Transcy: AI Language Translate	reviews	2576	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Transcy: AI Language Translate	Transcy: AI Language Translate	rating	4.5	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Translate store ‑ GTranslate	Translate store ‑ GTranslate	reviews	684	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Translate store ‑ GTranslate	Translate store ‑ GTranslate	rating	4.7	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/IT‑Recht AGB‑Schnittstelle	IT‑Recht AGB‑Schnittstelle	reviews	20	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/IT‑Recht AGB‑Schnittstelle	IT‑Recht AGB‑Schnittstelle	rating	4.9	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Hextom AI Translate & Currency	Hextom AI Translate & Currency	reviews	1237	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Hextom AI Translate & Currency	Hextom AI Translate & Currency	rating	4.7	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Complianz Consent	Complianz Consent	reviews	277	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Complianz Consent	Complianz Consent	rating	4.3	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Shopify Translate & Adapt	Shopify Translate & Adapt	reviews	1414	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Shopify Translate & Adapt	Shopify Translate & Adapt	rating	4.4	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Beast Currency Converter	Beast Currency Converter	reviews	1112	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/Beast Currency Converter	Beast Currency Converter	rating	4.6	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/BM Bot blocker Country blocker	BM Bot blocker Country blocker	reviews	208	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	store-design/BM Bot blocker Country blocker	BM Bot blocker Country blocker	rating	4.9	https://apps.shopify.com/categories/store-design
+2026-10-05	shopify	sales-channels/BookX Appointment Booking App	BookX Appointment Booking App	reviews	612	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/BookX Appointment Booking App	BookX Appointment Booking App	rating	5.0	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/IG Facebook & Instagram Shop	IG Facebook & Instagram Shop	reviews	386	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/IG Facebook & Instagram Shop	IG Facebook & Instagram Shop	rating	4.9	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Reputon Amazon Importer	Reputon Amazon Importer	reviews	711	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Reputon Amazon Importer	Reputon Amazon Importer	rating	4.9	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Canva Connect	Canva Connect	reviews	400	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Canva Connect	Canva Connect	rating	4.8	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Shuttle ‑ Sync with Etsy	Shuttle ‑ Sync with Etsy	reviews	223	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Shuttle ‑ Sync with Etsy	Shuttle ‑ Sync with Etsy	rating	4.7	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Omega Facebook Pixel, Meta Ads	Omega Facebook Pixel, Meta Ads	reviews	990	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Omega Facebook Pixel, Meta Ads	Omega Facebook Pixel, Meta Ads	rating	4.8	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/SKUGen SKU & Barcode Generator	SKUGen SKU & Barcode Generator	reviews	63	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/SKUGen SKU & Barcode Generator	SKUGen SKU & Barcode Generator	rating	4.4	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Altera ‑ Export and Import	Altera ‑ Export and Import	reviews	250	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Altera ‑ Export and Import	Altera ‑ Export and Import	rating	5.0	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Duplify ‑ Duplicate & Backup	Duplify ‑ Duplicate & Backup	reviews	123	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Duplify ‑ Duplicate & Backup	Duplify ‑ Duplicate & Backup	rating	4.8	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Matrixify: Data Export Import	Matrixify: Data Export Import	reviews	1719	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Matrixify: Data Export Import	Matrixify: Data Export Import	rating	4.9	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Flexify: Facebook Product Feed	Flexify: Facebook Product Feed	reviews	154	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Flexify: Facebook Product Feed	Flexify: Facebook Product Feed	rating	4.4	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/MetaShop: Instagram & Facebook	MetaShop: Instagram & Facebook	reviews	648	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/MetaShop: Instagram & Facebook	MetaShop: Instagram & Facebook	rating	5.0	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/TikTok Shop Integration — SPL	TikTok Shop Integration — SPL	reviews	836	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/TikTok Shop Integration — SPL	TikTok Shop Integration — SPL	rating	4.9	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Google & YouTube	Google & YouTube	reviews	5515	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Google & YouTube	Google & YouTube	rating	4.5	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/TikTok	TikTok	reviews	15993	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/TikTok	TikTok	rating	4.8	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Faire: Sell Wholesale	Faire: Sell Wholesale	reviews	459	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Faire: Sell Wholesale	Faire: Sell Wholesale	rating	4.6	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/CedCommerce Amazon Channel	CedCommerce Amazon Channel	reviews	1163	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/CedCommerce Amazon Channel	CedCommerce Amazon Channel	rating	4.6	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Multifeed Google Shopping Feed	Multifeed Google Shopping Feed	reviews	1111	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Multifeed Google Shopping Feed	Multifeed Google Shopping Feed	rating	4.9	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Facebook & Instagram	Facebook & Instagram	reviews	5714	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Facebook & Instagram	Facebook & Instagram	rating	3.8	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/EComposer Landing Page Builder	EComposer Landing Page Builder	reviews	3480	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/EComposer Landing Page Builder	EComposer Landing Page Builder	rating	4.9	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/PagePilot: AI Page Builder	PagePilot: AI Page Builder	reviews	200	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/PagePilot: AI Page Builder	PagePilot: AI Page Builder	rating	4.8	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Atlas: AI Store Builder	Atlas: AI Store Builder	reviews	369	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Atlas: AI Store Builder	Atlas: AI Store Builder	rating	4.6	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Section Star ‑ Theme Sections	Section Star ‑ Theme Sections	reviews	187	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Section Star ‑ Theme Sections	Section Star ‑ Theme Sections	rating	4.9	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/XO Insert Code	XO Insert Code	reviews	112	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/XO Insert Code	XO Insert Code	rating	5.0	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/PageFly ✦ AI Page Builder	PageFly ✦ AI Page Builder	reviews	5906	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/PageFly ✦ AI Page Builder	PageFly ✦ AI Page Builder	rating	4.9	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Headless	Headless	reviews	5	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Headless	Headless	rating	5.0	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Section Store: Theme Sections	Section Store: Theme Sections	reviews	2968	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Section Store: Theme Sections	Section Store: Theme Sections	rating	4.9	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/ZipStore ‑ AI Store Builder	ZipStore ‑ AI Store Builder	reviews	20	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/ZipStore ‑ AI Store Builder	ZipStore ‑ AI Store Builder	rating	3.9	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/QR Code Generator by QodeVault	QR Code Generator by QodeVault	reviews	188	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/QR Code Generator by QodeVault	QR Code Generator by QodeVault	rating	5.0	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/RF—Barcode Labels Generator	RF—Barcode Labels Generator	reviews	510	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/RF—Barcode Labels Generator	RF—Barcode Labels Generator	rating	5.0	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Easy Appointment Booking App	Easy Appointment Booking App	reviews	559	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Easy Appointment Booking App	Easy Appointment Booking App	rating	4.9	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/MS Barcode Labels & Generator	MS Barcode Labels & Generator	reviews	397	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/MS Barcode Labels & Generator	MS Barcode Labels & Generator	rating	4.9	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Easyteam POS Time Clock In	Easyteam POS Time Clock In	reviews	326	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Easyteam POS Time Clock In	Easyteam POS Time Clock In	rating	5.0	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/QuiQR Codes: QR Code Generator	QuiQR Codes: QR Code Generator	reviews	57	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/QuiQR Codes: QR Code Generator	QuiQR Codes: QR Code Generator	rating	4.9	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Zon Staff POS Time Clock In	Zon Staff POS Time Clock In	reviews	49	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Zon Staff POS Time Clock In	Zon Staff POS Time Clock In	rating	4.8	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/PML Stock Take Inventory Count	PML Stock Take Inventory Count	reviews	89	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/PML Stock Take Inventory Count	PML Stock Take Inventory Count	rating	4.7	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Shop	Shop	reviews	9504	https://apps.shopify.com/categories/sales-channels
+2026-10-05	shopify	sales-channels/Shop	Shop	rating	4.8	https://apps.shopify.com/categories/sales-channels
+2026-10-05	gumroad	3d	3D	items	58177	https://gumroad.com/3d
+2026-10-05	gumroad	3d	3D	price_median_usd	35.0	https://gumroad.com/3d
+2026-10-05	gumroad	audio	Audio	items	6388	https://gumroad.com/audio
+2026-10-05	gumroad	audio	Audio	price_median_usd	74.0	https://gumroad.com/audio
+2026-10-05	gumroad	business-and-money	Business & Money	items	23494	https://gumroad.com/business-and-money
+2026-10-05	gumroad	business-and-money	Business & Money	price_median_usd	54.0	https://gumroad.com/business-and-money
+2026-10-05	gumroad	comics-and-graphic-novels	Comics & Graphic Novels	items	5114	https://gumroad.com/comics-and-graphic-novels
+2026-10-05	gumroad	comics-and-graphic-novels	Comics & Graphic Novels	price_median_usd	13.969999999999999	https://gumroad.com/comics-and-graphic-novels
+2026-10-05	gumroad	design	Design	items	61568	https://gumroad.com/design
+2026-10-05	gumroad	design	Design	price_median_usd	25.0	https://gumroad.com/design
+2026-10-05	gumroad	drawing-and-painting	Drawing & Painting	items	30264	https://gumroad.com/drawing-and-painting
+2026-10-05	gumroad	drawing-and-painting	Drawing & Painting	price_median_usd	25.0	https://gumroad.com/drawing-and-painting
+2026-10-05	gumroad	education	Education	items	49575	https://gumroad.com/education
+2026-10-05	gumroad	education	Education	price_median_usd	99.0	https://gumroad.com/education
+2026-10-05	gumroad	fiction-books	Fiction Books	items	2286	https://gumroad.com/fiction-books
+2026-10-05	gumroad	fiction-books	Fiction Books	price_median_usd	12.5	https://gumroad.com/fiction-books
+2026-10-05	gumroad	films	Films	items	33818	https://gumroad.com/films
+2026-10-05	gumroad	films	Films	price_median_usd	29.994999999999997	https://gumroad.com/films
+2026-10-05	gumroad	fitness-and-health	Fitness & Health	items	8055	https://gumroad.com/fitness-and-health
+2026-10-05	gumroad	fitness-and-health	Fitness & Health	price_median_usd	47.0	https://gumroad.com/fitness-and-health
+2026-10-05	gumroad	gaming	Gaming	items	11535	https://gumroad.com/gaming
+2026-10-05	gumroad	gaming	Gaming	price_median_usd	12.5	https://gumroad.com/gaming
+2026-10-05	gumroad	music-and-sound-design	Music & Sound Design	items	55326	https://gumroad.com/music-and-sound-design
+2026-10-05	gumroad	music-and-sound-design	Music & Sound Design	price_median_usd	25.0	https://gumroad.com/music-and-sound-design
+2026-10-05	gumroad	other	Other	items	294197	https://gumroad.com/other
+2026-10-05	gumroad	other	Other	price_median_usd	35.0	https://gumroad.com/other
+2026-10-05	gumroad	photography	Photography	items	10504	https://gumroad.com/photography
+2026-10-05	gumroad	photography	Photography	price_median_usd	18.5	https://gumroad.com/photography
+2026-10-05	gumroad	recorded-music	Recorded Music	items	2041	https://gumroad.com/recorded-music
+2026-10-05	gumroad	recorded-music	Recorded Music	price_median_usd	25.0	https://gumroad.com/recorded-music
+2026-10-05	gumroad	self-improvement	Self Improvement	items	39986	https://gumroad.com/self-improvement
+2026-10-05	gumroad	self-improvement	Self Improvement	price_median_usd	28.5	https://gumroad.com/self-improvement
+2026-10-05	gumroad	software-development	Software Development	items	15912	https://gumroad.com/software-development
+2026-10-05	gumroad	software-development	Software Development	price_median_usd	19.994999999999997	https://gumroad.com/software-development
+2026-10-05	gumroad	writing-and-publishing	Writing & Publishing	items	22930	https://gumroad.com/writing-and-publishing
+2026-10-05	gumroad	writing-and-publishing	Writing & Publishing	price_median_usd	56.0	https://gumroad.com/writing-and-publishing
+2026-10-05	booth	3Dモデル	3Dモデル	items	280949	https://booth.pm/ja/browse/3D%E3%83%A2%E3%83%87%E3%83%AB
+2026-10-05	booth	イラスト	イラスト	items	167639	https://booth.pm/ja/browse/%E3%82%A4%E3%83%A9%E3%82%B9%E3%83%88
+2026-10-05	booth	音楽	音楽	items	89687	https://booth.pm/ja/browse/%E9%9F%B3%E6%A5%BD
+2026-10-05	booth	ソフトウェア・ハードウェア	ソフトウェア・ハードウェア	items	25747	https://booth.pm/ja/browse/%E3%82%BD%E3%83%95%E3%83%88%E3%82%A6%E3%82%A7%E3%82%A2%E3%83%BB%E3%83%8F%E3%83%BC%E3%83%89%E3%82%A6%E3%82%A7%E3%82%A2
+2026-10-05	booth	アクセサリー	アクセサリー	items	114262	https://booth.pm/ja/browse/%E3%82%A2%E3%82%AF%E3%82%BB%E3%82%B5%E3%83%AA%E3%83%BC
+2026-10-05	booth	ゲーム	ゲーム	items	70394	https://booth.pm/ja/browse/%E3%82%B2%E3%83%BC%E3%83%A0
+2026-10-05	booth	音声作品	音声作品	items	19375	https://booth.pm/ja/browse/%E9%9F%B3%E5%A3%B0%E4%BD%9C%E5%93%81
+2026-10-05	booth	写真	写真	items	21426	https://booth.pm/ja/browse/%E5%86%99%E7%9C%9F
+2026-10-05	booth	グッズ	グッズ	items	880864	https://booth.pm/ja/browse/%E3%82%B0%E3%83%83%E3%82%BA
+2026-10-05	booth	漫画	漫画	items	156390	https://booth.pm/ja/browse/%E6%BC%AB%E7%94%BB
+2026-10-05	booth	ファッション	ファッション	items	160251	https://booth.pm/ja/browse/%E3%83%95%E3%82%A1%E3%83%83%E3%82%B7%E3%83%A7%E3%83%B3
