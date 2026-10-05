@@ -1,0 +1,39 @@
+<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>サンプル商店 注文書 確認画面</title>
+<style>
+:root{--bg:#f6f6f2;--sheet:#fff;--ink:#1d2433;--sub:#5b6477;--rule:#d9dce3;--ok:#2f6b4f;--ok-soft:#e3efe8;--warn:#b26a00;--warn-soft:#fff3dc;--bad:#b23a2a;--bad-soft:#f7e6e2;--indigo:#2b3f7a}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IPAPGothic","Noto Sans CJK JP",system-ui,sans-serif;font-size:14px}
+header{padding:12px 20px;border-bottom:2px solid var(--ink);display:flex;justify-content:space-between;align-items:baseline;background:var(--sheet)}
+h1{font-size:18px;margin:0} .sub{color:var(--sub);font-size:12px}
+main{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:16px 20px}
+.pane{background:var(--sheet);border:1px solid var(--rule);border-radius:6px;padding:12px;min-width:0}
+img{max-width:100%;border:1px solid var(--rule)}
+table{border-collapse:collapse;width:100%} th,td{border-bottom:1px solid var(--rule);padding:6px 8px;text-align:left;vertical-align:top}
+th{font-size:11.5px;color:var(--sub)} td.n{text-align:right;font-variant-numeric:tabular-nums}
+.b{display:inline-block;padding:1px 8px;border-radius:999px;font-size:11.5px;font-weight:600}
+.ok{background:var(--ok-soft);color:var(--ok)} .warn{background:var(--warn-soft);color:var(--warn)} .bad{background:var(--bad-soft);color:var(--bad)}
+select,input{font:inherit;padding:3px 6px;border:1px solid var(--rule);border-radius:4px;max-width:100%}
+.foot{display:flex;gap:12px;align-items:center;margin-top:12px} button{font:inherit;padding:6px 14px;border-radius:6px;border:1px solid var(--indigo);background:var(--indigo);color:#fff;cursor:pointer}
+.stat{color:var(--sub);font-size:12.5px}
+@media(max-width:900px){main{grid-template-columns:1fr}}
+</style>
+<header><h1>サンプル商店 注文書</h1><span class="sub">読み取り結果の確認 → 直す → CSVを書き出す（販売管理に取り込む）</span></header>
+<main>
+<section class="pane"><img src="../fax1.png" alt="受け取ったFAX注文書"></section>
+<section class="pane">
+<table><thead><tr><th>#</th><th>読み取った品名</th><th>品番（候補から選ぶ）</th><th>数量</th><th>単位</th><th>納期</th><th>判定</th></tr></thead><tbody id="rows"></tbody></table>
+<div class="foot"><button id="dl">CSVを書き出す</button><span class="stat" id="stat"></span></div>
+</section></main>
+<script>
+const CAT={"A-101": "業務用タオル 大（白）", "A-102": "業務用タオル 小（白）", "A-103": "バスマット（ベージュ）", "B-201": "固形石けん 15g", "B-202": "液体ボディソープ 詰替 2L", "B-203": "シャンプー 詰替 2L", "B-204": "コンディショナー 詰替 2L", "C-301": "歯ブラシセット（透明）", "C-302": "ヘアブラシ", "C-303": "カミソリ 2枚刃", "C-304": "綿棒 5本入", "C-305": "ヘアゴム", "D-401": "スリッパ 使い捨て（白）", "D-402": "スリッパ 使い捨て（紺）", "D-403": "室内履き ワッフル", "E-501": "ティーバッグ 緑茶", "E-502": "ドリップコーヒー", "E-503": "ミネラルウォーター 500ml", "F-601": "ゴミ袋 45L 半透明", "F-602": "ゴミ袋 10L", "F-603": "消臭スプレー 300ml", "G-701": "トイレットペーパー シングル", "G-702": "ボックスティッシュ 200組", "G-703": "ペーパータオル 中判", "H-801": "シーツ シングル（白）", "H-802": "枕カバー（白）", "H-803": "羽毛枕", "I-901": "ハンガー 木製", "I-902": "ランドリーバッグ", "I-903": "靴みがき"}; const ROWS=[{"品名_読み取り": "歯ブラシセット(透明)", "数量": 30, "単位": "", "納期": "至急", "品番": "C-301", "確度": 1.0, "根拠": "一致", "候補": ["C-301", "C-302", "I-902"], "読み取り確度": 85.4}, {"品名_読み取り": "ゴミ袋45L4a", "数量": 20, "単位": "個", "納期": "至急", "品番": "", "確度": 0.53, "根拠": "不明", "候補": ["F-601", "F-602", "E-503"], "読み取り確度": 83.9}, {"品名_読み取り": "ミネラルウォーター500ml", "数量": 20, "単位": "箱", "納期": "至急", "品番": "E-503", "確度": 1.0, "根拠": "一致", "候補": ["E-503", "F-603", "F-602"], "読み取り確度": 90.9}, {"品名_読み取り": "液体ボディソープ詰替2L", "数量": 3, "単位": "", "納期": "来週", "品番": "B-202", "確度": 1.0, "根拠": "一致", "候補": ["B-202", "B-204", "B-203"], "読み取り確度": 88.8}, {"品名_読み取り": "ヘアゴム", "数量": 24, "単位": "ケース", "納期": "来週", "品番": "C-305", "確度": 1.0, "根拠": "一致", "候補": ["C-305", "C-302", "F-602"], "読み取り確度": 84.1}, {"品名_読み取り": "ゴミき袋10L", "数量": 2, "単位": "", "納期": "至急", "品番": "F-602", "確度": 0.69, "根拠": "あいまい", "候補": ["F-602", "F-601", "E-503"], "読み取り確度": 89.7}, {"品名_読み取り": "ティーバッグ緑茶", "数量": 1, "単位": "個", "納期": "10/10", "品番": "E-501", "確度": 1.0, "根拠": "一致", "候補": ["E-501", "I-902", "G-702"], "読み取り確度": 88.5}, {"品名_読み取り": "消臭スプレー3", "数量": 12, "単位": "ケース", "納期": "10/10", "品番": "F-603", "確度": 0.9, "根拠": "一致", "候補": ["F-603", "E-502", "B-203"], "読み取り確度": 93.2}];
+const tb=document.getElementById('rows');
+function badge(r){const c=r.確度>=0.9?'ok':r.確度>=0.6?'warn':'bad';const t=r.確度>=0.9?'一致':r.確度>=0.6?'要確認':'不明';return `<span class="b ${c}">${t} ${r.確度}</span>`}
+ROWS.forEach((r,i)=>{const tr=document.createElement('tr');
+ const opts=[...new Set([r.品番,...r.候補].filter(Boolean))].map(c=>`<option value="${c}" ${c===r.品番?'selected':''}>${c} ${CAT[c]||''}</option>`).join('')+'<option value="">（該当なし）</option>';
+ tr.innerHTML=`<td>${i+1}</td><td>${r.品名_読み取り}</td><td><select data-i="${i}">${opts}</select></td><td class="n"><input type="number" value="${r.数量}" size="4" data-q="${i}"></td><td>${r.単位}</td><td>${r.納期}</td><td>${badge(r)}</td>`;
+ tb.appendChild(tr)});
+const need=ROWS.filter(r=>r.確度<0.9).length; document.getElementById('stat').textContent=`${ROWS.length}行中 ${need}行が要確認`;
+document.getElementById('dl').onclick=()=>{const lines=['品番,品名,数量,単位,納期'];
+ document.querySelectorAll('#rows tr').forEach((tr,i)=>{const code=tr.querySelector('select').value;const q=tr.querySelector('input').value;lines.push([code,(CAT[code]||ROWS[i].品名_読み取り),q,ROWS[i].単位,ROWS[i].納期].map(v=>`"${String(v).replace(/"/g,'""')}"`).join(','))});
+ const blob=new Blob(["\ufeff"+lines.join('\n')],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='order.csv';a.click()};
+</script></html>
