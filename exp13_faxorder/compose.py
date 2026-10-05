@@ -22,7 +22,8 @@ def screenshot(html_path: Path, png: Path, width: int = 1400):
         pg = b.new_page(viewport={"width": width, "height": 900})
         pg.goto(html_path.resolve().as_uri())
         pg.wait_for_timeout(500)
-        pg.screenshot(path=str(png), full_page=True)
+        # 左のFAX画像は前後の絵の左側に出すので、右の表の面だけを撮る
+        pg.locator("main > section.pane").nth(1).screenshot(path=str(png))
         b.close()
 
 
