@@ -1,5 +1,5 @@
 <!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>富士パン粉工業株式会社 宛の注文書（架空） 確認画面</title>
+<title>FAX注文書 確認画面</title>
 <style>
 :root{--bg:#f6f6f2;--sheet:#fff;--ink:#1d2433;--sub:#5b6477;--rule:#d9dce3;--ok:#2f6b4f;--ok-soft:#e3efe8;--warn:#b26a00;--warn-soft:#fff3dc;--bad:#b23a2a;--bad-soft:#f7e6e2;--indigo:#2b3f7a}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:"IPAPGothic","Noto Sans CJK JP",system-ui,sans-serif;font-size:14px}
@@ -15,9 +15,11 @@ th{font-size:11.5px;color:var(--sub)} td.n{text-align:right;font-variant-numeric
 select,input{font:inherit;padding:3px 6px;border:1px solid var(--rule);border-radius:4px;max-width:100%}
 .foot{display:flex;gap:12px;align-items:center;margin-top:12px} button{font:inherit;padding:6px 14px;border-radius:6px;border:1px solid var(--indigo);background:var(--indigo);color:#fff;cursor:pointer}
 .stat{color:var(--sub);font-size:12.5px}
+td:nth-child(2){min-width:8em} td:nth-child(3){max-width:20em} td:nth-child(3) select{width:100%}
+input[type=number]{width:4.5em} .b,td:nth-child(5),td:nth-child(6){white-space:nowrap}
 @media(max-width:900px){main{grid-template-columns:1fr}}
 </style>
-<header><h1>富士パン粉工業株式会社 宛の注文書（架空）</h1><span class="sub">読み取り結果の確認 → 直す → CSVを書き出す（販売管理に取り込む）</span></header>
+<header><h1>FAX注文書</h1><span class="sub">読み取り結果の確認 → 直す → CSVを書き出す（販売管理に取り込む）</span></header>
 <main>
 <section class="pane"><img src="../fax.png" alt="受け取ったFAX注文書"></section>
 <section class="pane">

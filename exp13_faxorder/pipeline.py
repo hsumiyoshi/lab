@@ -168,6 +168,11 @@ def norm(s: str) -> str:
     return re.sub(r"[\s・･\-ー—（）()\[\]【】/,、。]", "", s)
 
 
+def base(name: str) -> str:
+    """括弧の付記を落とした品名（比べる用）"""
+    return norm(re.sub(r"[(（][^)）]*[)）]", "", name))
+
+
 class Matcher:
     def __init__(self, catalog: list[dict], aliases: dict[str, str]):
         self.catalog = catalog
@@ -195,9 +200,10 @@ class Matcher:
         scored.sort(reverse=True)
         top = scored[:3]
         best = top[0] if top else (0.0, "")
-        # 同じ品名で規格だけ違う候補が並ぶときは、人に選ばせる（650g と 3kg の取り違えを防ぐ）
+        # 同じ品名で規格だけ違う候補が並ぶときは、人に選ばせる（650g と 3kg の取り違えを防ぐ）。
+        # 「(箱入り)」のような括弧の付記だけが違う品名も同じ扱い——FAXでは括弧ごと省かれる
         if len(top) >= 2 and best[0] >= 0.9 and top[1][0] >= 0.9 \
-                and self.by_code[top[0][1]]["品名"] == self.by_code[top[1][1]]["品名"]:
+                and base(self.by_code[top[0][1]]["品名"]) == base(self.by_code[top[1][1]]["品名"]):
             best = (0.85, best[1])
         return dict(品番=best[1] if best[0] >= 0.6 else "", 確度=round(best[0], 2),
                     根拠="一致" if best[0] >= 0.9 else "あいまい" if best[0] >= 0.6 else "不明",
@@ -226,6 +232,8 @@ th{{font-size:11.5px;color:var(--sub)}} td.n{{text-align:right;font-variant-nume
 select,input{{font:inherit;padding:3px 6px;border:1px solid var(--rule);border-radius:4px;max-width:100%}}
 .foot{{display:flex;gap:12px;align-items:center;margin-top:12px}} button{{font:inherit;padding:6px 14px;border-radius:6px;border:1px solid var(--indigo);background:var(--indigo);color:#fff;cursor:pointer}}
 .stat{{color:var(--sub);font-size:12.5px}}
+td:nth-child(2){{min-width:8em}} td:nth-child(3){{max-width:20em}} td:nth-child(3) select{{width:100%}}
+input[type=number]{{width:4.5em}} .b,td:nth-child(5),td:nth-child(6){{white-space:nowrap}}
 @media(max-width:900px){{main{{grid-template-columns:1fr}}}}
 </style>
 <header><h1>{html.escape(title)}</h1><span class="sub">読み取り結果の確認 → 直す → CSVを書き出す（販売管理に取り込む）</span></header>

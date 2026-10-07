@@ -32,6 +32,28 @@ def alias(name: str, rng: random.Random) -> str:
     return n.replace(" ", "").replace("・", "")
 
 
+def fit(d, text: str, width: int, size: int = 30, floor: int = 22):
+    """マスに収まる書き方を返す: (行のリスト, フォント)。
+
+    人は長い品名を、字を小さくするか2行に折ってマスに収める。はみ出させない。
+    まず1行のまま floor まで小さくし、それでも入らなければ2行に折る
+    """
+    for sz in range(size, floor - 1, -2):
+        f = ImageFont.truetype(FONT, sz)
+        if d.textlength(text, font=f) <= width:
+            return [text], f
+    for sz in range(26, floor - 1, -2):
+        f = ImageFont.truetype(FONT, sz)
+        cut = len(text) // 2
+        sp = text.rfind(" ", 0, cut + 4)
+        if sp > cut // 2:
+            cut = sp
+        a, b = text[:cut].strip(), text[cut:].strip()
+        if max(d.textlength(a, font=f), d.textlength(b, font=f)) <= width:
+            return [a, b], f
+    return [text[: len(text) // 2], text[len(text) // 2 :]], ImageFont.truetype(FONT, floor)
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("catalog")
@@ -70,7 +92,12 @@ def main():
         due = rng.choice(["", "", "10/8", "10/10", "至急", "来週"])
         shown = alias(it["品名"], rng)
         d.rectangle([left, y, right, y + 64], outline=0, width=1)
-        d.text((cols[0] + 16, y + 14), shown, font=f, fill=0)
+        lines, fn = fit(d, shown, cols[1] - cols[0] - 32)
+        if len(lines) == 1:
+            d.text((cols[0] + 16, y + 14), lines[0], font=fn, fill=0)
+        else:
+            for k, t in enumerate(lines):
+                d.text((cols[0] + 16, y + 4 + k * 28), t, font=fn, fill=0)
         d.text((cols[1] + 16, y + 14), f"{qty}{unit}", font=f, fill=0)
         d.text((cols[2] + 16, y + 14), due, font=f, fill=0)
         truth.append(dict(shown=shown, 品番=it["品番"], 品名=it["品名"], 数量=qty, 単位=unit, 納期=due))
