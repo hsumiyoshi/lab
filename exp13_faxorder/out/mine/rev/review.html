@@ -1,0 +1,41 @@
+<!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FAX注文書 確認画面</title>
+<style>
+:root{--bg:#f6f6f2;--sheet:#fff;--ink:#1d2433;--sub:#5b6477;--rule:#d9dce3;--ok:#2f6b4f;--ok-soft:#e3efe8;--warn:#b26a00;--warn-soft:#fff3dc;--bad:#b23a2a;--bad-soft:#f7e6e2;--indigo:#2b3f7a}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IPAPGothic","Noto Sans CJK JP",system-ui,sans-serif;font-size:14px}
+header{padding:12px 20px;border-bottom:2px solid var(--ink);display:flex;justify-content:space-between;align-items:baseline;background:var(--sheet)}
+h1{font-size:18px;margin:0} .sub{color:var(--sub);font-size:12px}
+main{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:16px 20px}
+.pane{background:var(--sheet);border:1px solid var(--rule);border-radius:6px;padding:12px;min-width:0}
+img{max-width:100%;border:1px solid var(--rule)}
+table{border-collapse:collapse;width:100%} th,td{border-bottom:1px solid var(--rule);padding:6px 8px;text-align:left;vertical-align:top}
+th{font-size:11.5px;color:var(--sub)} td.n{text-align:right;font-variant-numeric:tabular-nums}
+.b{display:inline-block;padding:1px 8px;border-radius:999px;font-size:11.5px;font-weight:600}
+.ok{background:var(--ok-soft);color:var(--ok)} .warn{background:var(--warn-soft);color:var(--warn)} .bad{background:var(--bad-soft);color:var(--bad)}
+select,input{font:inherit;padding:3px 6px;border:1px solid var(--rule);border-radius:4px;max-width:100%}
+.foot{display:flex;gap:12px;align-items:center;margin-top:12px} button{font:inherit;padding:6px 14px;border-radius:6px;border:1px solid var(--indigo);background:var(--indigo);color:#fff;cursor:pointer}
+.stat{color:var(--sub);font-size:12.5px}
+td:nth-child(2){min-width:8em} td:nth-child(3){max-width:20em} td:nth-child(3) select{width:100%}
+input[type=number]{width:4.5em} .b,td:nth-child(5),td:nth-child(6){white-space:nowrap}
+@media(max-width:900px){main{grid-template-columns:1fr}}
+</style>
+<header><h1>FAX注文書</h1><span class="sub">読み取り結果の確認 → 直す → CSVを書き出す（販売管理に取り込む）</span></header>
+<main>
+<section class="pane"><img src="../fax.png" alt="受け取ったFAX注文書"></section>
+<section class="pane">
+<table><thead><tr><th>#</th><th>読み取った品名</th><th>品番（候補から選ぶ）</th><th>数量</th><th>単位</th><th>納期</th><th>判定</th></tr></thead><tbody id="rows"></tbody></table>
+<div class="foot"><button id="dl">CSVを書き出す</button><span class="stat" id="stat"></span></div>
+</section></main>
+<script>
+const CAT={"MN-001": "歯ブラシ PBT-00-SPP 歯磨き粉白3g SGBM2", "MN-002": "歯ブラシ PBT-25-SPP 歯磨き粉白3g SGBM2", "MN-003": "歯ブラシ PBT-00-SPP 歯磨き粉白3g SGBM2", "MN-004": "バイオマス歯ブラシ PBT-20-FBM ナチュラル 薬用歯磨き粉3g ZIP袋 EA", "MN-005": "バイオマス歯ブラシ PBT-23-FBM ナチュラル 薬用歯磨き粉3g ZIP袋 EA", "MN-006": "バイオマス歯ブラシ PBT-23-FBM ナチュラル 薬用歯磨き粉6g ZIP袋 EA", "MN-007": "バイオマス歯ブラシ PBT-20-FBM ナチュラル 薬用歯磨き粉3g 化粧箱 EA", "MN-008": "バイオマス歯ブラシ PBT-20-FBM ナチュラル 薬用歯磨き粉4.5g 化粧箱 EA", "MN-009": "マウスウォッシュ 16mL ラヴィアン ブレスクール", "MN-010": "マウスウォッシュ 16mL ラヴィアン ブレスクール", "MN-011": "マウスウォッシュ ミントの香り 10mL ビーフレッシュ", "MN-012": "マウスウォッシュ ミントの香り 30mL ビーフレッシュ", "MN-013": "マウスウォッシュ ミントの香り 30mL ビーフレッシュ", "MN-014": "マウスウォッシュ アジアン [4種アソート] ミントの香り 10mL ビーフレッシュ", "MN-015": "コットンセット 2B-2C-0 SGBM2", "MN-016": "コットンセット 2B-2C-1G SGBM2", "MN-017": "アメニティセットD エチュールコットン2枚 バスキャップ ヘアゴム 綿棒2本 化粧箱 EA", "MN-018": "アメニティセットD エチュールコットン2枚 バスキャップ ヘアゴム 綿棒2本 化粧箱 EA", "MN-019": "アメニティセットC エチュールコットン2枚 バスキャップ ヘアバンド 綿棒2本 化粧箱 EA", "MN-020": "アメニティセットB エチュールコットン2枚 ヘアゴム 綿棒2本 化粧箱 EA", "MN-021": "アメニティセットB エチュールコットン2枚 ヘアゴム 綿棒2本 化粧箱 EA", "MN-022": "アメニティセットA エチュールコットン2枚 ヘアバンド 綿棒2本 化粧箱 EA", "MN-023": "子供用 パイル地 スリッパ 白 パルパルポー", "MN-024": "子供用 パイル地 スリッパ 白 パルパルポー", "MN-025": "大人用 パイル地 スリッパ EX 通常サイズ W105*H270mm 白", "MN-026": "大人用 パイル地 スリッパ EX 通常サイズ W105*H270mm 白", "MN-027": "大人用 パイル地 スリッパ EX 通常サイズ W105*H270mm 黒", "MN-028": "大人用 パイル地 スリッパ EX 通常サイズ W105*H270mm 黒", "MN-029": "大人用 スムース地 スリッパ PX-3 通常サイズ W105*H270mm 白", "MN-030": "大人用 スムース地 スリッパ PX-3 XLサイズ W120*H300mm 茶", "MN-031": "アイマスク 袋入", "MN-032": "アイマスク 袋入", "MN-033": "アイマスク 袋入", "MN-034": "ネックピロー 袋入"}; const ROWS=[{"品名_読み取り": "マウスウォッシュ16mLラヴィアン.ブレスクール", "数量": 24, "単位": "", "納期": "", "品番": "MN-010", "確度": 0.73, "根拠": "あいまい", "候補": ["MN-010", "MN-009", "MN-011"], "読み取り確度": 65.3}, {"品名_読み取り": "Baee-1xWIO5YH270mm自", "数量": 12, "単位": "", "納期": "", "品番": "", "確度": 0.28, "根拠": "不明", "候補": ["MN-028", "MN-027", "MN-026"], "読み取り確度": 50.7}, {"品名_読み取り": "ネックビピローBK", "数量": 12, "単位": "", "納期": "至急", "品番": "", "確度": 0.5, "根拠": "不明", "候補": ["MN-034", "MN-015", "MN-016"], "読み取り確度": 89.1}, {"品名_読み取り": "歯ブラシPBT-25-SPP歯磨き粉白3gSGBM2", "数量": 578, "単位": "", "納期": "", "品番": "MN-002", "確度": 1.0, "根拠": "一致", "候補": ["MN-002", "MN-003", "MN-001"], "読み取り確度": 84.8}, {"品名_読み取り": "歯ブラシPBT-00-SPP歯磨き粉白3gSGBM2", "数量": 12, "単位": "", "納期": "", "品番": "MN-003", "確度": 0.85, "根拠": "あいまい", "候補": ["MN-003", "MN-001", "MN-002"], "読み取り確度": 74.5}, {"品名_読み取り": "Beo--xWTO5YH270mm時", "数量": 3, "単位": "個", "納期": "10/10", "品番": "", "確度": 0.33, "根拠": "不明", "候補": ["MN-028", "MN-027", "MN-026"], "読み取り確度": 69.1}, {"品名_読み取り": "REPOSヘアゴムMOR(OHIEA", "数量": 2, "単位": "箱", "納期": "10/8", "品番": "", "確度": 0.18, "根拠": "不明", "候補": ["MN-021", "MN-020", "MN-018"], "読み取り確度": 78.4}];
+const tb=document.getElementById('rows');
+function badge(r){const c=r.確度>=0.9?'ok':r.確度>=0.6?'warn':'bad';const t=r.確度>=0.9?'一致':r.確度>=0.6?'要確認':'不明';return `<span class="b ${c}">${t} ${r.確度}</span>`}
+ROWS.forEach((r,i)=>{const tr=document.createElement('tr');
+ const opts=[...new Set([r.品番,...r.候補].filter(Boolean))].map(c=>`<option value="${c}" ${c===r.品番?'selected':''}>${c} ${CAT[c]||''}</option>`).join('')+'<option value="">（該当なし）</option>';
+ tr.innerHTML=`<td>${i+1}</td><td>${r.品名_読み取り}</td><td><select data-i="${i}">${opts}</select></td><td class="n"><input type="number" value="${r.数量}" size="4" data-q="${i}"></td><td>${r.単位}</td><td>${r.納期}</td><td>${badge(r)}</td>`;
+ tb.appendChild(tr)});
+const need=ROWS.filter(r=>r.確度<0.9).length; document.getElementById('stat').textContent=`${ROWS.length}行中 ${need}行が要確認`;
+document.getElementById('dl').onclick=()=>{const lines=['品番,品名,数量,単位,納期'];
+ document.querySelectorAll('#rows tr').forEach((tr,i)=>{const code=tr.querySelector('select').value;const q=tr.querySelector('input').value;lines.push([code,(CAT[code]||ROWS[i].品名_読み取り),q,ROWS[i].単位,ROWS[i].納期].map(v=>`"${String(v).replace(/"/g,'""')}"`).join(','))});
+ const blob=new Blob(["\ufeff"+lines.join('\n')],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='order.csv';a.click()};
+</script></html>
