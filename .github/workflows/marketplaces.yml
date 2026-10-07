@@ -1,8 +1,7 @@
 name: marketplaces weekly collect
 
+# 2026-10-07 週次の自走を止めた（拡充は終了・台帳は材料として残す）。手動実行のみ
 on:
-  schedule:
-    - cron: "0 22 * * 0"   # 月曜07:00 JST（週1回。売り場の数字を台帳に積む）
   workflow_dispatch: {}
 
 permissions:
