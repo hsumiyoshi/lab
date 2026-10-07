@@ -265,6 +265,8 @@ def main():
     ap.add_argument("out_dir")
     ap.add_argument("--aliases", default=None)
     ap.add_argument("--title", default="FAX注文書")
+    ap.add_argument("--lines", default=None,
+                    help="読み取り済みの行（1行=「品名 | 数量 | 納期」）。画像を読むAIの結果を渡すとき。無ければTesseractで読む")
     a = ap.parse_args()
     out = Path(a.out_dir)
     out.mkdir(parents=True, exist_ok=True)
@@ -274,7 +276,11 @@ def main():
         aliases = {r["別名"]: r["品番"] for r in csv.DictReader(open(a.aliases, newline=""))}
     m = Matcher(catalog, aliases)
     rows = []
-    for ln in read_lines(a.image):
+    if a.lines:
+        lines = [dict(text=t.rstrip("\n"), conf=99.0) for t in open(a.lines, encoding="utf-8") if t.strip()]
+    else:
+        lines = read_lines(a.image)
+    for ln in lines:
         p = parse_row(ln["text"])
         if not p:
             continue
