@@ -1,0 +1,10 @@
+{
+ "target": "2026-10-12",
+ "submitted_at": "2026-10-11T09:36:41+09:00",
+ "type": "WF",
+ "picks": {
+  "persistence": 1,
+  "ma7": 10
+ },
+ "history_days": 68
+}
