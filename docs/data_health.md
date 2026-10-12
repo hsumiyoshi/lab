@@ -1,6 +1,6 @@
 # データ健全性（保全の番人）
 
-生成: 2026-10-12 02:55 JST / 登録 27件 / 合計 27.2MB
+生成: 2026-10-13 06:37 JST / 登録 27件 / 合計 27.3MB
 
 **方針**: 格付け(A/B/C)は価値の判定であり、保全の可否ではない。**全件を守る**——再取得可能でも、取り直せる保証は外部（API廃止・仕様変更・サイト改変）に依存するため。
 
@@ -9,11 +9,11 @@
 | データ | 格 | 形式 | サイズ | 状態 | 出所 |
 |---|---|---|---|---|---|
 | `exp01_jepx/reports/forward_ledger.csv` | A | append | 9KB | OK | 自前の採点 |
-| `exp05_quake/archive/quakes.csv` | A | append | 67KB | 変化なし | P2P地震情報API |
+| `exp05_quake/archive/quakes.csv` | A | append | 70KB | OK | P2P地震情報API |
 | `exp03_weather/data/ledger.json` | A | append | 10KB | OK | 自前の採点 |
-| `exp08_curtail/data/outlook_history.json` | A | append | 1KB | OK | 九電でんき予報 |
+| `exp08_curtail/data/outlook_history.json` | A | append | 2KB | OK | 九電でんき予報 |
 | `exp08_curtail/data/ledger.json` | A | append | 1KB | 変化なし | 自前の採点 |
-| `exp10_disaster/data/events.json` | A | append | 4.0MB | OK | GDACS RSS |
+| `exp10_disaster/data/events.json` | A | append | 4.1MB | OK | GDACS RSS |
 | `exp10_disaster/data/ledger.json` | A | append | 6KB | OK | 自前の採点 |
 | `exp10_disaster/data/firms_daily.json` | A | append | 1KB | OK | NASA FIRMS（要キー） |
 | `exp11_books/data/rankings.json` | A | append | 13KB | 変化なし | トーハン週間ベストセラー |
@@ -24,8 +24,8 @@
 | `marketplaces/ledger/ledger.tsv` | B | append | 290KB | 変化なし | ココナラ・Shopify App Store・Gumroad・BOOTHの公開ページ |
 | `exp01_jepx/data/spot_2026.csv` | C | append | 2.3MB | OK | JEPX公式CSV |
 | `exp01_jepx/data/spot_2025.csv` | C | append | 4.3MB | 変化なし | JEPX公式CSV |
-| `exp01_jepx/data/weather_actual.csv` | C | append | 27KB | OK | Open-Meteo archive |
-| `exp01_jepx/data/weather_forecast.csv` | C | append | 26KB | 変化なし | Open-Meteo historical-forecast |
+| `exp01_jepx/data/weather_actual.csv` | C | append | 27KB | 変化なし | Open-Meteo archive |
+| `exp01_jepx/data/weather_forecast.csv` | C | append | 27KB | OK | Open-Meteo historical-forecast |
 | `exp02_vegetable/data/veg_31700.csv` | C | append | 98KB | 変化なし | 東京都中央卸売市場（ベジ探） |
 | `exp02_vegetable/data/veg_33400.csv` | C | append | 99KB | 変化なし | 同上 |
 | `exp02_vegetable/data/veg_34100.csv` | C | append | 153KB | 変化なし | 同上 |
