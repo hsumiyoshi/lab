@@ -15,7 +15,7 @@ from PIL import Image, ImageDraw, ImageFont
 FONT = "/usr/share/fonts/opentype/ipafont-gothic/ipagp.ttf"
 
 
-def screenshot(html_path: Path, png: Path, width: int = 1400):
+def screenshot(html_path: Path, png: Path, width: int = 1600):
     from playwright.sync_api import sync_playwright
     with sync_playwright() as p:
         b = p.chromium.launch(executable_path="/opt/pw-browsers/chromium-1194/chrome-linux/chrome")
@@ -49,7 +49,8 @@ def main():
     f = ImageFont.truetype(FONT, 30)
     fs = ImageFont.truetype(FONT, 22)
     d.text((40, 24), a.title, font=f, fill=(29, 36, 51))
-    d.text((40, 64), "左: 受け取ったFAX注文書（架空）　→　右: 読み取り結果を品番に直し、人が確認する画面。確認後にCSVを書き出す", font=fs, fill=(91, 100, 119))
+    d.text((40, 64), "左: 受け取ったFAX注文書（架空）　→　右: 読み取り結果を品番に直し、人が確認する画面。"
+           "品番が決まらない行は空のまま「要確認」。全行を確かめるまでCSVは書き出せない", font=fs, fill=(91, 100, 119))
     canvas.paste(left, (40, top))
     canvas.paste(right, (40 + left.width + gap, top))
     d.rectangle([40, top, 40 + left.width, top + H], outline=(217, 220, 227), width=2)

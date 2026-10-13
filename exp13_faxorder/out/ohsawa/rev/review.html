@@ -1,41 +1,147 @@
 <!doctype html><html lang="ja"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>FAX注文書 確認画面</title>
 <style>
-:root{--bg:#f6f6f2;--sheet:#fff;--ink:#1d2433;--sub:#5b6477;--rule:#d9dce3;--ok:#2f6b4f;--ok-soft:#e3efe8;--warn:#b26a00;--warn-soft:#fff3dc;--bad:#b23a2a;--bad-soft:#f7e6e2;--indigo:#2b3f7a}
+:root{--bg:#f6f6f2;--sheet:#fff;--ink:#1d2433;--sub:#5b6477;--rule:#d9dce3;--ok:#2f6b4f;--ok-soft:#e3efe8;--warn:#9a5b00;--warn-soft:#fff3dc;--bad:#b23a2a;--bad-soft:#f7e6e2;--indigo:#2b3f7a;--indigo-soft:#e8ecf6}
+*{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:"IPAPGothic","Noto Sans CJK JP",system-ui,sans-serif;font-size:14px}
-header{padding:12px 20px;border-bottom:2px solid var(--ink);display:flex;justify-content:space-between;align-items:baseline;background:var(--sheet)}
+header{padding:12px 20px;border-bottom:2px solid var(--ink);display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;background:var(--sheet)}
 h1{font-size:18px;margin:0} .sub{color:var(--sub);font-size:12px}
-main{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:16px 20px}
+main{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,3fr);gap:16px;padding:16px 20px}
 .pane{background:var(--sheet);border:1px solid var(--rule);border-radius:6px;padding:12px;min-width:0}
 img{max-width:100%;border:1px solid var(--rule)}
-table{border-collapse:collapse;width:100%} th,td{border-bottom:1px solid var(--rule);padding:6px 8px;text-align:left;vertical-align:top}
-th{font-size:11.5px;color:var(--sub)} td.n{text-align:right;font-variant-numeric:tabular-nums}
-.b{display:inline-block;padding:1px 8px;border-radius:999px;font-size:11.5px;font-weight:600}
-.ok{background:var(--ok-soft);color:var(--ok)} .warn{background:var(--warn-soft);color:var(--warn)} .bad{background:var(--bad-soft);color:var(--bad)}
-select,input{font:inherit;padding:3px 6px;border:1px solid var(--rule);border-radius:4px;max-width:100%}
-.foot{display:flex;gap:12px;align-items:center;margin-top:12px} button{font:inherit;padding:6px 14px;border-radius:6px;border:1px solid var(--indigo);background:var(--indigo);color:#fff;cursor:pointer}
-.stat{color:var(--sub);font-size:12.5px}
-td:nth-child(2){min-width:8em} td:nth-child(3){max-width:20em} td:nth-child(3) select{width:100%}
-input[type=number]{width:4.5em} .b,td:nth-child(5),td:nth-child(6){white-space:nowrap}
-@media(max-width:900px){main{grid-template-columns:1fr}}
+.sheetwarn{background:var(--bad-soft);border:1px solid var(--bad);border-radius:6px;padding:10px 12px;margin-bottom:10px;line-height:1.5}
+.sheetwarn b{color:var(--bad)} .sheetwarn ul{margin:4px 0 6px;padding-left:1.3em} .sheetwarn label{font-weight:600;cursor:pointer}
+.bar{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin:0 0 6px}
+.count{font-weight:700} .count.zero{color:var(--ok)} .count.some{color:var(--warn)}
+.hint{color:var(--sub);font-size:12px}
+table{border-collapse:collapse;width:100%;table-layout:fixed}
+th,td{border-bottom:1px solid var(--rule);padding:6px 5px;text-align:left;vertical-align:top}
+th{font-size:11.5px;color:var(--sub);font-weight:600}
+td.no{color:var(--sub);font-variant-numeric:tabular-nums}
+tr.need{background:#fffbf2}
+select,input,textarea,button{font:inherit}
+select,input,textarea{width:100%;padding:3px 5px;border:1px solid var(--rule);border-radius:4px;background:#fff;color:var(--ink)}
+input[type=checkbox]{width:auto;margin:0 4px 0 0;vertical-align:-2px}
+textarea{resize:vertical;min-height:2.6em;line-height:1.35}
+.flagged{border-color:var(--warn)!important;background:var(--warn-soft)!important}
+.empty{border-color:var(--bad)!important;background:var(--bad-soft)!important}
+.full{font-size:12px;color:var(--ok);margin-top:3px;line-height:1.35}
+.cands{display:flex;flex-direction:column;gap:3px;margin-top:4px}
+.cands .lab{font-size:11px;color:var(--sub)}
+.cands button,.hits button{font-size:12px;text-align:left;background:#fff;border:1px dashed var(--warn);border-radius:4px;padding:2px 6px;cursor:pointer;color:var(--ink);line-height:1.35}
+.hits button{border-style:solid;border-color:var(--rule)}
+.find{margin-top:4px;font-size:12px}
+.hits{display:flex;flex-direction:column;gap:2px;margin-top:3px} .hits .none{font-size:12px;color:var(--sub)}
+.iso{font-size:11px;color:var(--sub);margin-top:2px;white-space:nowrap}
+.b{display:inline-block;padding:1px 8px;border-radius:999px;font-size:11.5px;font-weight:700;white-space:nowrap}
+.ok{background:var(--ok-soft);color:var(--ok)} .warn{background:var(--warn-soft);color:var(--warn)} .bad{background:var(--bad-soft);color:var(--bad)} .done{background:var(--indigo-soft);color:var(--indigo)}
+.why{margin:4px 0 0;padding-left:1.1em;font-size:11.5px;color:var(--warn);line-height:1.4}
+.ack{margin-top:4px;font-size:12px;padding:2px 8px;border:1px solid var(--warn);background:#fff;color:var(--warn);border-radius:4px;cursor:pointer}
+.del{white-space:nowrap;font-size:12px;padding:2px 6px;border:1px solid var(--rule);background:#fff;color:var(--sub);border-radius:4px;cursor:pointer}
+.foot{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.btn{padding:6px 14px;border-radius:6px;border:1px solid var(--indigo);background:var(--indigo);color:#fff;cursor:pointer}
+.btn.blocked{background:#8d96ad;border-color:#8d96ad}
+.btn2{padding:5px 12px;border-radius:6px;border:1px solid var(--indigo);background:#fff;color:var(--indigo);cursor:pointer}
+#msg{font-size:13px} #msg.err{color:var(--bad)} #msg.okm{color:var(--ok)}
+@media(max-width:1000px){main{grid-template-columns:1fr}}
 </style>
-<header><h1>FAX注文書</h1><span class="sub">読み取り結果の確認 → 直す → CSVを書き出す（販売管理に取り込む）</span></header>
+<header><h1>FAX注文書</h1><span class="sub">読み取り結果の確認 → 直す → CSVを書き出す（販売管理に取り込む）。受信日 2026-10-06</span></header>
 <main>
 <section class="pane"><img src="../fax.png" alt="受け取ったFAX注文書"></section>
 <section class="pane">
-<table><thead><tr><th>#</th><th>読み取った品名</th><th>品番（候補から選ぶ）</th><th>数量</th><th>単位</th><th>納期</th><th>判定</th></tr></thead><tbody id="rows"></tbody></table>
-<div class="foot"><button id="dl">CSVを書き出す</button><span class="stat" id="stat"></span></div>
+<div id="sheet"></div>
+<div class="bar"><span class="count" id="count"></span><span class="hint">品番が空の行は、候補か「一覧から探す」で選ぶ</span></div>
+<table><colgroup><col style="width:28px"><col style="width:20%"><col><col style="width:60px"><col style="width:66px"><col style="width:92px"><col style="width:150px"><col style="width:50px"></colgroup>
+<thead><tr><th>#</th><th>読み取った品名</th><th>品番（候補から選ぶ・一覧から探す）</th><th>数量</th><th>単位</th><th>納期</th><th>判定</th><th></th></tr></thead><tbody id="rows"></tbody></table>
+<div class="foot"><button class="btn2" id="add">＋ 行を追加（読み落とし・電話の注文）</button><button class="btn" id="dl">CSVを書き出す</button><span id="msg" role="status"></span></div>
 </section></main>
 <script>
-const CAT={"OJ-001": "オーサワの有機玄米みそ(甘口)彩仕込み", "OJ-002": "アルチェネロ オーガニックＥＸＶオリーブオイルフルッタート", "OJ-003": "アルチェネロ オーガニックＥＸＶオリーブオイルフルッタート", "OJ-004": "オーサワの有機立科米みそ", "OJ-005": "オーサワの国産立科あわせみそ", "OJ-006": "オーサワの国産立科あわせみそ", "OJ-007": "オーサワの国産立科麦みそ(箱入り)", "OJ-008": "オーサワの国産立科麦みそ", "OJ-009": "オーサワの有機立科麦みそ", "OJ-010": "オーサワの有機立科豆みそ", "OJ-011": "オーサワの有機立科玄米みそ", "OJ-012": "オーサワの茜醤油(ペットボトル)", "OJ-013": "オーサワのなたねサラダ油", "OJ-014": "オーサワのなたねサラダ油", "OJ-015": "オーガニックフラックスシードオイル(有機亜麻仁油)", "OJ-016": "オーサワの和風だし"}; const ROWS=[{"品名_読み取り": "オーサワの有機立科玄米みそ", "数量": 10, "単位": "箱", "納期": "", "品番": "OJ-011", "確度": 1.0, "根拠": "一致", "候補": ["OJ-011", "OJ-004", "OJ-010"], "読み取り確度": 83.2}, {"品名_読み取り": "アルチェネロオーガニックEXVオリーブオイルフルッタート", "数量": 5, "単位": "", "納期": "", "品番": "OJ-003", "確度": 0.85, "根拠": "あいまい", "候補": ["OJ-003", "OJ-002", "OJ-015"], "読み取り確度": 95.3}, {"品名_読み取り": "オーサワの国産立科麦みそ", "数量": 2, "単位": "", "納期": "", "品番": "OJ-008", "確度": 0.85, "根拠": "あいまい", "候補": ["OJ-008", "OJ-007", "OJ-006"], "読み取り確度": 66.8}, {"品名_読み取り": "オーサワの和風だし", "数量": 1, "単位": "箱", "納期": "", "品番": "OJ-016", "確度": 1.0, "根拠": "一致", "候補": ["OJ-016", "OJ-014", "OJ-013"], "読み取り確度": 69.4}, {"品名_読み取り": "オーサワの有機玄米みそ", "数量": 30, "単位": "", "納期": "至急", "品番": "OJ-001", "確度": 0.9, "根拠": "一致", "候補": ["OJ-001", "OJ-011", "OJ-004"], "読み取り確度": 91.9}, {"品名_読み取り": "アルチェネロオーガーニックEXVオリープオイルフルッタート", "数量": 1, "単位": "", "納期": "", "品番": "OJ-003", "確度": 0.72, "根拠": "あいまい", "候補": ["OJ-003", "OJ-002", "OJ-015"], "読み取り確度": 90.8}, {"品名_読み取り": "オーサワの有機立科麦みそ", "数量": 3, "単位": "個", "納期": "10/10", "品番": "OJ-009", "確度": 1.0, "根拠": "一致", "候補": ["OJ-009", "OJ-010", "OJ-004"], "読み取り確度": 90.0}, {"品名_読み取り": "オーサワのなたねサラダ油", "数量": 2, "単位": "箱", "納期": "10/8", "品番": "OJ-014", "確度": 0.85, "根拠": "あいまい", "候補": ["OJ-014", "OJ-013", "OJ-016"], "読み取り確度": 92.6}];
+const CAT=[{"c": "OJ-001", "n": "オーサワの有機玄米みそ(甘口)彩仕込み", "s": "300g"}, {"c": "OJ-002", "n": "アルチェネロ オーガニックＥＸＶオリーブオイルフルッタート", "s": "229g(250ml)"}, {"c": "OJ-003", "n": "アルチェネロ オーガニックＥＸＶオリーブオイルフルッタート", "s": "458g(500ml)"}, {"c": "OJ-004", "n": "オーサワの有機立科米みそ", "s": "650g"}, {"c": "OJ-005", "n": "オーサワの国産立科あわせみそ", "s": "650g"}, {"c": "OJ-006", "n": "オーサワの国産立科あわせみそ", "s": "400g"}, {"c": "OJ-007", "n": "オーサワの国産立科麦みそ(箱入り)", "s": "3㎏(1kg×3)"}, {"c": "OJ-008", "n": "オーサワの国産立科麦みそ", "s": "650g"}, {"c": "OJ-009", "n": "オーサワの有機立科麦みそ", "s": "650g"}, {"c": "OJ-010", "n": "オーサワの有機立科豆みそ", "s": "650g"}, {"c": "OJ-011", "n": "オーサワの有機立科玄米みそ", "s": "650g"}, {"c": "OJ-012", "n": "オーサワの茜醤油(ペットボトル)", "s": "1.8L"}, {"c": "OJ-013", "n": "オーサワのなたねサラダ油", "s": "1360g"}, {"c": "OJ-014", "n": "オーサワのなたねサラダ油", "s": "600g"}, {"c": "OJ-015", "n": "オーガニックフラックスシードオイル(有機亜麻仁油)", "s": "190g"}, {"c": "OJ-016", "n": "オーサワの和風だし", "s": "40g(5g×8包)"}], ROWS=[{"品名_読み取り": "オーサワの有機立科玄米みそ", "品番": "OJ-011", "確度": 1.0, "根拠": "一致", "候補": ["OJ-011", "OJ-004", "OJ-009", "OJ-010", "OJ-001"], "競合": 1, "数量": 10, "単位": "箱", "納期": "", "納期_日付": "", "納期_原文": "", "数量_原文": "10箱", "判定": "一致", "理由": []}, {"品名_読み取り": "アルチェネロオーガニックEXVオリーブオイルフルッタート", "品番": "", "確度": 0.85, "根拠": "同名で規格違い", "候補": ["OJ-002", "OJ-003", "OJ-015", "OJ-007", "OJ-016"], "競合": 2, "数量": 5, "単位": "", "納期": "", "納期_日付": "", "納期_原文": "", "数量_原文": "5", "判定": "要確認", "理由": [["品番", "同じ品名の候補が2つ。規格（g・mL・入数・大小）が書かれていないので決めない"]]}, {"品名_読み取り": "オーサワの国産立科麦みそ", "品番": "", "確度": 0.85, "根拠": "同名で規格違い", "候補": ["OJ-008", "OJ-007", "OJ-005", "OJ-006", "OJ-009"], "競合": 2, "数量": 2, "単位": "", "納期": "", "納期_日付": "", "納期_原文": "", "数量_原文": "2", "判定": "要確認", "理由": [["品番", "同じ品名の候補が2つ。規格（g・mL・入数・大小）が書かれていないので決めない"]]}, {"品名_読み取り": "オーサワの和風だし", "品番": "OJ-016", "確度": 1.0, "根拠": "一致", "候補": ["OJ-016", "OJ-013", "OJ-014", "OJ-004", "OJ-008"], "競合": 1, "数量": 1, "単位": "箱", "納期": "", "納期_日付": "", "納期_原文": "", "数量_原文": "1箱", "判定": "一致", "理由": []}, {"品名_読み取り": "オーサワの有機玄米みそ", "品番": "OJ-001", "確度": 0.9, "根拠": "一致", "候補": ["OJ-001", "OJ-011", "OJ-004", "OJ-009", "OJ-010"], "競合": 1, "数量": 30, "単位": "", "納期": "至急", "納期_日付": "", "納期_原文": "至急", "数量_原文": "30", "判定": "一致", "理由": []}, {"品名_読み取り": "アルチェネロオーガニックEXVオリープォイルフルッタート", "品番": "", "確度": 0.69, "根拠": "あいまい", "候補": ["OJ-002", "OJ-003", "OJ-015", "OJ-007", "OJ-016"], "競合": 0, "数量": 1, "単位": "", "納期": "", "納期_日付": "", "納期_原文": "", "数量_原文": "1", "判定": "要確認", "理由": [["品番", "似た品名はあるが一致しない（あいまい）"], ["数量", "数量の読み取りが不確か（確度75）"]]}, {"品名_読み取り": "オーサワの有機立科麦みそ", "品番": "OJ-009", "確度": 1.0, "根拠": "一致", "候補": ["OJ-009", "OJ-004", "OJ-010", "OJ-011", "OJ-008"], "競合": 1, "数量": 3, "単位": "個", "納期": "10/10", "納期_日付": "2026-10-10", "納期_原文": "10/10", "数量_原文": "3個", "判定": "一致", "理由": []}, {"品名_読み取り": "オーサワのなたねサラダ油", "品番": "", "確度": 0.85, "根拠": "同名で規格違い", "候補": ["OJ-013", "OJ-014", "OJ-016", "OJ-012", "OJ-004"], "競合": 2, "数量": 2, "単位": "箱", "納期": "10/8", "納期_日付": "2026-10-08", "納期_原文": "10/8", "数量_原文": "2箱", "判定": "要確認", "理由": [["品番", "同じ品名の候補が2つ。規格（g・mL・入数・大小）が書かれていないので決めない"]]}], SHEET=[], REF="2026-10-06";
+const BY=Object.fromEntries(CAT.map(x=>[x.c,x]));
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const label=c=>{const x=BY[c];return x?`${x.c} ${x.n}${x.s?' '+x.s:''}`:c};
+const fold=s=>String(s||'').normalize('NFKC').toLowerCase().replace(/[\u3041-\u3096]/g,ch=>String.fromCharCode(ch.charCodeAt(0)+0x60)).replace(/[\s・･\-ー—（）()\[\]【】\/,、。]/g,'');
+const IDX=CAT.map(x=>({x,k:fold(x.c+' '+x.n+' '+x.s),n:fold(x.n),c:fold(x.c)}));
+function search(q){const ts=String(q||'').normalize('NFKC').split(/\s+/).map(fold).filter(Boolean);if(!ts.length)return[];
+ return IDX.filter(e=>ts.every(t=>e.k.includes(t))).map(e=>[e.c===ts[0]?0:e.n.startsWith(ts[0])?1:2,e.n.length,e]).sort((a,b)=>a[0]-b[0]||a[1]-b[1]).slice(0,8).map(a=>a[2].x.c)}
+const iso=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+function parseDue(raw){let t=String(raw||'').normalize('NFKC').replace(/\s/g,'');if(!t)return{ok:true,canon:'',iso:''};
+ t=t.replace(/[(（][月火水木金土日][)）]$/,'').replace(/(まで|迄|必着|着|納品|納入|頃|ごろ)$/,'');
+ const ref=new Date(REF+'T00:00:00'),add=n=>{const d=new Date(ref);d.setDate(d.getDate()+n);return iso(d)};
+ const W={'至急':null,'明日':1,'明後日':2,'本日':0,'今日':0,'来週':null,'今週':null};
+ if(t in W)return{ok:true,canon:t,iso:W[t]===null?'':add(W[t])};
+ if(t==='月末'||t==='今月末')return{ok:true,canon:'月末',iso:iso(new Date(ref.getFullYear(),ref.getMonth()+1,0))};
+ const m=t.match(/^(\d{1,2})[\/月.\-](\d{1,2})日?$/);
+ if(m){const mo=+m[1],da=+m[2];let d=new Date(ref.getFullYear(),mo-1,da);if(d.getMonth()!==mo-1)return{ok:false};
+  if(d<ref&&(ref-d)/864e5>180)d=new Date(ref.getFullYear()+1,mo-1,da);return{ok:true,canon:`${mo}/${da}`,iso:iso(d)}}
+ return{ok:false}}
+// 行の状態。flags = 仕組みが付けた「確かめてほしい点」。品番の点は品番を選べば、数量・納期の点はそのマスを直すか「確認した」で消える
+const S=ROWS.map(r=>({name:r.品名_読み取り||'',code:r.品番||'',qty:r.数量,unit:r.単位||'',due:r.納期_原文||r.納期||'',
+ cands:r.候補||[],nc:r.競合||0,init:r.判定,flags:(r.理由||[]).map(([k,m])=>({k,m,open:true})),del:false,added:false}));
 const tb=document.getElementById('rows');
-function badge(r){const c=r.確度>=0.9?'ok':r.確度>=0.6?'warn':'bad';const t=r.確度>=0.9?'一致':r.確度>=0.6?'要確認':'不明';return `<span class="b ${c}">${t} ${r.確度}</span>`}
-ROWS.forEach((r,i)=>{const tr=document.createElement('tr');
- const opts=[...new Set([r.品番,...r.候補].filter(Boolean))].map(c=>`<option value="${c}" ${c===r.品番?'selected':''}>${c} ${CAT[c]||''}</option>`).join('')+'<option value="">（該当なし）</option>';
- tr.innerHTML=`<td>${i+1}</td><td>${r.品名_読み取り}</td><td><select data-i="${i}">${opts}</select></td><td class="n"><input type="number" value="${r.数量}" size="4" data-q="${i}"></td><td>${r.単位}</td><td>${r.納期}</td><td>${badge(r)}</td>`;
- tb.appendChild(tr)});
-const need=ROWS.filter(r=>r.確度<0.9).length; document.getElementById('stat').textContent=`${ROWS.length}行中 ${need}行が要確認`;
-document.getElementById('dl').onclick=()=>{const lines=['品番,品名,数量,単位,納期'];
- document.querySelectorAll('#rows tr').forEach((tr,i)=>{const code=tr.querySelector('select').value;const q=tr.querySelector('input').value;lines.push([code,(CAT[code]||ROWS[i].品名_読み取り),q,ROWS[i].単位,ROWS[i].納期].map(v=>`"${String(v).replace(/"/g,'""')}"`).join(','))});
- const blob=new Blob(["\ufeff"+lines.join('\n')],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='order.csv';a.click()};
+function check(s){const errs=[];
+ if(!s.code)errs.push(['品番','品番を選んでください']);
+ if(!(Number.isInteger(s.qty)&&s.qty>0))errs.push(['数量','数量を入れてください']);
+ const d=parseDue(s.due);if(!d.ok)errs.push(['納期',`納期「${s.due}」を読めません（例: 10/20・10月20日・明日・至急）`]);
+ const open=s.flags.filter(f=>f.open&&!(f.k==='品番'&&s.code));
+ return{errs,open,d,ok:!errs.length&&!open.length}}
+function badge(s,c){if(c.ok)return s.init==='一致'&&!s.edited?'<span class="b ok">一致</span>':'<span class="b done">確認済み</span>';
+ return !s.code&&s.init==='不明'?'<span class="b bad">不明</span>':'<span class="b warn">要確認</span>'}
+function codeCell(s,i){const opts=[...new Set([s.code,...s.cands].filter(Boolean))];
+ return `<select data-i="${i}" class="code"><option value="">選んでください</option>${opts.map(c=>`<option value="${esc(c)}"${c===s.code?' selected':''}>${esc(label(c))}</option>`).join('')}</select>
+ <div class="full"></div><div class="cands"></div>
+ <input class="find" type="search" placeholder="一覧から探す（品名・規格・品番）" data-i="${i}"><div class="hits"></div>`}
+function render(){tb.innerHTML='';S.forEach((s,i)=>{if(s.del)return;const tr=document.createElement('tr');tr.dataset.i=i;
+ tr.innerHTML=`<td class="no"></td><td><textarea class="name" rows="2" data-i="${i}">${esc(s.name)}</textarea></td><td>${codeCell(s,i)}</td>
+ <td><input class="qty" type="number" min="1" step="1" value="${s.qty??''}" data-i="${i}"></td><td><input class="unit" value="${esc(s.unit)}" data-i="${i}"></td>
+ <td><input class="due" value="${esc(s.due)}" data-i="${i}"><div class="iso"></div></td><td class="st"></td><td><button class="del" data-i="${i}" title="この行を消す">削除</button></td>`;
+ tb.appendChild(tr)});update()}
+function update(){let n=0,need=0;
+ tb.querySelectorAll('tr').forEach(tr=>{const i=+tr.dataset.i,s=S[i],c=check(s);n++;if(!c.ok)need++;
+  tr.querySelector('.no').textContent=n;tr.classList.toggle('need',!c.ok);
+  const sel=tr.querySelector('select.code');sel.classList.toggle('empty',!s.code);
+  tr.querySelector('.full').textContent=s.code&&label(s.code).length>20?label(s.code):'';
+  const cd=tr.querySelector('.cands'),chips=s.cands.slice(0,Math.min(6,s.nc>=2?s.nc:3));
+  cd.innerHTML=!s.code&&chips.length?'<span class="lab">候補（押すと選ぶ。ほかは上の一覧か、下で探す）</span>'+chips.map(x=>`<button type="button" data-c="${esc(x)}">${esc(label(x))}</button>`).join(''):'';
+  const fl=k=>c.open.some(f=>f.k===k)||c.errs.some(e=>e[0]===k);
+  tr.querySelector('.qty').classList.toggle('flagged',fl('数量'));tr.querySelector('.due').classList.toggle('flagged',fl('納期'));
+  tr.querySelector('.iso').textContent=c.d.ok&&c.d.iso?'→ '+c.d.iso:'';
+  const msgs=[...c.open.map(f=>f.m),...c.errs.filter(e=>!c.open.some(f=>f.k===e[0])).map(e=>e[1])];
+  const ack=c.open.some(f=>f.k!=='品番');
+  tr.querySelector('.st').innerHTML=badge(s,c)+(msgs.length?`<ul class="why">${msgs.map(m=>`<li>${esc(m)}</li>`).join('')}</ul>`:'')+(ack?`<button class="ack" data-i="${i}" type="button">確認した</button>`:'')});
+ const sa=document.getElementById('sheetack'),sheetOpen=SHEET.length&&!(sa&&sa.checked);
+ const cnt=document.getElementById('count');cnt.textContent=`${n}行中 ${need}行が要確認`+(sheetOpen?'・用紙の確認が未了':'');
+ cnt.className='count '+(need||sheetOpen?'some':'zero');
+ document.getElementById('dl').classList.toggle('blocked',!!(need||sheetOpen||!n));
+ const msg=document.getElementById('msg');if(msg.classList.contains('err')){const b=blockers();msg.textContent=b.join('。');if(!b.length)msg.className=''}}
+function blockers(){const b=[],bad=[];let n=0;S.forEach(s=>{if(s.del)return;n++;if(!check(s).ok)bad.push(n)});
+ if(bad.length)b.push(`まだ書き出せません: ${bad.join('・')}行目が未確認です`);
+ const sa=document.getElementById('sheetack');if(SHEET.length&&!(sa&&sa.checked))b.push((bad.length?'':'まだ書き出せません: ')+'用紙の確認（上の赤い枠）が済んでいません');
+ if(!n)b.push('行がありません');return b}
+function setCode(i,c){const s=S[i];s.code=c;s.edited=true;if(c&&!s.cands.includes(c))s.cands=[c,...s.cands];
+ const tr=tb.querySelector(`tr[data-i="${i}"]`);const td=tr.children[2];td.innerHTML=codeCell(s,i);update()}
+tb.addEventListener('change',e=>{const t=e.target,i=+t.dataset.i;if(t.classList.contains('code'))setCode(i,t.value)});
+tb.addEventListener('input',e=>{const t=e.target,i=+t.dataset.i,s=S[i];if(!s)return;
+ if(t.classList.contains('name'))s.name=t.value;
+ if(t.classList.contains('qty')){const v=t.value.trim();s.qty=/^\d+$/.test(v)?parseInt(v,10):null;s.edited=true;if(s.qty>0)s.flags.forEach(f=>{if(f.k==='数量')f.open=false})}
+ if(t.classList.contains('unit')){s.unit=t.value;s.edited=true}
+ if(t.classList.contains('due')){s.due=t.value;s.edited=true;if(parseDue(s.due).ok)s.flags.forEach(f=>{if(f.k==='納期')f.open=false})}
+ if(t.classList.contains('find')){const h=t.nextElementSibling,r=search(t.value);
+  h.innerHTML=t.value.trim()?(r.length?r.map(c=>`<button type="button" data-c="${esc(c)}">${esc(label(c))}</button>`).join(''):'<span class="none">一覧に見つかりません</span>'):'';return}
+ update()});
+tb.addEventListener('click',e=>{const t=e.target.closest('button');if(!t)return;const tr=t.closest('tr'),i=+tr.dataset.i,s=S[i];
+ if(t.dataset.c){setCode(i,t.dataset.c);return}
+ if(t.classList.contains('ack')){s.flags.forEach(f=>{if(f.k!=='品番')f.open=false});s.edited=true;update();return}
+ if(t.classList.contains('del')){s.del=true;tr.remove();update()}});
+document.getElementById('add').onclick=()=>{S.push({name:'',code:'',qty:null,unit:'',due:'',cands:[],init:'要確認',flags:[],del:false,added:true,edited:true});render();
+ const last=tb.lastElementChild;if(last)last.querySelector('.name').focus()};
+if(SHEET.length){document.getElementById('sheet').innerHTML=`<div class="sheetwarn" role="alert"><b>用紙ごと要確認</b>（行が抜けている・つながっている可能性があります）<ul>${SHEET.map(m=>`<li>${esc(m)}</li>`).join('')}</ul><label><input type="checkbox" id="sheetack"> FAXの画像と照らし、行の抜け・余分がないことを確かめた</label></div>`;
+ document.getElementById('sheetack').addEventListener('change',update)}
+document.getElementById('dl').onclick=()=>{const msg=document.getElementById('msg'),b=blockers();
+ if(b.length){msg.textContent=b.join('。');msg.className='err';return}
+ const q=v=>`"${String(v??'').replace(/"/g,'""')}"`,lines=['品番,品名,規格,数量,単位,納期,納期日付'];let n=0;
+ S.forEach(s=>{if(s.del)return;n++;const x=BY[s.code]||{},d=parseDue(s.due);lines.push([s.code,x.n,x.s,s.qty,s.unit,d.canon,d.iso].map(q).join(','))});
+ const blob=new Blob(["\ufeff"+lines.join('\r\n')],{type:'text/csv'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='order.csv';a.click();
+ msg.textContent=`order.csv を書き出しました（${n}行）`;msg.className='okm'};
+render();
 </script></html>
