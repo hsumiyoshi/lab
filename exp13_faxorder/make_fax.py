@@ -32,18 +32,18 @@ def alias(name: str, rng: random.Random) -> str:
     return n.replace(" ", "").replace("・", "")
 
 
-def fit(d, text: str, width: int, size: int = 30, floor: int = 22):
+def fit(d, text: str, width: int, size: int = 30, floor: int = 22, font: str = FONT):
     """マスに収まる書き方を返す: (行のリスト, フォント)。
 
     人は長い品名を、字を小さくするか2行に折ってマスに収める。はみ出させない。
     まず1行のまま floor まで小さくし、それでも入らなければ2行に折る
     """
     for sz in range(size, floor - 1, -2):
-        f = ImageFont.truetype(FONT, sz)
+        f = ImageFont.truetype(font, sz)
         if d.textlength(text, font=f) <= width:
             return [text], f
     for sz in range(26, floor - 1, -2):
-        f = ImageFont.truetype(FONT, sz)
+        f = ImageFont.truetype(font, sz)
         cut = len(text) // 2
         sp = text.rfind(" ", 0, cut + 4)
         if sp > cut // 2:
@@ -51,7 +51,7 @@ def fit(d, text: str, width: int, size: int = 30, floor: int = 22):
         a, b = text[:cut].strip(), text[cut:].strip()
         if max(d.textlength(a, font=f), d.textlength(b, font=f)) <= width:
             return [a, b], f
-    return [text[: len(text) // 2], text[len(text) // 2 :]], ImageFont.truetype(FONT, floor)
+    return [text[: len(text) // 2], text[len(text) // 2 :]], ImageFont.truetype(font, floor)
 
 
 def main():
