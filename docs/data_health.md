@@ -1,6 +1,6 @@
 # データ健全性（保全の番人）
 
-生成: 2026-10-17 02:12 JST / 登録 27件 / 合計 27.5MB
+生成: 2026-10-18 01:10 JST / 登録 27件 / 合計 27.6MB
 
 **方針**: 格付け(A/B/C)は価値の判定であり、保全の可否ではない。**全件を守る**——再取得可能でも、取り直せる保証は外部（API廃止・仕様変更・サイト改変）に依存するため。
 
@@ -13,18 +13,18 @@
 | `exp03_weather/data/ledger.json` | A | append | 11KB | OK | 自前の採点 |
 | `exp08_curtail/data/outlook_history.json` | A | append | 2KB | OK | 九電でんき予報 |
 | `exp08_curtail/data/ledger.json` | A | append | 1KB | 変化なし | 自前の採点 |
-| `exp10_disaster/data/events.json` | A | append | 4.2MB | OK | GDACS RSS |
-| `exp10_disaster/data/ledger.json` | A | append | 6KB | 変化なし | 自前の採点 |
+| `exp10_disaster/data/events.json` | A | append | 4.3MB | OK | GDACS RSS |
+| `exp10_disaster/data/ledger.json` | A | append | 6KB | OK | 自前の採点 |
 | `exp10_disaster/data/firms_daily.json` | A | append | 1KB | OK | NASA FIRMS（要キー） |
 | `exp11_books/data/rankings.json` | A | append | 15KB | 変化なし | トーハン週間ベストセラー |
 | `exp11_books/data/ledger.json` | A | append | 1KB | 変化なし | 自前の採点 |
-| `collector/data/kyuden_curtail.json` | A | append | 29KB | OK | 九電でんき予報（収集基盤） |
+| `collector/data/kyuden_curtail.json` | A | append | 30KB | OK | 九電でんき予報（収集基盤） |
 | `collector/data/tohan_books.json` | A | append | 24KB | 変化なし | トーハン週間ベストセラー（収集基盤） |
 | `exp07_satellite/data/tsumagoi_ndvi.csv` | B | append | 3KB | 変化なし | Sentinel-2 AWS公開COG |
 | `marketplaces/ledger/ledger.tsv` | B | append | 290KB | 変化なし | ココナラ・Shopify App Store・Gumroad・BOOTHの公開ページ |
 | `exp01_jepx/data/spot_2026.csv` | C | append | 2.4MB | OK | JEPX公式CSV |
 | `exp01_jepx/data/spot_2025.csv` | C | append | 4.3MB | 変化なし | JEPX公式CSV |
-| `exp01_jepx/data/weather_actual.csv` | C | append | 27KB | 変化なし | Open-Meteo archive |
+| `exp01_jepx/data/weather_actual.csv` | C | append | 27KB | OK | Open-Meteo archive |
 | `exp01_jepx/data/weather_forecast.csv` | C | append | 27KB | 変化なし | Open-Meteo historical-forecast |
 | `exp02_vegetable/data/veg_31700.csv` | C | append | 98KB | 変化なし | 東京都中央卸売市場（ベジ探） |
 | `exp02_vegetable/data/veg_33400.csv` | C | append | 100KB | 変化なし | 同上 |
