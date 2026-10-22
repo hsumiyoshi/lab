@@ -12,3 +12,4 @@ CIが落ちるたびにこの表へ1行追記される（`if: failure()` ステ�
 | 2026-08-23T22:18Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/32670176818) | 解決（提出は成功したがpushが他CIと衝突して弾かれた→全CIのpushを再試行つきに 2026-08-24） |
 | 2026-08-24T05:31Z | exp01 forward daily | [run](https://github.com/hsumiyoshi/lab/actions/runs/32693162667) | 解決（コンテナ巻き戻し時のファイルコピー運用がforward.pyを8/13以前へ巻き戻していた 2026-08-24） |
 | 2026-09-06T23:25Z | exp10 global disaster league | [run](https://github.com/hsumiyoshi/lab/actions/runs/34066717370) | 未対応 |
+| 2026-10-22T13:43Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/39789337325) | 未対応 |
