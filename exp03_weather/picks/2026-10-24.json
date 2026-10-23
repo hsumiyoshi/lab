@@ -1,0 +1,13 @@
+{
+ "target": "2026-10-24",
+ "submitted_at": "2026-10-23T23:03:00+09:00",
+ "debias_offset": -0.04,
+ "picks": {
+  "jma": 17.0,
+  "debias": 17.0,
+  "openmeteo": 16.4,
+  "blend": 16.7,
+  "persistence": 20.6
+ },
+ "absent": []
+}
