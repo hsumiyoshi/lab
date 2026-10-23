@@ -559,5 +559,16 @@
    "ma7": 10,
    "persistence": 4
   }
+ },
+ "2026-10-22": {
+  "actual": 1,
+  "err": {
+   "ma7": 11,
+   "persistence": 1
+  },
+  "picks": {
+   "ma7": 12,
+   "persistence": 2
+  }
  }
 }
