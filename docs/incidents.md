@@ -16,3 +16,4 @@ CIが落ちるたびにこの表へ1行追記される（`if: failure()` ステ�
 | 2026-10-22T22:47Z | collector/tohan_books | — | tohan_books: 件数が想定外 0件（想定 10〜10）——パーサ破損かページ改変の可能性 |
 | 2026-10-23T00:23Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/39877755007) | 未対応 |
 | 2026-10-23T09:27Z | collector/tohan_books | — | tohan_books: 件数が想定外 0件（想定 10〜10）——パーサ破損かページ改変の可能性 |
+| 2026-10-23T13:20Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/39960328977) | 未対応 |
