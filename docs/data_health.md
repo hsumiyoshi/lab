@@ -1,6 +1,6 @@
 # データ健全性（保全の番人）
 
-生成: 2026-10-25 01:27 JST / 登録 27件 / 合計 28.1MB
+生成: 2026-10-26 01:58 JST / 登録 27件 / 合計 28.2MB
 
 **方針**: 格付け(A/B/C)は価値の判定であり、保全の可否ではない。**全件を守る**——再取得可能でも、取り直せる保証は外部（API廃止・仕様変更・サイト改変）に依存するため。
 
@@ -13,8 +13,8 @@
 | `exp03_weather/data/ledger.json` | A | append | 13KB | OK | 自前の採点 |
 | `exp08_curtail/data/outlook_history.json` | A | append | 2KB | 変化なし | 九電でんき予報 |
 | `exp08_curtail/data/ledger.json` | A | append | 1KB | 変化なし | 自前の採点 |
-| `exp10_disaster/data/events.json` | A | append | 4.8MB | OK | GDACS RSS |
-| `exp10_disaster/data/ledger.json` | A | append | 7KB | OK | 自前の採点 |
+| `exp10_disaster/data/events.json` | A | append | 4.9MB | OK | GDACS RSS |
+| `exp10_disaster/data/ledger.json` | A | append | 7KB | 変化なし | 自前の採点 |
 | `exp10_disaster/data/firms_daily.json` | A | append | 1KB | OK | NASA FIRMS（要キー） |
 | `exp11_books/data/rankings.json` | A | append | 16KB | 変化なし | トーハン週間ベストセラー |
 | `exp11_books/data/ledger.json` | A | append | 2KB | 変化なし | 自前の採点 |
