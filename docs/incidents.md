@@ -23,3 +23,4 @@ CIが落ちるたびにこの表へ1行追記される（`if: failure()` ステ�
 | 2026-10-24T12:37Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/40094690396) | 未対応 |
 | 2026-10-24T21:38Z | collector/kyuden_curtail | — | kyuden_curtail: 件数が想定外 0件（想定 3〜24）——パーサ破損かページ改変の可能性 |
 | 2026-10-24T23:58Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/40144874416) | 未対応 |
+| 2026-10-25T09:04Z | collector/kyuden_curtail | — | kyuden_curtail: 件数が想定外 0件（想定 3〜24）——パーサ破損かページ改変の可能性 |
