@@ -870,5 +870,39 @@
    "blend": 1.7,
    "persistence": 2.2
   }
+ },
+ "2026-10-25": {
+  "actual": 27.1,
+  "picks": {
+   "jma": 26.0,
+   "debias": 25.9,
+   "openmeteo": 25.4,
+   "blend": 25.7,
+   "persistence": 18.4
+  },
+  "err": {
+   "jma": 1.1,
+   "debias": 1.2,
+   "openmeteo": 1.7,
+   "blend": 1.4,
+   "persistence": 8.7
+  }
+ },
+ "2026-10-26": {
+  "actual": 20.2,
+  "picks": {
+   "jma": 18.0,
+   "debias": 18.0,
+   "openmeteo": 19.4,
+   "blend": 18.7,
+   "persistence": 27.1
+  },
+  "err": {
+   "jma": 2.2,
+   "debias": 2.2,
+   "openmeteo": 0.8,
+   "blend": 1.5,
+   "persistence": 6.9
+  }
  }
 }
