@@ -9,10 +9,10 @@
    "refetch": "python3 exp01_jepx/fetch.py（年度指定）",
    "note": "市場価格。全戦略の採点根拠",
    "state": {
-    "bytes": 2683316,
-    "sha256": "d65f9de9269de3626e3b00e2601197a14ceb4cf85ac6c85a999dd6674b2fab14",
-    "lines": 10321,
-    "checked": "2026-11-01"
+    "bytes": 2695994,
+    "sha256": "e0cf0a001d2d05eb9ea2d19c8e7dc7fbe7631445a746d4ee0ded4767dea0db73",
+    "lines": 10369,
+    "checked": "2026-11-02"
    }
   },
   {
@@ -26,7 +26,7 @@
     "bytes": 4463497,
     "sha256": "796d10916b1c457cdcb5e9a17161020296864418bc93d94b6aaad2b0f827ba28",
     "lines": 17521,
-    "checked": "2026-11-01"
+    "checked": "2026-11-02"
    }
   },
   {
@@ -37,10 +37,10 @@
    "refetch": "python3 exp01_jepx/weather.py",
    "note": "日射・気温の実測（学習用）",
    "state": {
-    "bytes": 27995,
-    "sha256": "08c6fed341a884f56edecf789483bb359de5f85f191c58f8bd3da2ee77810ce5",
-    "lines": 604,
-    "checked": "2026-11-01"
+    "bytes": 28138,
+    "sha256": "2cea27a4fb66523e618a7c8a8cc9b95be250e39e49ca996508e19e415b1b16e3",
+    "lines": 607,
+    "checked": "2026-11-02"
    }
   },
   {
@@ -54,7 +54,7 @@
     "bytes": 28168,
     "sha256": "1e758aa5c1b26956c4215bbad869c45c09a096d427fc74fa175b6ea082917a36",
     "lines": 608,
-    "checked": "2026-11-01"
+    "checked": "2026-11-02"
    }
   },
   {
@@ -65,10 +65,10 @@
    "refetch": "再計算不可（提出の事実は再現できない）",
    "note": "フォワード台帳。提出と採点の履歴",
    "state": {
-    "bytes": 11878,
-    "sha256": "4bc4b45ba6aa014df89cdc7f730a5b46d346d36269c310df655358d223e6e760",
-    "lines": 81,
-    "checked": "2026-11-01"
+    "bytes": 12013,
+    "sha256": "46b2f9995d667e4189c5f355d978c72d1b43ef2afb47da254f0daa618b6e0cd2",
+    "lines": 82,
+    "checked": "2026-11-02"
    }
   },
   {
@@ -82,7 +82,7 @@
     "bytes": 102485,
     "sha256": "0c43bbc8914a80b0054ffdd980faad2debc11dfe40e45f2744320e1c6403401e",
     "lines": 2463,
-    "checked": "2026-11-01"
+    "checked": "2026-11-02"
    }
   },
   {
@@ -96,7 +96,7 @@
     "bytes": 103407,
     "sha256": "7210b62101cda0a1c4f708566ae5076c9a8ff953f915d7ff56e12fb41398808b",
     "lines": 2689,
-    "checked": "2026-11-01"
+    "checked": "2026-11-02"
    }
   },
   {
@@ -110,7 +110,7 @@
     "bytes": 159989,
     "sha256": "20258d1c60d6173d2ca9afdeeb1292b3bd0963a2980fe6049c67695da7ee9a99",
     "lines": 3884,
-    "checked": "2026-11-01"
+    "checked": "2026-11-02"
    }
   },
   {
@@ -124,7 +124,7 @@
     "bytes": 155199,
     "sha256": "f9295baa776bf71a98723fb514f8ae0cd1636175319142f3ca6e1262fa56c632",
     "lines": 4045,
-    "checked": "2026-11-01"
+    "checked": "2026-11-02"
    }
   },
   {
@@ -137,7 +137,7 @@
    "state": {
     "bytes": 5889955,
     "sha256": "03365d548d0808d1ea338bc852eb6fb1c0e4726a241691115ad8ef16269650ce",
-    "checked": "2026-11-01"
+    "checked": "2026-11-02"
    }
   },
   {
@@ -150,7 +150,7 @@
    "state": {
     "bytes": 743002,
     "sha256": "230d91796986b7e8e0c37f4d341dd314938e7082c48eec4866a3319da56f5e51",
-    "checked": "2026-11-01"
+    "checked": "2026-11-02"
    }
   },
   {
@@ -163,7 +163,7 @@
    "state": {
     "bytes": 393326,
     "sha256": "ee76542ff8799fb5b925c8738aa57a4397045954269d37943ecf57cfdcc709c3",
-    "checked": "2026-11-01"
+    "checked": "2026-11-02"
    }
   },
   {
@@ -176,7 +176,7 @@
    "state": {
     "bytes": 9355882,
     "sha256": "af009934c08d1f3ae5caaa010e6c88a707188dd87e5340a8f358dd817edbad5d",
-    "checked": "2026-11-01"
+    "checked": "2026-11-02"
    }
   },
   {
@@ -189,7 +189,7 @@
    "state": {
     "bytes": 6102,
     "sha256": "9383dc1d9380b1e45d9e408b89ea14f666a806eeb0a28cc4a879306aa0429dc7",
-    "checked": "2026-11-01"
+    "checked": "2026-11-02"
    }
   },
   {
@@ -203,7 +203,7 @@
     "bytes": 75076,
     "sha256": "648ccb9efba3e6c8e4dd5077865b46ada92252bde27f22c05c0e0239d8d0ebfd",
     "lines": 1223,
-    "checked": "2026-11-01"
+    "checked": "2026-11-02"
    }
   },
   {
@@ -217,7 +217,7 @@
     "bytes": 2601,
     "sha256": "88c343273be3f2f72f02fa3b4f0085b36c8083e3d03bfd7e36b1d8ce87bd5e45",
     "lines": 66,
-    "checked": "2026-11-01"
+    "checked": "2026-11-02"
    }
   },
   {
@@ -228,10 +228,10 @@
    "refetch": "再計算不可",
    "note": "気象リーグの提出と採点",
    "state": {
-    "bytes": 14512,
-    "sha256": "73dde40bf10688a28275ddce800c77a86036ef3f7c2fa41831730267ddd4eb15",
-    "lines": 952,
-    "checked": "2026-11-01"
+    "bytes": 14672,
+    "sha256": "1b6d4f5308029d58bfbb5ad925604127bbe81f27ff21725adf7122f38cfa9169",
+    "lines": 963,
+    "checked": "2026-11-02"
    }
   },
   {
@@ -242,10 +242,10 @@
    "refetch": "**不可**（当日分しか表示されない）",
    "note": "出力制御見通しの履歴",
    "state": {
-    "bytes": 1812,
-    "sha256": "c507a5369eabf45025633d2ab96fd022da0c685393b66771202a2d8a67bd0f89",
-    "lines": 63,
-    "checked": "2026-11-01"
+    "bytes": 1948,
+    "sha256": "fb64b9e4ce5dbdfeffb0df00489ae3db5d8fcc1d1b82b6515edf4def83dcbf72",
+    "lines": 67,
+    "checked": "2026-11-02"
    }
   },
   {
@@ -259,7 +259,7 @@
     "bytes": 536,
     "sha256": "2c615ba97faabe41e9e5f297a5e816ff1b998f16e620628e07f2ed9c8e553084",
     "lines": 35,
-    "checked": "2026-11-01"
+    "checked": "2026-11-02"
    }
   },
   {
@@ -270,10 +270,10 @@
    "refetch": "**不可**（巻き取り式で古いものが落ちる）",
    "note": "全球災害イベントの履歴",
    "state": {
-    "bytes": 5477502,
-    "sha256": "5373b2172966710357996cc2db2afd4a2c48228106f6d0c7effcc5080be0e0bd",
-    "lines": 129174,
-    "checked": "2026-11-01"
+    "bytes": 5530828,
+    "sha256": "c066b1dfc5f87b7d17977bfe3668dff745f8cdce7aad58d0e0b34ce5c9217675",
+    "lines": 130436,
+    "checked": "2026-11-02"
    }
   },
   {
@@ -284,10 +284,10 @@
    "refetch": "再計算不可",
    "note": "全球災害リーグの採点",
    "state": {
-    "bytes": 8053,
-    "sha256": "fe6356c3b33ad5c1e33eb3a3a07cda8f252d994607dc7960ed7fde0dc3a5342d",
-    "lines": 651,
-    "checked": "2026-11-01"
+    "bytes": 8190,
+    "sha256": "8ecb740b6f3a52c50d2c9dbc37a2b5427cbdd674989d9d2361c420e03b9b646f",
+    "lines": 662,
+    "checked": "2026-11-02"
    }
   },
   {
@@ -298,10 +298,10 @@
    "refetch": "直近数日のみ再取得可",
    "note": "衛星の熱異常検知の日次集計",
    "state": {
-    "bytes": 1342,
-    "sha256": "7fa9a6ee14339ed2a9d0c62d982648c79fedfa725167b40573ff40009597f220",
-    "lines": 69,
-    "checked": "2026-11-01"
+    "bytes": 1363,
+    "sha256": "d90a140c75789f87e3a8822ba8f041be34d5bc3bb99fae3badd5d9ab085ad5bb",
+    "lines": 70,
+    "checked": "2026-11-02"
    }
   },
   {
@@ -315,7 +315,7 @@
     "bytes": 18563,
     "sha256": "0389b9f8c39ba9a4656f415137756a8d55b74505aa4410c4790a3bd615efb178",
     "lines": 622,
-    "checked": "2026-11-01"
+    "checked": "2026-11-02"
    }
   },
   {
@@ -329,7 +329,7 @@
     "bytes": 1876,
     "sha256": "87b03ff3ee849adc27a88a391e02d48f7b7648b85beae15c10fba1a582375e80",
     "lines": 128,
-    "checked": "2026-11-01"
+    "checked": "2026-11-02"
    },
    "optional_until": "2026-08-27"
   },
@@ -341,10 +341,10 @@
    "refetch": "**不可**（当日分しか表示されない）",
    "note": "出力制御見通しの全行（本土＋離島×3日）",
    "state": {
-    "bytes": 31922,
-    "sha256": "0a636ff90acc08f7d916fab7fec98296e912253b3126038113c05cff0e193b1a",
-    "lines": 1283,
-    "checked": "2026-11-01"
+    "bytes": 33017,
+    "sha256": "1152de3c8feb9277f4f04a840cf52c075aa874ff96e6198e25166f8345e079fd",
+    "lines": 1325,
+    "checked": "2026-11-02"
    }
   },
   {
@@ -358,7 +358,7 @@
     "bytes": 29346,
     "sha256": "3a76c9285cdbb3798423d1b4eb70f06c6327ef0dc11ec795f336118bfad3b0a1",
     "lines": 992,
-    "checked": "2026-11-01"
+    "checked": "2026-11-02"
    }
   },
   {
@@ -372,7 +372,7 @@
     "bytes": 296494,
     "sha256": "1304c817740d14ba96591303720713d00ff279ca93e09f3d21a70361bafad226",
     "lines": 2095,
-    "checked": "2026-11-01"
+    "checked": "2026-11-02"
    }
   }
  ]
