@@ -15,7 +15,8 @@ def parse_kyuden_curtail(html: str) -> list:
     if i < 0:
         return []       # 件数0はruntimeがアラートにする（黙って成功しない）
     seg = html[i:i + 8000]
-    pub = re.search(r"\((\d+)月(\d+)日\s*(\d+)時(\d+)分発表\)", seg)
+    # 一時ページは全角の括弧で「（10月31日 17時0分発表）」と書く
+    pub = re.search(r"[\(（](\d+)月(\d+)日\s*(\d+)時(\d+)分発表[\)）]", seg)
     days = []
     out = []
     for r in re.findall(r"<tr[^>]*>(.*?)</tr>", seg, re.S):
@@ -66,6 +67,8 @@ SOURCES = {
     "kyuden_curtail": {
         "name": "kyuden_curtail",
         "url": "https://www.kyuden.co.jp/td_power_usages/pc.html",
+        # サーバー保守中（2026-10-22〜）は表が一時ページへ移る。本来のページが0件のときだけ読む
+        "fallback_urls": ["https://www.kyuden.co.jp/td/power-usages/temporary.html"],
         "fetch": {"interval": 2.0, "retries": 4},
         "raw": {"save": True},          # 当日分しか表示されない＝一回性あり
         "expect": {"rows": [3, 24], "schema": ["area", "date", "curtail"]},

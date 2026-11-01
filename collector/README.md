@@ -76,6 +76,7 @@ def parse_xxx(text: str) -> list:
 
 SOURCES["xxx"] = {
     "name": "xxx", "url": "...",
+    "fallback_urls": ["..."],      # 任意。本来のページが0件のときだけ順に読む
     "fetch": {"interval": 2.0, "retries": 4},   # ipv4/data(POST)も指定可
     "raw": {"save": True},        # 一回性があるなら必ずTrue
     "expect": {"rows": [lo, hi], "schema": ["date", "value"]},

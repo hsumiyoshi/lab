@@ -151,13 +151,22 @@ def run(spec: dict, parser) -> dict:
     parser: (text) -> list[dict]
     """
     name = spec["name"]
-    print(f"[{name}] 取得: {spec['url']}")
-    text = fetch(spec["url"], **spec.get("fetch", {}))
+    url = spec["url"]
+    print(f"[{name}] 取得: {url}")
+    text = fetch(url, **spec.get("fetch", {}))
     rows = parser(text)
+    # 本来のページで0件なら、宣言した予備のページを順に読む（九電の保守中の一時ページなど）。
+    # 予備でも0件なら、下の件数検査がアラートにする
+    for alt in spec.get("fallback_urls", []):
+        if rows:
+            break
+        print(f"[{name}] 0件のため予備を取得: {alt}")
+        url = alt
+        rows = parser(fetch(alt, **spec.get("fetch", {})))
     problems = check_expectations(name, rows, spec.get("expect", {}))
     if spec.get("raw", {}).get("save"):
         save_raw(name, {"fetched_at": datetime.now(JST).isoformat(timespec="seconds"),
-                        "source": spec["url"], "items": rows})
+                        "source": url, "items": rows})
     keyf = spec.get("key") or (lambda r: r.get("id") or hashlib.sha1(
         json.dumps(r, sort_keys=True, ensure_ascii=False).encode()).hexdigest()[:12])
     added = sum(1 for r in rows if append_ledger(name, keyf(r), r))
