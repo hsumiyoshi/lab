@@ -20,7 +20,7 @@ jobs:
       - name: Submit (07:00 JST) or collect+score (17:10 JST)
         working-directory: exp08_curtail
         run: |
-          if [ "$(date -u +%H)" = "22" ]; then python3 curtail.py; else python3 curtail.py collect; fi
+          if [ "${{ github.event.schedule }}" = "0 22 * * *" ]; then python3 curtail.py; else python3 curtail.py collect; fi
       - name: Build dashboard（台帳を更新したら必ず作り直す）
         run: python3 build_site.py
       - name: Commit

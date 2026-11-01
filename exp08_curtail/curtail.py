@@ -24,19 +24,33 @@ from pathlib import Path
 JST = timezone(timedelta(hours=9))
 HERE = Path(__file__).resolve().parent
 URL = "https://www.kyuden.co.jp/td_power_usages/pc.html"
+# 九電のサーバー保守中（2026-10-22〜）は、見通しの表が一時ページへ移る。本来のページを先に読み、
+# 表が無ければ一時ページを読む（保守明けに一時ページが古いまま残っても、本来のページが勝つ）
+TEMP_URL = "https://www.kyuden.co.jp/td/power-usages/temporary.html"
 UA = "Mozilla/5.0 (personal research ledger; https://github.com/hsumiyoshi/lab)"
 
 
 def fetch_outlook() -> dict:
     """九電のでんき予報から出力制御見通しを取る。返り値: {日付: 'あり'/'なし'} と発表時刻。"""
-    req = urllib.request.Request(URL, headers={"User-Agent": UA})
+    err = None
+    for url in (URL, TEMP_URL):
+        try:
+            return _parse_outlook(url)
+        except RuntimeError as e:
+            err = e
+    raise err
+
+
+def _parse_outlook(url: str) -> dict:
+    req = urllib.request.Request(url, headers={"User-Agent": UA})
     with urllib.request.urlopen(req, timeout=30) as r:
         h = r.read().decode("utf-8", errors="replace")
     i = h.find("再生可能エネルギー出力制御見通し")
     if i < 0:
         raise RuntimeError("見通しセクションが見つからない（ページ改変の可能性）")
     seg = h[i:i + 8000]
-    pub = re.search(r"\((\d+)月(\d+)日\s*(\d+)時(\d+)分発表\)", seg)
+    # 一時ページは全角の括弧で「（10月31日 17時0分発表）」と書く
+    pub = re.search(r"[\(（](\d+)月(\d+)日\s*(\d+)時(\d+)分発表[\)）]", seg)
     rows = re.findall(r"<tr[^>]*>(.*?)</tr>", seg, re.S)
     # 日付はセル単位で拾う。生HTMLだと "8月24日<br>(月曜日)" のようにタグで分断されるため
     days, honshu = [], None
