@@ -12,43 +12,43 @@ CIが落ちるたびにこの表へ1行追記される（`if: failure()` ステ�
 | 2026-08-23T22:18Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/32670176818) | 解決（提出は成功したがpushが他CIと衝突して弾かれた→全CIのpushを再試行つきに 2026-08-24） |
 | 2026-08-24T05:31Z | exp01 forward daily | [run](https://github.com/hsumiyoshi/lab/actions/runs/32693162667) | 解決（コンテナ巻き戻し時のファイルコピー運用がforward.pyを8/13以前へ巻き戻していた 2026-08-24） |
 | 2026-09-06T23:25Z | exp10 global disaster league | [run](https://github.com/hsumiyoshi/lab/actions/runs/34066717370) | 未対応 |
-| 2026-10-22T13:43Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/39789337325) | 未対応 |
+| 2026-10-22T13:43Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/39789337325) | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
 | 2026-10-22T22:47Z | collector/tohan_books | — | tohan_books: 件数が想定外 0件（想定 10〜10）——パーサ破損かページ改変の可能性 |
-| 2026-10-23T00:23Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/39877755007) | 未対応 |
+| 2026-10-23T00:23Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/39877755007) | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
 | 2026-10-23T09:27Z | collector/tohan_books | — | tohan_books: 件数が想定外 0件（想定 10〜10）——パーサ破損かページ改変の可能性 |
-| 2026-10-23T13:20Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/39960328977) | 未対応 |
-| 2026-10-23T22:21Z | collector/kyuden_curtail | — | kyuden_curtail: 件数が想定外 0件（想定 3〜24）——パーサ破損かページ改変の可能性 |
-| 2026-10-24T00:15Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/40044040245) | 未対応 |
-| 2026-10-24T09:22Z | collector/kyuden_curtail | — | kyuden_curtail: 件数が想定外 0件（想定 3〜24）——パーサ破損かページ改変の可能性 |
-| 2026-10-24T12:37Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/40094690396) | 未対応 |
-| 2026-10-24T21:38Z | collector/kyuden_curtail | — | kyuden_curtail: 件数が想定外 0件（想定 3〜24）——パーサ破損かページ改変の可能性 |
-| 2026-10-24T23:58Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/40144874416) | 未対応 |
-| 2026-10-25T09:04Z | collector/kyuden_curtail | — | kyuden_curtail: 件数が想定外 0件（想定 3〜24）——パーサ破損かページ改変の可能性 |
-| 2026-10-25T13:08Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/40196276641) | 未対応 |
-| 2026-10-25T22:09Z | collector/kyuden_curtail | — | kyuden_curtail: 件数が想定外 0件（想定 3〜24）——パーサ破損かページ改変の可能性 |
-| 2026-10-25T23:47Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/40246337940) | 未対応 |
-| 2026-10-26T08:56Z | collector/kyuden_curtail | — | kyuden_curtail: 件数が想定外 0件（想定 3〜24）——パーサ破損かページ改変の可能性 |
-| 2026-10-26T15:07Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/40346163192) | 未対応 |
-| 2026-10-27T00:08Z | collector/kyuden_curtail | — | kyuden_curtail: 件数が想定外 0件（想定 3〜24）——パーサ破損かページ改変の可能性 |
-| 2026-10-27T01:06Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/40430578287) | 未対応 |
-| 2026-10-27T10:16Z | collector/kyuden_curtail | — | kyuden_curtail: 件数が想定外 0件（想定 3〜24）——パーサ破損かページ改変の可能性 |
-| 2026-10-27T14:22Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/40520448863) | 未対応 |
-| 2026-10-27T23:23Z | collector/kyuden_curtail | — | kyuden_curtail: 件数が想定外 0件（想定 3〜24）——パーサ破損かページ改変の可能性 |
-| 2026-10-28T00:57Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/40612090603) | 未対応 |
-| 2026-10-28T10:01Z | collector/kyuden_curtail | — | kyuden_curtail: 件数が想定外 0件（想定 3〜24）——パーサ破損かページ改変の可能性 |
-| 2026-10-28T15:03Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/40711985124) | 未対応 |
-| 2026-10-29T00:03Z | collector/kyuden_curtail | — | kyuden_curtail: 件数が想定外 0件（想定 3〜24）——パーサ破損かページ改変の可能性 |
-| 2026-10-29T01:31Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/40800926398) | 未対応 |
-| 2026-10-29T10:38Z | collector/kyuden_curtail | — | kyuden_curtail: 件数が想定外 0件（想定 3〜24）——パーサ破損かページ改変の可能性 |
-| 2026-10-29T15:10Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/40898872980) | 未対応 |
-| 2026-10-30T00:11Z | collector/kyuden_curtail | — | kyuden_curtail: 件数が想定外 0件（想定 3〜24）——パーサ破損かページ改変の可能性 |
-| 2026-10-30T01:31Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/40986373254) | 未対応 |
-| 2026-10-30T10:41Z | collector/kyuden_curtail | — | kyuden_curtail: 件数が想定外 0件（想定 3〜24）——パーサ破損かページ改変の可能性 |
-| 2026-10-30T14:59Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/41076568666) | 未対応 |
-| 2026-10-31T00:00Z | collector/kyuden_curtail | — | kyuden_curtail: 件数が想定外 0件（想定 3〜24）——パーサ破損かページ改変の可能性 |
-| 2026-10-31T01:24Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/41155230619) | 未対応 |
-| 2026-10-31T10:26Z | collector/kyuden_curtail | — | kyuden_curtail: 件数が想定外 0件（想定 3〜24）——パーサ破損かページ改変の可能性 |
-| 2026-10-31T14:28Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/41210288468) | 未対応 |
-| 2026-10-31T23:29Z | collector/kyuden_curtail | — | kyuden_curtail: 件数が想定外 0件（想定 3〜24）——パーサ破損かページ改変の可能性 |
-| 2026-11-01T00:40Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/41257774188) | 未対応 |
-| 2026-11-01T09:47Z | collector/kyuden_curtail | — | kyuden_curtail: 件数が想定外 0件（想定 3〜24）——パーサ破損かページ改変の可能性 |
+| 2026-10-23T13:20Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/39960328977) | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-23T22:21Z | collector/kyuden_curtail | — | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-24T00:15Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/40044040245) | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-24T09:22Z | collector/kyuden_curtail | — | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-24T12:37Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/40094690396) | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-24T21:38Z | collector/kyuden_curtail | — | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-24T23:58Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/40144874416) | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-25T09:04Z | collector/kyuden_curtail | — | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-25T13:08Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/40196276641) | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-25T22:09Z | collector/kyuden_curtail | — | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-25T23:47Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/40246337940) | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-26T08:56Z | collector/kyuden_curtail | — | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-26T15:07Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/40346163192) | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-27T00:08Z | collector/kyuden_curtail | — | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-27T01:06Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/40430578287) | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-27T10:16Z | collector/kyuden_curtail | — | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-27T14:22Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/40520448863) | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-27T23:23Z | collector/kyuden_curtail | — | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-28T00:57Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/40612090603) | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-28T10:01Z | collector/kyuden_curtail | — | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-28T15:03Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/40711985124) | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-29T00:03Z | collector/kyuden_curtail | — | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-29T01:31Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/40800926398) | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-29T10:38Z | collector/kyuden_curtail | — | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-29T15:10Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/40898872980) | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-30T00:11Z | collector/kyuden_curtail | — | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-30T01:31Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/40986373254) | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-30T10:41Z | collector/kyuden_curtail | — | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-30T14:59Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/41076568666) | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-31T00:00Z | collector/kyuden_curtail | — | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-31T01:24Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/41155230619) | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-31T10:26Z | collector/kyuden_curtail | — | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-31T14:28Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/41210288468) | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-10-31T23:29Z | collector/kyuden_curtail | — | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-11-01T00:40Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/41257774188) | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-11-01T09:47Z | collector/kyuden_curtail | — | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
