@@ -3,7 +3,9 @@ name: collector
 # 収集の共通ランタイム（宣言＋パーサ）で動くソース群。
 # 個別のリーグCIと違い、**新しいソースはsources.pyに30行足すだけ**でここに乗る。
 on:
-  # 2026-11-03 定時実行を止めた（本社の中間ゲートで「やめる」に仕分け）。再開するときは git 履歴から schedule を戻す
+  schedule:
+    - cron: "0 22 * * *"    # 07:00 JST
+    - cron: "10 8 * * *"    # 17:10 JST（九電の発表後）
   workflow_dispatch: {}
 
 permissions:

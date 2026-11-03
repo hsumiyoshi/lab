@@ -1,7 +1,8 @@
 name: exp10 global disaster league
 
 on:
-  # 2026-11-03 定時実行を止めた（本社の中間ゲートで「やめる」に仕分け）。再開するときは git 履歴から schedule を戻す
+  schedule:
+    - cron: "0 22 * * *"   # 07:00 JST: RSS取込 → 翌日分の提出 → 確定日の採点
   workflow_dispatch: {}
 
 permissions:

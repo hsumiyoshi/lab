@@ -1,7 +1,9 @@
 name: exp02 veg forward weekly
 
 on:
-  # 2026-11-03 定時実行を止めた（本社の中間ゲートで「やめる」に仕分け）。再開するときは git 履歴から schedule を戻す
+  schedule:
+    # 水曜 14:00 JST = 05:00 UTC。ベジ探の2〜3日遅れを見込んで前週分を採点する
+    - cron: "0 5 * * 3"
   workflow_dispatch: {}
 
 permissions:

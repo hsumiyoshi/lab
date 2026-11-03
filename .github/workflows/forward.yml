@@ -1,7 +1,10 @@
 name: exp01 forward daily
 
 on:
-  # 2026-11-03 定時実行を止めた（本社の中間ゲートで「やめる」に仕分け）。再開するときは git 履歴から schedule を戻す
+  schedule:
+    # 13:30 JST = 04:30 UTC。JEPXの翌日価格公表(〜12:30 JST)後に実行。
+    # picksは「まだ入札が締まっていない翌々日受渡分」を自動選択する
+    - cron: "30 4 * * *"
   workflow_dispatch: {}
 
 permissions:

@@ -1,7 +1,9 @@
 name: exp05 quake forward weekly
 
 on:
-  # 2026-11-03 定時実行を止めた（本社の中間ゲートで「やめる」に仕分け）。再開するときは git 履歴から schedule を戻す
+  schedule:
+    # 月曜 14:00 JST = 05:00 UTC。前週（月〜日）の余震件数を採点する
+    - cron: "0 5 * * 1"
   workflow_dispatch: {}
 
 permissions:

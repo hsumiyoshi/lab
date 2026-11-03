@@ -1,7 +1,9 @@
 name: exp08 curtailment league
 
 on:
-  # 2026-11-03 定時実行を止めた（本社の中間ゲートで「やめる」に仕分け）。再開するときは git 履歴から schedule を戻す
+  schedule:
+    - cron: "0 22 * * *"   # 07:00 JST 提出（九電の17:00発表より10時間早い＝あと出し不可）
+    - cron: "10 8 * * *"   # 17:10 JST 取込と採点
   workflow_dispatch: {}
 
 permissions:

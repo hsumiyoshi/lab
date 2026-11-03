@@ -1,7 +1,8 @@
 name: uptime meter
 
 on:
-  # 2026-11-03 定時実行を止めた（本社の中間ゲートで「やめる」に仕分け）。再開するときは git 履歴から schedule を戻す
+  schedule:
+    - cron: "0 3 * * 3"   # 水曜12:00 JST（週次レビュー前に更新）
   workflow_dispatch: {}
 
 permissions:
