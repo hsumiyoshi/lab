@@ -11,11 +11,11 @@ CIが落ちるたびにこの表へ1行追記される（`if: failure()` ステ�
 | 2026-08-23T09:41Z | exp10 global disaster league | [run](https://github.com/hsumiyoshi/lab/actions/runs/32631678717) | 解決（新リーグのdata/がgitignore＋NASAへIPv6到達不能） |
 | 2026-08-23T22:18Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/32670176818) | 解決（提出は成功したがpushが他CIと衝突して弾かれた→全CIのpushを再試行つきに 2026-08-24） |
 | 2026-08-24T05:31Z | exp01 forward daily | [run](https://github.com/hsumiyoshi/lab/actions/runs/32693162667) | 解決（コンテナ巻き戻し時のファイルコピー運用がforward.pyを8/13以前へ巻き戻していた 2026-08-24） |
-| 2026-09-06T23:25Z | exp10 global disaster league | [run](https://github.com/hsumiyoshi/lab/actions/runs/34066717370) | 未対応 |
+| 2026-09-06T23:25Z | exp10 global disaster league | [run](https://github.com/hsumiyoshi/lab/actions/runs/34066717370) | 解決（一過性。翌日から毎日成功し、直近30日は30/30（無停止率 2026-10-28）。2026-11-03 の点検で確認） |
 | 2026-10-22T13:43Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/39789337325) | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
-| 2026-10-22T22:47Z | collector/tohan_books | — | tohan_books: 件数が想定外 0件（想定 10〜10）——パーサ破損かページ改変の可能性 |
+| 2026-10-22T22:47Z | collector/tohan_books | — | 解決（一過性。10/27 の週は10件取れた。2026-11-03 の点検で確認） |
 | 2026-10-23T00:23Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/39877755007) | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
-| 2026-10-23T09:27Z | collector/tohan_books | — | tohan_books: 件数が想定外 0件（想定 10〜10）——パーサ破損かページ改変の可能性 |
+| 2026-10-23T09:27Z | collector/tohan_books | — | 解決（一過性。10/27 の週は10件取れた。2026-11-03 の点検で確認） |
 | 2026-10-23T13:20Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/39960328977) | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
 | 2026-10-23T22:21Z | collector/kyuden_curtail | — | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
 | 2026-10-24T00:15Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/40044040245) | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
