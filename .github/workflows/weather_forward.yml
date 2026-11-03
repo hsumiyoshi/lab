@@ -1,9 +1,7 @@
 name: exp03 weather league
 
 on:
-  schedule:
-    # 18:00 JST = 09:00 UTC。気象庁の17:00発表を見た後に翌日分を提出し、同時に過去分を採点
-    - cron: "0 9 * * *"
+  # 2026-11-03 定時実行を止めた（本社の中間ゲートで「やめる」に仕分け）。再開するときは git 履歴から schedule を戻す
   workflow_dispatch: {}
 
 permissions:

@@ -1,5 +1,7 @@
 # lab — prediction leagues that score themselves
 
+> **Paused on 2026-11-03.** All scheduled runs are stopped. The ledgers and the dashboard stay as they were on that date; the history is unchanged.
+
 **I run 10 prediction leagues against real-world data. Every prediction is committed
 to git *before* the outcome exists, so I cannot move the goalposts afterwards.
 The losses stay in the ledger.**

@@ -2,8 +2,7 @@ name: data guard
 
 # データ保全の番人。全リーグのCIが走った後に照合し、消失・縮小・破損があれば赤くする。
 on:
-  schedule:
-    - cron: "0 13 * * *"   # 22:00 JST（その日の収集がすべて終わった後）
+  # 2026-11-03 定時実行を止めた（本社の中間ゲートで「やめる」に仕分け）。再開するときは git 履歴から schedule を戻す
   workflow_dispatch: {}
 
 permissions:

@@ -1,8 +1,7 @@
 name: exp11 books ranking league
 
 on:
-  schedule:
-    - cron: "0 22 * * 3"   # 木曜07:00 JST（トーハンの週次公表後に取得・採点・提出）
+  # 2026-11-03 定時実行を止めた（本社の中間ゲートで「やめる」に仕分け）。再開するときは git 履歴から schedule を戻す
   workflow_dispatch: {}
 
 permissions:
