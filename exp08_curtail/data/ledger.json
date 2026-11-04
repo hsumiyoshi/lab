@@ -42,5 +42,27 @@
    "always_none": "なし",
    "persistence": "当日指示予定"
   }
+ },
+ "2026-11-04": {
+  "actual": "可能性あり",
+  "hit": {
+   "always_none": false,
+   "persistence": false
+  },
+  "picks": {
+   "always_none": "なし",
+   "persistence": "指示実施"
+  }
+ },
+ "2026-11-05": {
+  "actual": "なし",
+  "hit": {
+   "always_none": true,
+   "persistence": false
+  },
+  "picks": {
+   "always_none": "なし",
+   "persistence": "可能性あり"
+  }
  }
 }
