@@ -97,5 +97,16 @@
    "always_none": "なし",
    "persistence": "指示実施"
   }
+ },
+ "2026-11-09": {
+  "actual": "なし",
+  "hit": {
+   "always_none": true,
+   "persistence": false
+  },
+  "picks": {
+   "always_none": "なし",
+   "persistence": "当日指示予定"
+  }
  }
 }
