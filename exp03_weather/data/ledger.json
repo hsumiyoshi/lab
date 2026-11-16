@@ -1098,5 +1098,14 @@
   "err": {
    "persistence": 2.0
   }
+ },
+ "2026-11-16": {
+  "actual": 20.5,
+  "picks": {
+   "persistence": 14.0
+  },
+  "err": {
+   "persistence": 6.5
+  }
  }
 }
