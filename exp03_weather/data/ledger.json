@@ -1118,5 +1118,16 @@
    "openmeteo": 2.3,
    "persistence": 3.2
   }
+ },
+ "2026-11-18": {
+  "actual": 19.8,
+  "picks": {
+   "openmeteo": 20.5,
+   "persistence": 14.7
+  },
+  "err": {
+   "openmeteo": 0.7,
+   "persistence": 5.1
+  }
  }
 }
