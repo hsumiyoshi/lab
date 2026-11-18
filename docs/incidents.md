@@ -52,3 +52,4 @@ CIが落ちるたびにこの表へ1行追記される（`if: failure()` ステ�
 | 2026-10-31T23:29Z | collector/kyuden_curtail | — | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
 | 2026-11-01T00:40Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/41257774188) | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
 | 2026-11-01T09:47Z | collector/kyuden_curtail | — | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
+| 2026-11-18T13:24Z | exp01 forward daily | [run](https://github.com/hsumiyoshi/lab/actions/runs/44312112104) | 未対応 |
