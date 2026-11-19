@@ -232,7 +232,15 @@ def koma_to_range(k: int) -> str:
 def make_picks(df: pd.DataFrame, target: pd.Timestamp) -> dict:
     """ベースラインのpicks計算＋提出済み機体のpicks読込（表示用）"""
     hist = df[df["date"] < target]
-    rf, _tf = live_forecast(target)
+    try:
+        rf, _tf = live_forecast(target)
+    except Exception as e:
+        # 2026-11-18: Open-Meteo との通信の確立が時間切れになり、日次の手順ごと落ちた。
+        # この予報は表示の乖離にしか使わない（提出は picks の手順が持つ）。
+        # 取れない日は、予報なしで続ける（rad_dev は予報の控えに戻る）
+        print(f"!! live予報の取得に失敗: {type(e).__name__} {e} → 予報なしで続行")
+        print(f"::warning title=live予報の取得に失敗::{type(e).__name__} {e}")
+        rf, _tf = None, None
     dev, thr = rad_dev(target, rad_forecast=rf)
     picks = {"clock": sim.strat_clock()}
     pred = sim.pred_weekshape(hist, None, target)
