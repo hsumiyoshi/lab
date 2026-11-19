@@ -17,6 +17,7 @@
 
 import json
 import re
+import time
 import urllib.request
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -30,20 +31,38 @@ TEMP_URL = "https://www.kyuden.co.jp/td/power-usages/temporary.html"
 UA = "Mozilla/5.0 (personal research ledger; https://github.com/hsumiyoshi/lab)"
 
 
-def fetch_outlook() -> dict:
-    """九電のでんき予報から出力制御見通しを取る。返り値: {日付: 'あり'/'なし'} と発表時刻。"""
+TRIES = 3          # 九電が応答しない時の試し直し（2026-11-20、02:20 JST に30秒の時間切れで1回で落ちた）
+WAITS = (60, 180)  # 試し直しの前に待つ秒。合わせて約4分＋通信の時間
+
+
+def fetch_outlook(raw_tag: str = "", tries: int = TRIES, waits=WAITS) -> dict:
+    """九電のでんき予報から出力制御見通しを取る。返り値: {日付: 'あり'/'なし'} と発表時刻。
+
+    通信の失敗（時間切れ・接続できない）でも、表の形の失敗でも、一時ページを試す。
+    両方とも通信で落ちた時は、待ってから全体を試し直す。表の形の失敗は、試し直しても同じなので待たない。"""
     err = None
-    for url in (URL, TEMP_URL):
-        try:
-            return _parse_outlook(url)
-        except RuntimeError as e:
-            err = e
+    for attempt in range(tries):
+        net_fail = False
+        for url in (URL, TEMP_URL):
+            try:
+                return _parse_outlook(url, raw_tag)
+            except RuntimeError as e:
+                err = e
+            except OSError as e:      # TimeoutError・URLError・HTTPError は、どれも OSError の仲間
+                err = e
+                net_fail = True
+                print(f"  {url}: {type(e).__name__} {e}")
+        if not net_fail or attempt == tries - 1:
+            break
+        w = waits[min(attempt, len(waits) - 1)]
+        print(f"  九電が応答しない → {w}秒待って試し直す（{attempt + 2}/{tries}回目）")
+        time.sleep(w)
     raise err
 
 
-def _parse_outlook(url: str) -> dict:
+def _parse_outlook(url: str, raw_tag: str = "") -> dict:
     req = urllib.request.Request(url, headers={"User-Agent": UA})
-    with urllib.request.urlopen(req, timeout=30) as r:
+    with urllib.request.urlopen(req, timeout=60) as r:
         h = r.read().decode("utf-8", errors="replace")
     i = h.find("再生可能エネルギー出力制御見通し")
     if i < 0:
@@ -81,7 +100,8 @@ def _parse_outlook(url: str) -> dict:
             allrows.append(cells)
     rawdir = HERE / "data" / "raw"
     rawdir.mkdir(parents=True, exist_ok=True)
-    (rawdir / f"kyuden_outlook_{datetime.now(JST):%Y-%m-%d}.json").write_text(
+    # 朝の読み直し（raw_tag="_am"）は別の名前にする。夕方の回が同じ日の名前で書くと、朝の控えが消えるため
+    (rawdir / f"kyuden_outlook_{datetime.now(JST):%Y-%m-%d}{raw_tag}.json").write_text(
         json.dumps({"fetched_at": datetime.now(JST).isoformat(timespec="seconds"),
                     "days": days, "table": allrows}, ensure_ascii=False, separators=(",", ":")),
         encoding="utf-8")
@@ -90,10 +110,35 @@ def _parse_outlook(url: str) -> dict:
             "outlook": out}
 
 
+def refetch_outlook():
+    """朝の回で、前の日の17:00の発表を読み直す（夕方の回が落ちた日の取りこぼしを拾う）。
+
+    九電のページは、次の17:00まで前の日の発表を出している。夕方の回が落ちても、朝に読めば採点のラベルが残る
+    （2026-11-20、夕方の回が九電の時間切れで落ちた）。17:00 を過ぎた後は読まない——
+    その日の発表は翌日分のラベルそのものなので、予測を凍結する前に手元へ入れない。
+    読めなくても提出は止めない（ここは予備。採点の取り込みは夕方の回が持つ）。"""
+    now = datetime.now(JST)
+    if now.hour >= 17:
+        print("朝の読み直し: 17:00 を過ぎたので読まない")
+        return
+    hist_f = HERE / "data" / "outlook_history.json"
+    try:
+        res = fetch_outlook(raw_tag="_am")
+    except Exception as e:
+        print(f"朝の読み直し: 取れなかった（提出は続ける）: {type(e).__name__} {e}")
+        return
+    hist = json.loads(hist_f.read_text()) if hist_f.exists() else {}
+    hist.update(res["outlook"])
+    hist_f.parent.mkdir(exist_ok=True)
+    hist_f.write_text(json.dumps(hist, ensure_ascii=False, indent=1, sort_keys=True), encoding="utf-8")
+    print(f"朝の読み直し（{res['published']} 発表）: {res['outlook']}")
+
+
 def submit():
     """翌日分の予測を、九電の発表より前に凍結する（あと出し禁止）。"""
     now = datetime.now(JST)
     target = (now + timedelta(days=1)).date()
+    refetch_outlook()
     hist = json.loads((HERE / "data" / "outlook_history.json").read_text()) \
         if (HERE / "data" / "outlook_history.json").exists() else {}
     today_val = hist.get(str(now.date()), "なし")
