@@ -6,6 +6,25 @@
 """
 
 import re
+from datetime import date, datetime, timedelta, timezone
+
+JST = timezone(timedelta(hours=9))
+
+
+def _near_date(m, d) -> str:
+    """年の無い「月・日」を、今日（日本時間）にいちばん近い年の日付にする。
+
+    12/31 に読む表の「1月1日」を翌年にする（2026-11-20 まで、年を 2026 と直に書いていた）。"""
+    today = datetime.now(JST).date()
+    best = None
+    for y in (today.year - 1, today.year, today.year + 1):
+        try:
+            c = date(y, int(m), int(d))
+        except ValueError:
+            continue
+        if best is None or abs((c - today).days) < abs((best - today).days):
+            best = c
+    return str(best)
 
 # ---------------- パーサ（変わるのはここだけ） ----------------
 
@@ -30,8 +49,9 @@ def parse_kyuden_curtail(html: str) -> list:
         if cells and cells[0] in ("九州本土", "対馬", "壱岐", "五島", "離島"):
             area = cells[0]
             for (mm, dd), v in zip(days[:3], cells[1:4]):
-                out.append({"id": f"kyuden-{area}-2026-{int(mm):02d}-{int(dd):02d}",
-                            "area": area, "date": f"2026-{int(mm):02d}-{int(dd):02d}",
+                day = _near_date(mm, dd)
+                out.append({"id": f"kyuden-{area}-{day}",
+                            "area": area, "date": day,
                             "curtail": "なし" if v.strip() in ("―", "-", "－") else v.strip(),
                             "published": (f"{int(pub.group(1)):02d}-{int(pub.group(2)):02d} "
                                           f"{int(pub.group(3)):02d}:{int(pub.group(4)):02d}") if pub else None})

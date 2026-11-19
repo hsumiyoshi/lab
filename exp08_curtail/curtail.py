@@ -85,10 +85,10 @@ def _parse_outlook(url: str, raw_tag: str = "") -> dict:
             honshu = cells[1:4]
     if honshu is None or not days:
         raise RuntimeError("表の形が変わった（九州本土の行を特定できない）")
-    year = datetime.now(JST).year
+    today = datetime.now(JST).date()
     out = {}
     for (m, d), v in zip(days[:3], honshu):
-        out[f"{year}-{int(m):02d}-{int(d):02d}"] = "なし" if v.strip() in ("―", "-", "－") else v.strip()
+        out[str(_near_date(m, d, today))] = "なし" if v.strip() in ("―", "-", "－") else v.strip()
     # 生情報の保存: 抽出後のフラグだけでなく、表の全行（離島含む）と発表時刻を残す
     #（2026-08-24。当日分しか表示されないページなので、後から問い直す手段が他に無い）
     allrows = []
@@ -100,14 +100,54 @@ def _parse_outlook(url: str, raw_tag: str = "") -> dict:
             allrows.append(cells)
     rawdir = HERE / "data" / "raw"
     rawdir.mkdir(parents=True, exist_ok=True)
-    # 朝の読み直し（raw_tag="_am"）は別の名前にする。夕方の回が同じ日の名前で書くと、朝の控えが消えるため
+    # 朝の読み直し（raw_tag="_am"）は別の名前にする。夕方の予定の回は GitHub の遅れで翌日の02時ごろに動き、
+    # 朝の回と同じ日付の名前になる。名前を分けないと、後から書いた方が先の控えを消す
     (rawdir / f"kyuden_outlook_{datetime.now(JST):%Y-%m-%d}{raw_tag}.json").write_text(
         json.dumps({"fetched_at": datetime.now(JST).isoformat(timespec="seconds"),
                     "days": days, "table": allrows}, ensure_ascii=False, separators=(",", ":")),
         encoding="utf-8")
     return {"published": f"{int(pub.group(1)):02d}-{int(pub.group(2)):02d} "
                          f"{int(pub.group(3)):02d}:{int(pub.group(4)):02d}" if pub else "不明",
+            "pub_date": str(_near_date(pub.group(1), pub.group(2), today)) if pub else None,
             "outlook": out}
+
+
+def _near_date(m, d, today):
+    """年の無い「月・日」を、今日にいちばん近い年の日付にする（12/31 に読む「1月1日」を翌年にする）。"""
+    best = None
+    for y in (today.year - 1, today.year, today.year + 1):
+        try:
+            c = datetime(y, int(m), int(d)).date()
+        except ValueError:      # 2月29日の無い年
+            continue
+        if best is None or abs((c - today).days) < abs((best - today).days):
+            best = c
+    return best
+
+
+def merge_outlook(res: dict) -> int:
+    """見通しを台帳に入れる。どの発表の値かを outlook_source.json に残し、古い発表で新しい値を上書きしない。
+
+    採点のラベルは「前の日の17:00の発表」の値だけ（collect_and_score）。2日先・3日先の値で採点すると、
+    「可能性あり」が「当日指示予定」と合わず、必ず外れになるため、発表の日付を値と一緒に持つ（2026-11-20）。"""
+    d = HERE / "data"
+    d.mkdir(exist_ok=True)
+    hist_f, src_f = d / "outlook_history.json", d / "outlook_source.json"
+    hist = json.loads(hist_f.read_text()) if hist_f.exists() else {}
+    src = json.loads(src_f.read_text()) if src_f.exists() else {}
+    if not res.get("pub_date"):
+        print("  発表の日付が読めない → 台帳に入れない")
+        return 0
+    n = 0
+    for day, v in res["outlook"].items():
+        if src.get(day, "") > res["pub_date"]:
+            print(f"  {day}: 手元の値（{src[day]} 発表）の方が新しい → そのまま")
+            continue
+        hist[day], src[day] = v, res["pub_date"]
+        n += 1
+    hist_f.write_text(json.dumps(hist, ensure_ascii=False, indent=1, sort_keys=True), encoding="utf-8")
+    src_f.write_text(json.dumps(src, ensure_ascii=False, indent=1, sort_keys=True), encoding="utf-8")
+    return n
 
 
 def refetch_outlook():
@@ -121,17 +161,17 @@ def refetch_outlook():
     if now.hour >= 17:
         print("朝の読み直し: 17:00 を過ぎたので読まない")
         return
-    hist_f = HERE / "data" / "outlook_history.json"
     try:
         res = fetch_outlook(raw_tag="_am")
     except Exception as e:
         print(f"朝の読み直し: 取れなかった（提出は続ける）: {type(e).__name__} {e}")
         return
-    hist = json.loads(hist_f.read_text()) if hist_f.exists() else {}
-    hist.update(res["outlook"])
-    hist_f.parent.mkdir(exist_ok=True)
-    hist_f.write_text(json.dumps(hist, ensure_ascii=False, indent=1, sort_keys=True), encoding="utf-8")
-    print(f"朝の読み直し（{res['published']} 発表）: {res['outlook']}")
+    # 取った後にも確かめる。試し直しで17:00をまたいだ時や、九電が早めに出した時に、その日の発表を入れない
+    if not res.get("pub_date") or res["pub_date"] >= str(now.date()):
+        print(f"朝の読み直し: 発表が {res['published']} なので入れない（前の日より前の発表だけ入れる）")
+        return
+    n = merge_outlook(res)
+    print(f"朝の読み直し（{res['published']} 発表・{n}日分を更新）: {res['outlook']}")
 
 
 def submit():
@@ -156,19 +196,23 @@ def submit():
 def collect_and_score():
     """17:05に九電の発表を取り込み、提出済みの予測を採点する。"""
     d = HERE / "data"
-    d.mkdir(exist_ok=True)
-    hist_f = d / "outlook_history.json"
-    hist = json.loads(hist_f.read_text()) if hist_f.exists() else {}
     res = fetch_outlook()
-    hist.update(res["outlook"])
-    hist_f.write_text(json.dumps(hist, ensure_ascii=False, indent=1, sort_keys=True), encoding="utf-8")
-    print(f"取込（{res['published']} 発表）: {res['outlook']}")
+    n = merge_outlook(res)
+    print(f"取込（{res['published']} 発表・{n}日分を更新）: {res['outlook']}")
+    hist_f, src_f = d / "outlook_history.json", d / "outlook_source.json"
+    hist = json.loads(hist_f.read_text()) if hist_f.exists() else {}
+    src = json.loads(src_f.read_text()) if src_f.exists() else {}
 
     led_f = d / "ledger.json"
     led = json.loads(led_f.read_text()) if led_f.exists() else {}
     for f in sorted((HERE / "picks").glob("*.json")):
         day = f.stem
         if day not in hist or day in led:
+            continue
+        # ラベルは前の日の17:00の発表の値だけ。まだ無い日は採点を待つ（前の日の発表を取り逃した日は、欠けのまま）
+        want = str(datetime.strptime(day, "%Y-%m-%d").date() - timedelta(days=1))
+        if src.get(day) != want:
+            print(f"採点を待つ {day}: 手元の値は {src.get(day, '発表の日付なし')} の発表（{want} の発表が要る）")
             continue
         p = json.loads(f.read_text())["picks"]
         led[day] = {"actual": hist[day],
@@ -185,6 +229,10 @@ def report(led, hist):
     lines = ["# 出力制御リーグ（九電の見通しを先回りする）", "",
              f"予測対象: 翌日の九州本土の出力制御（あり/なし） / 生成: {datetime.now(JST):%Y-%m-%d %H:%M} JST", "",
              f"収集済み {len(hist)}日 / うち制御ありの日 **{n_ctrl}日**（夏は基底率がほぼゼロ。本番は春と秋）", ""]
+    today = str(datetime.now(JST).date())
+    lost = [f.stem for f in sorted((HERE / "picks").glob("*.json")) if f.stem < today and f.stem not in led]
+    if lost:
+        lines += [f"採点できなかった日 {len(lost)}日（前の日の発表を取り逃した）: {', '.join(lost[-5:])}", ""]
     if rows:
         names = sorted({k for r in rows for k in r["hit"]})
         lines += [f"## 成績（{len(rows)}日）", "", "| 機体 | 的中 | 的中率 |", "|---|---|---|"]
