@@ -152,5 +152,19 @@
    "persistence": 6
   },
   "scored_against": "2026-11-10"
+ },
+ "2026-11-10": {
+  "actual": 5,
+  "err": {
+   "all_stay": 5,
+   "mean": 0,
+   "persistence": 2
+  },
+  "picks": {
+   "all_stay": 10,
+   "mean": 5,
+   "persistence": 7
+  },
+  "scored_against": "2026-11-17"
  }
 }
