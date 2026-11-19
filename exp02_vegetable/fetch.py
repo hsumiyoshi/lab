@@ -19,6 +19,7 @@ import pathlib as _pl, sys
 sys.path.insert(0, str(_pl.Path(__file__).resolve().parent.parent / "collector"))
 
 import pandas as pd
+from runtime import CollectError
 
 DATA = Path(__file__).parent / "data"
 URL = "https://vegetan.alic.go.jp/vegetan/sch7.do"
@@ -97,11 +98,25 @@ if __name__ == "__main__":
         for y, m in months:
             if (y, m) in have:
                 continue
-            df = fetch_month(code, y, m)
+            try:
+                df = fetch_month(code, y, m)
+            except CollectError as e:
+                # 2026-11-19: ベジ探の検索が、ブラウザで開いても 404 になった（サイト側の故障）。
+                # 取れない月は、持っている行を残して続ける。落とすと週の採点ごと止まり、
+                # 再取得の対象の当月・前月の行まで消える。止まった事は警告の注記で残す
+                kept = old[old["date"].dt.strftime("%Y-%m") == f"{y}-{m:02d}"] if not old.empty else old
+                print(f"!! {name} {y}-{m:02d} の取得に失敗: {e} → 持っている {len(kept)}行で続行")
+                print(f"::warning title=ベジ探の取得に失敗::{name} {y}-{m:02d}: {e}")
+                frames.append(kept)
+                continue
             print(f"{name} {y}-{m:02d}: {len(df)}行")
             frames.append(df)
             time.sleep(0.4)
-        alldf = pd.concat([f for f in frames if len(f)], ignore_index=True)
+        frames = [f for f in frames if len(f)]
+        if not frames:
+            print(f"  -> {dest} は書かない（取れた行も、持っている行も無い）")
+            continue
+        alldf = pd.concat(frames, ignore_index=True)
         alldf["date"] = pd.to_datetime(alldf["date"])
         alldf = alldf.drop_duplicates(["date", "item", "origin"]).sort_values(["date", "origin"])
         alldf.to_csv(dest, index=False)
