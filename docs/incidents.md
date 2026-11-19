@@ -54,3 +54,4 @@ CIが落ちるたびにこの表へ1行追記される（`if: failure()` ステ�
 | 2026-11-01T09:47Z | collector/kyuden_curtail | — | 解決（九電の保守で見通しが一時ページへ移った→予備のページを読む 2026-11-01 2c6cca5・712ac6f） |
 | 2026-11-18T13:24Z | exp01 forward daily | [run](https://github.com/hsumiyoshi/lab/actions/runs/44312112104) | 解決（Open-Meteo の live予報で通信の時間切れ→取れない日は予報なしで続ける 2026-11-19 8a82a69） |
 | 2026-11-18T13:44Z | exp02 veg forward weekly | [run](https://github.com/hsumiyoshi/lab/actions/runs/44316222528) | 解決（ベジ探の検索がブラウザでも404になるサイト側の故障→取れない月は持っている行で続ける 2026-11-19 3a142a4） |
+| 2026-11-19T17:20Z | exp08 curtailment league | [run](https://github.com/hsumiyoshi/lab/actions/runs/44576004086) | 未対応 |
