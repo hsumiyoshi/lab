@@ -78,6 +78,7 @@ if __name__ == "__main__":
     today = date.today()
     months = [(y, m) for y in (2024, 2025, 2026) for m in range(1, 13)
               if (y, m) <= (today.year, today.month)]
+    down = None  # ベジ探が1回でも取れなかったら、この回は残りを問い合わせない
     for code, name in ITEMS.items():
         dest = DATA / f"veg_{code}.csv"
         have = set()
@@ -99,8 +100,13 @@ if __name__ == "__main__":
             if (y, m) in have:
                 continue
             try:
+                if down is not None:
+                    raise down
                 df = fetch_month(code, y, m)
             except CollectError as e:
+                # 1回目の失敗は、試し直しを含めて数分かかる（CI の実測）。壊れたサイトに
+                # 品目×月の数だけ問い合わせ直さない
+                down = e
                 # 2026-11-19: ベジ探の検索が、ブラウザで開いても 404 になった（サイト側の故障）。
                 # 取れない月は、持っている行を残して続ける。落とすと週の採点ごと止まり、
                 # 再取得の対象の当月・前月の行まで消える。止まった事は警告の注記で残す
