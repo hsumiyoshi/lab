@@ -218,5 +218,16 @@
    "always_none": "なし",
    "persistence": "なし"
   }
+ },
+ "2026-11-21": {
+  "actual": "なし",
+  "hit": {
+   "always_none": true,
+   "persistence": false
+  },
+  "picks": {
+   "always_none": "なし",
+   "persistence": "可能性あり"
+  }
  }
 }
